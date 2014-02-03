@@ -45,9 +45,9 @@ public:
             const int previousLeadingDim = data[i-1]->getLeadingDim();
             const int currentLeadingDim = data[i]->getLeadingDim();
             if (previousLeadingDim != currentLeadingDim) {
-              cerr << "Mismatch in data shapes:" << endl;
-              cerr << "Previous leading dim was " << previousLeadingDim << endl;
-              cerr << "Current leading dim is " << currentLeadingDim << endl;
+              std::cerr << "Mismatch in data shapes:" << std::endl;
+              std::cerr << "Previous leading dim was " << previousLeadingDim << std::endl;
+              std::cerr << "Current leading dim is " << currentLeadingDim << std::endl;
             }
             assert(previousLeadingDim == currentLeadingDim);
         }
