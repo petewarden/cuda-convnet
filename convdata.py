@@ -220,14 +220,14 @@ class TestDataProvider(LabeledRawDataProvider):
 
     def get_next_batch(self):
         num_cases = 2
-        images_data = np.empty((self.get_data_dims(), num_cases), dtype=np.float32)
+        images_data = n.empty((self.get_data_dims(), num_cases), dtype=n.float32)
         for i in num_cases:
           if i == 0:
             image_value = 0.0
           else:
             image_value = 255.0
-          images_data[:, i] = image_value * np.ones((self.get_data_dims()), dtype=float32)
-        labels = np.empty((2), dtype=np.float32)
+          images_data[:, i] = image_value * n.ones((self.get_data_dims()), dtype=float32)
+        labels = n.empty((2), dtype=n.float32)
         labels[0] = 0.0
         labels[1] = 1.0
         epoch = self.curr_epoch
