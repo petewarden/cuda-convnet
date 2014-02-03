@@ -101,6 +101,9 @@ PyObject* startBatch(PyObject *self, PyObject *args) {
     }
     MatrixV& mvec = *getMatrixV((PyObject*)data);
     
+    std::cerr << "mvec[0]->getLeadingDim()=" << mvec[0]->getLeadingDim() << std::endl;
+    std::cerr << "mvec[1]->getLeadingDim()=" << mvec[1]->getLeadingDim() << std::endl;
+
     TrainingWorker* wr = new TrainingWorker(*model, *new CPUData(mvec), test);
     model->getWorkerQueue().enqueue(wr);
     return Py_BuildValue("i", 0);
