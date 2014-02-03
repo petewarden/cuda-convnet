@@ -234,12 +234,15 @@ class TestDataProvider(LabeledRawDataProvider):
         labels[0, 1] = 1.0
         epoch = self.curr_epoch
         batchnum = self.curr_batchnum
+        self.advance_batch()
+        return epoch, batchnum, [images_data, labels]
+
+    def advance_batch(self):
         self.curr_batchnum += 1
         if self.curr_batchnum >= self.batch_range:
           self.curr_batchnum = 0
           self.curr_epoch += 1
-        return epoch, batchnum, [images_data, labels]
-        
+
     def get_data_dims(self, idx=0):
         return self.inner_size**2 * 3 if idx == 0 else 1
 
