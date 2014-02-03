@@ -47,7 +47,11 @@ public:
             if (previousLeadingDim != currentLeadingDim) {
               std::cerr << "Mismatch in data shapes:" << std::endl;
               std::cerr << "Previous leading dim was " << previousLeadingDim << std::endl;
+              std::cerr << "Previous numRows() was " << data[i-1]->getNumRows() << std::endl;
+              std::cerr << "Previous numCols() was " << data[i-1]->getNumCols() << std::endl;
               std::cerr << "Current leading dim is " << currentLeadingDim << std::endl;
+              std::cerr << "Current numRows() was " << data[i]->getNumRows() << std::endl;
+              std::cerr << "Current numCols() was " << data[i]->getNumCols() << std::endl;
             }
             assert(previousLeadingDim == currentLeadingDim);
         }
