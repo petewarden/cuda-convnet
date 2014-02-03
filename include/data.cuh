@@ -29,6 +29,7 @@
 
 #include <vector>
 #include <algorithm>
+#include <iostream>
 #include "util.cuh"
 
 template <class T>
