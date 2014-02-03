@@ -193,7 +193,8 @@ class ConvNet(IGPUModel):
         DataProvider.register_data_provider('dummy-cn-n', 'Dummy ConvNet', DummyConvNetDataProvider)
         DataProvider.register_data_provider('cifar-cropped', 'Cropped CIFAR', CroppedCIFARDataProvider)
         DataProvider.register_data_provider('raw-cropped', 'Cropped CIFAR', CroppedRawDataProvider)        
-        
+        DataProvider.register_data_provider('test', 'Test Data', TestDataProvider)
+
         return op
     
 if __name__ == "__main__":
