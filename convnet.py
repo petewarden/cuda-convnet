@@ -115,6 +115,7 @@ class ConvNet(IGPUModel):
         elif not train and self.multiview_test:
             self.libmodel.startMultiviewTest(data, self.train_data_provider.num_views, self.logreg_idx)
         else:
+            print 'batch_data[2]=%s' % (str(batch_data[2]))
             self.libmodel.startBatch(data, not train)
         
     def print_iteration(self):
