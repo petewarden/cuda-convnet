@@ -41,7 +41,14 @@ public:
     Data(std::vector<T*>& data) : _data(&data) {
         assert(_data->size() > 0);
         for (int i = 1; i < data.size(); i++) {
-            assert(data[i-1]->getLeadingDim() == data[i]->getLeadingDim());
+            const int previousLeadingDim = data[i-1]->getLeadingDim();
+            const int currentLeadingDim = data[i]->getLeadingDim();
+            if (previousLeadingDim != currentLeadingDim) {
+              cerr << "Mismatch in data shapes:" << endl;
+              cerr << "Previous leading dim was " << previousLeadingDim << endl;
+              cerr << "Current leading dim is " << currentLeadingDim << endl;
+            }
+            assert(previousLeadingDim == currentLeadingDim);
         }
         assert(data[0]->getLeadingDim() > 0);
     }
