@@ -214,11 +214,26 @@ class TestDataProvider(LabeledRawDataProvider):
         self.curr_epoch = init_epoch
         self.curr_batchnum = init_batchnum
         self.dp_params = dp_params
-        self.batch_index = init_batchnum
+        self.batch_range = 1
+        self.inner_size = 224
 
     def get_next_batch(self):
-
-        return epoch, batchnum, [cropped, datadic['labels']]
+        num_cases = 2
+        images_data = np.empty((self.get_data_dims(), num_cases), dtype=np.float32)
+        for i in num_cases:
+          if i == 0:
+            image_value = 0.0
+          else:
+            image_value = 255.0
+          images_data[:, i] = image_value * np.ones((self.get_data_dims()), dtype=float32)
+        labels = ['Black', 'White']
+        epoch = self.curr_epoch
+        batchnum = self.curr_batchnum
+        self.curr_batchnum += 1
+        if self.curr_batchnum >= self.batch_range:
+          self.curr_batchnum = 0
+          self.epoch += 1
+        return epoch, batchnum, [images_data, labels]
         
     def get_data_dims(self, idx=0):
         return self.inner_size**2 * 3 if idx == 0 else 1
@@ -228,4 +243,4 @@ class TestDataProvider(LabeledRawDataProvider):
     # fed to pylab for plotting.
     # This is used by shownet.py to plot test case predictions.
     def get_plottable_data(self, data):
-        return n.require((data + self.data_mean).T.reshape(data.shape[1], 3, self.inner_size, self.inner_size).swapaxes(1,3).swapaxes(1,2) / 255.0, dtype=n.single)
+        return n.require((data).T.reshape(data.shape[1], 3, self.inner_size, self.inner_size).swapaxes(1,3).swapaxes(1,2) / 255.0, dtype=n.single)
