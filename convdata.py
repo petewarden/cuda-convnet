@@ -221,7 +221,7 @@ class TestDataProvider(LabeledRawDataProvider):
     def get_next_batch(self):
         num_cases = 2
         images_data = n.empty((self.get_data_dims(), num_cases), dtype=n.float32)
-        for i in num_cases:
+        for i in range(num_cases):
           if i == 0:
             image_value = 0.0
           else:
