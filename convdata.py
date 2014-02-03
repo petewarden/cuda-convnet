@@ -216,6 +216,7 @@ class TestDataProvider(LabeledRawDataProvider):
         self.dp_params = dp_params
         self.batch_range = 1
         self.inner_size = 224
+        self.batch_meta = {'label_names': ['Black', 'White']}
 
     def get_next_batch(self):
         num_cases = 2
@@ -226,7 +227,9 @@ class TestDataProvider(LabeledRawDataProvider):
           else:
             image_value = 255.0
           images_data[:, i] = image_value * np.ones((self.get_data_dims()), dtype=float32)
-        labels = ['Black', 'White']
+        labels = np.empty((2), dtype=np.float32)
+        labels[0] = 0.0
+        labels[1] = 1.0
         epoch = self.curr_epoch
         batchnum = self.curr_batchnum
         self.curr_batchnum += 1
