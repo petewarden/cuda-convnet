@@ -235,7 +235,7 @@ class TestDataProvider(LabeledRawDataProvider):
         self.curr_batchnum += 1
         if self.curr_batchnum >= self.batch_range:
           self.curr_batchnum = 0
-          self.epoch += 1
+          self.curr_epoch += 1
         return epoch, batchnum, [images_data, labels]
         
     def get_data_dims(self, idx=0):
