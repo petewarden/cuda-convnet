@@ -212,6 +212,8 @@ class DummyConvNetDataProvider(LabeledDummyDataProvider):
 class TestDataProvider(LabeledRawDataProvider):
     def __init__(self, data_dir, batch_range=None, init_epoch=1, init_batchnum=None, dp_params=None, test=False):
         self.curr_epoch = init_epoch
+        if init_batchnum is None:
+          init_batchnum = 0
         self.curr_batchnum = init_batchnum
         self.dp_params = dp_params
         self.batch_range = 1
