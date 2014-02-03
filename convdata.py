@@ -238,8 +238,6 @@ class TestDataProvider(LabeledRawDataProvider):
         if self.curr_batchnum >= self.batch_range:
           self.curr_batchnum = 0
           self.curr_epoch += 1
-        sys.stderr.write('images_data.shape=%s\n' % (str(images_data.shape)))
-        sys.stderr.write('labels.shape=%s\n' % (str(labels.shape)))
         return epoch, batchnum, [images_data, labels]
         
     def get_data_dims(self, idx=0):

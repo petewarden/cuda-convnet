@@ -181,7 +181,6 @@ class IGPUModel:
         return batch_data[0], batch_data[1], batch_data[2]['data']
     
     def start_batch(self, batch_data, train=True):
-        print 'batch_data[2]=%s' % (str(batch_data[2]))
         self.libmodel.startBatch(batch_data[2], not train)
     
     def finish_batch(self):
