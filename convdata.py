@@ -226,7 +226,7 @@ class TestDataProvider(LabeledRawDataProvider):
             image_value = 0.0
           else:
             image_value = 255.0
-          images_data[:, i] = image_value * n.ones((self.get_data_dims()), dtype=float32)
+          images_data[:, i] = image_value * n.ones((self.get_data_dims()), dtype=n.float32)
         labels = n.empty((2), dtype=n.float32)
         labels[0] = 0.0
         labels[1] = 1.0
