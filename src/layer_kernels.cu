@@ -77,6 +77,8 @@ __global__ void kLogregCost(float* probs, float* labels, float* maxProbs, float*
               correctProbs[tx] = 0.0f;
             }
         }
+        labelLogProbs[tx] = 0;
+        correctProbs[tx] = 0.0f;
     }
 }
 
