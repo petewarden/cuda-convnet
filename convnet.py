@@ -151,19 +151,19 @@ class ConvNet(IGPUModel):
                 if type(l['weights']) == n.ndarray:
                     print "%sLayer '%s' weights: %e [%e]" % (NL, l['name'], n.mean(n.abs(l['weights'])), n.mean(n.abs(l['weightsInc']))),
                     if print_entire_array:
-                      print "weights=[%s]" % (", ".join("%6f" % v for v in l['weights'])),
-                      print "weightsInc=[%s]" % (", ".join("%6f" % v for v in l['weightsInc'])),
+                      print "weights=[%s]" % (", ".join("%6f" % v for v in l['weights'].tolist())),
+                      print "weightsInc=[%s]" % (", ".join("%6f" % v for v in l['weightsInc'].tolist())),
                 elif type(l['weights']) == list:
                     print ""
                     print NL.join("Layer '%s' weights[%d]: %e [%e]" % (l['name'], i, n.mean(n.abs(w)), n.mean(n.abs(wi))) for i,(w,wi) in enumerate(zip(l['weights'],l['weightsInc']))),
                     if print_entire_array:
                       for i,(w,wi) in enumerate(zip(l['weights'],l['weightsInc'])):
-                        print "weights=[%s]" % (", ".join("%6f" % v for v in w)),
-                        print "weightsInc=[%s]" % (", ".join("%6f" % v for v in wi)),
+                        print "weights=[%s]" % (", ".join("%6f" % v for v in w.tolist())),
+                        print "weightsInc=[%s]" % (", ".join("%6f" % v for v in wi.tolist())),
                 print "%sLayer '%s' biases: %e [%e]" % (NL, l['name'], n.mean(n.abs(l['biases'])), n.mean(n.abs(l['biasesInc']))),
                 if print_entire_array:
-                  print "biases=[%s]" % (", ".join("%6f" % v for v in l['biases'])),
-                  print "biasesInc=[%s]" % (", ".join("%6f" % v for v in l['biasesInc'])),
+                  print "biases=[%s]" % (", ".join("%6f" % v for v in l['biases'].tolist())),
+                  print "biasesInc=[%s]" % (", ".join("%6f" % v for v in l['biasesInc'].tolist())),
         print ""
 
 
