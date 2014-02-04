@@ -143,7 +143,7 @@ class ConvNet(IGPUModel):
     def print_test_results(self, print_entire_array=False):
         print ""
         print "======================Test output======================"
-        self.print_costs(self.test_outputs[-1], do_exit_on_nan = not print_entire_array)
+        self.print_costs(self.test_outputs[-1], do_exit_on_nan = False)
         print ""
         print "-------------------------------------------------------", 
         for i,l in enumerate(self.layers): # This is kind of hacky but will do for now.
