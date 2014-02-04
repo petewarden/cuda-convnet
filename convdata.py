@@ -30,6 +30,7 @@ import sys
 from time import time
 
 IMAGE_SIZE_RAW=256
+IMAGE_SIZE_TEST=16
 
 class CIFARDataProvider(LabeledMemoryDataProvider):
     def __init__(self, data_dir, batch_range, init_epoch=1, init_batchnum=None, dp_params={}, test=False):
@@ -217,7 +218,7 @@ class TestDataProvider(LabeledRawDataProvider):
         self.curr_batchnum = init_batchnum
         self.dp_params = dp_params
         self.batch_range = 1
-        self.inner_size = 224
+        self.inner_size = IMAGE_SIZE_TEST
         self.batch_meta = {'label_names': ['Black', 'White']}
 
     def get_next_batch(self):
