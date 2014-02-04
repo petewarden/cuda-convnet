@@ -68,7 +68,11 @@ __global__ void kLogregCost(float* probs, float* labels, float* maxProbs, float*
             for (int i = 0; i < numOut; i++) {
                 numMax += probs[i * numCases + tx] == maxp;
             }
-            correctProbs[tx] = 1.0f / float(numMax);
+            if (numMax > 0) {
+              correctProbs[tx] = 1.0f / float(numMax);
+            } else {
+              correctProbs[tx] = 0.0f;            
+            }
         }
     }
 }
