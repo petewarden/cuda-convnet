@@ -48,7 +48,7 @@ __global__ void kLogregCost(float* probs, float* labels, float* maxProbs, float*
         const float labelp = probs[label * numCases + tx];
         
         float logResult = __logf(labelp);
-        const bool isLogResultBad = (isnan(logResult) || isinf(logresult));
+        const bool isLogResultBad = (isnan(logResult) || isinf(logResult));
         logResult = (isLogResultBad) ? 0 : logResult;
 
         labelLogProbs[tx] = logResult;
