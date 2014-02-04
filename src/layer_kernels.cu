@@ -47,7 +47,7 @@ __global__ void kLogregCost(float* probs, float* labels, float* maxProbs, float*
         const float maxp = maxProbs[tx];
         const float labelp = probs[label * numCases + tx];
         
-        labelLogProbs[tx] = Nan2Zero(__logf(labelp));
+        labelLogProbs[tx] = NVMatrixOps::Nan2Zero(__logf(labelp));
         
         /*
          * Compute the probability of guessing the correct case if you take the most-probable label.
