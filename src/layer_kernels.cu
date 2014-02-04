@@ -47,7 +47,7 @@ __global__ void kLogregCost(float* probs, float* labels, float* maxProbs, float*
         const float maxp = maxProbs[tx];
         const float labelp = probs[label * numCases + tx];
         
-        labelLogProbs[tx] = __logf(labelp);
+        labelLogProbs[tx] = Nan2Zero(__logf(labelp));
         
         /*
          * Compute the probability of guessing the correct case if you take the most-probable label.
@@ -71,7 +71,7 @@ __global__ void kLogregCost(float* probs, float* labels, float* maxProbs, float*
             if (numMax > 0) {
               correctProbs[tx] = 1.0f / float(numMax);
             } else {
-              correctProbs[tx] = 0.0f;            
+              correctProbs[tx] = 0.0f;
             }
         }
     }
