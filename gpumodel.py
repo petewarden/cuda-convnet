@@ -152,7 +152,7 @@ class IGPUModel:
             if self.get_num_batches_done() % self.testing_freq == 0:
                 self.sync_with_host()
                 self.test_outputs += [self.get_test_error()]
-                self.print_test_results()
+                self.print_test_results(print_entire_array=self.print_entire_array)
                 self.print_test_status()
                 self.conditional_save()
             
@@ -294,6 +294,7 @@ class IGPUModel:
         op.add_option("zip-save", "zip_save", BooleanOptionParser, "Compress checkpoints?", default=0)
         op.add_option("test-one", "test_one", BooleanOptionParser, "Test on one batch at a time?", default=1)
         op.add_option("gpu", "gpu", ListOptionParser(IntegerOptionParser), "GPU override", default=OptionExpression("[-1] * num_gpus"))
+        op.add_option("print-entire-array", "print_entire_array", BooleanOptionParser, "Print all weight and bias values?", default=0)
         return op
 
     @staticmethod

@@ -123,7 +123,7 @@ class ConvNet(IGPUModel):
     def print_train_time(self, compute_time_py):
         print "(%.3f sec)" % (compute_time_py)
         
-    def print_costs(self, cost_outputs):
+    def print_costs(self, cost_outputs, do_exit_on_nan=True):
         costs, num_cases = cost_outputs[0], cost_outputs[1]
         for errname in costs.keys():
             costs[errname] = [(v/num_cases) for v in costs[errname]]
@@ -131,15 +131,16 @@ class ConvNet(IGPUModel):
             print ", ".join("%6f" % v for v in costs[errname]),
             if sum(m.isnan(v) for v in costs[errname]) > 0 or sum(m.isinf(v) for v in costs[errname]):
                 print "^ got nan or inf!"
-                sys.exit(1)
-        
+                if do_exit_on_nan:
+                  sys.exit(1)
+
     def print_train_results(self):
         self.print_costs(self.train_outputs[-1])
         
     def print_test_status(self):
         pass
         
-    def print_test_results(self):
+    def print_test_results(self, print_entire_array=False):
         print ""
         print "======================Test output======================"
         self.print_costs(self.test_outputs[-1])
@@ -149,12 +150,23 @@ class ConvNet(IGPUModel):
             if 'weights' in l:
                 if type(l['weights']) == n.ndarray:
                     print "%sLayer '%s' weights: %e [%e]" % (NL, l['name'], n.mean(n.abs(l['weights'])), n.mean(n.abs(l['weightsInc']))),
+                    if print_entire_array:
+                      print "weights=[%s]" % (", ".join("%6f" % v for v in l['weights'])),
+                      print "weightsInc=[%s]" % (", ".join("%6f" % v for v in l['weightsInc'])),
                 elif type(l['weights']) == list:
                     print ""
                     print NL.join("Layer '%s' weights[%d]: %e [%e]" % (l['name'], i, n.mean(n.abs(w)), n.mean(n.abs(wi))) for i,(w,wi) in enumerate(zip(l['weights'],l['weightsInc']))),
+                    if print_entire_array:
+                      for i,(w,wi) in enumerate(zip(l['weights'],l['weightsInc'])):
+                        print "weights=[%s]" % (", ".join("%6f" % v for v in w)),
+                        print "weightsInc=[%s]" % (", ".join("%6f" % v for v in wi)),
                 print "%sLayer '%s' biases: %e [%e]" % (NL, l['name'], n.mean(n.abs(l['biases'])), n.mean(n.abs(l['biasesInc']))),
+                if print_entire_array:
+                  print "biases=[%s]" % (", ".join("%6f" % v for v in l['biases'])),
+                  print "biasesInc=[%s]" % (", ".join("%6f" % v for v in l['biasesInc'])),
         print ""
-        
+
+
     def conditional_save(self):
         self.save_state()
         print "-------------------------------------------------------"
