@@ -151,7 +151,7 @@ class ConvNet(IGPUModel):
                 if type(l['weights']) == n.ndarray:
                     print "%sLayer '%s' weights: %e [%e]" % (NL, l['name'], n.mean(n.abs(l['weights'])), n.mean(n.abs(l['weightsInc']))),
                     if print_entire_array:
-                        n.set_printoptions(threshold=n.nan)
+                        n.set_printoptions(threshold=100)
                         print "weights.shape=%s" % (str(l['weights'].shape))
                         print "weights=[%s]" % (str(['weights'])),
                         print "weightsInc=[%s]" % (str(l['weightsInc'])),
@@ -159,14 +159,14 @@ class ConvNet(IGPUModel):
                     print ""
                     print NL.join("Layer '%s' weights[%d]: %e [%e]" % (l['name'], i, n.mean(n.abs(w)), n.mean(n.abs(wi))) for i,(w,wi) in enumerate(zip(l['weights'],l['weightsInc']))),
                     if print_entire_array:
-                      n.set_printoptions(threshold=n.nan)
+                      n.set_printoptions(threshold=100)
                       for i,(w,wi) in enumerate(zip(l['weights'],l['weightsInc'])):
                         print "weights.shape=%s" % (str(w.shape))
                         print "weights=[%s]" % (str(w)),
                         print "weightsInc=[%s]" % (str(wi)),
                 print "%sLayer '%s' biases: %e [%e]" % (NL, l['name'], n.mean(n.abs(l['biases'])), n.mean(n.abs(l['biasesInc']))),
                 if print_entire_array:
-                  n.set_printoptions(threshold=n.nan)
+                  n.set_printoptions(threshold=100)
                   print "biases.shape=%s" % (str(l['biases'].shape))
                   print "biases=[%s]" % (str(l['biases'])),
                   print "biasesInc=[%s]" % (str(l['biasesInc'])),
