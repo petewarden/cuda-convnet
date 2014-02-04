@@ -9,6 +9,8 @@
 /* Begin PBXFileReference section */
 		5910AE3018A05C05001CE2C6 /* test_layer_params.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = test_layer_params.cfg; sourceTree = "<group>"; };
 		5910AE3118A05C05001CE2C6 /* test_layer.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = test_layer.cfg; sourceTree = "<group>"; };
+		5910AE3218A15422001CE2C6 /* infinity_layer_params.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = infinity_layer_params.cfg; sourceTree = "<group>"; };
+		5910AE3318A15422001CE2C6 /* infinity_layer.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = infinity_layer.cfg; sourceTree = "<group>"; };
 		59A97BF1189F2EB7002E167F /* ABOUT */ = {isa = PBXFileReference; lastKnownFileType = text; path = ABOUT; sourceTree = "<group>"; };
 		59A97BF2189F2EB7002E167F /* build.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = build.sh; sourceTree = "<group>"; };
 		59A97BF3189F2EB7002E167F /* common-gcc-cuda-4.0.mk */ = {isa = PBXFileReference; lastKnownFileType = text; path = "common-gcc-cuda-4.0.mk"; sourceTree = "<group>"; };
@@ -108,6 +110,8 @@
 			children = (
 				59A97BFC189F2EB7002E167F /* cuda_layer.cfg */,
 				59A97BFD189F2EB7002E167F /* cuda_layer_params.cfg */,
+				5910AE3218A15422001CE2C6 /* infinity_layer_params.cfg */,
+				5910AE3318A15422001CE2C6 /* infinity_layer.cfg */,
 				59A97BFE189F2EB7002E167F /* layer-params-18pct.cfg */,
 				59A97BFF189F2EB7002E167F /* layer-params-19pct.cfg */,
 				59A97C00189F2EB7002E167F /* layer-params-80sec.cfg */,
