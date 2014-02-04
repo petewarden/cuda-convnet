@@ -30,7 +30,7 @@ import sys
 from time import time
 
 IMAGE_SIZE_RAW=256
-IMAGE_SIZE_TEST=32
+IMAGE_SIZE_TEST=224
 
 class CIFARDataProvider(LabeledMemoryDataProvider):
     def __init__(self, data_dir, batch_range, init_epoch=1, init_batchnum=None, dp_params={}, test=False):
