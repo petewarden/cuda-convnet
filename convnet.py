@@ -131,8 +131,8 @@ class ConvNet(IGPUModel):
             print ", ".join("%6f" % v for v in costs[errname]),
             if sum(m.isnan(v) for v in costs[errname]) > 0 or sum(m.isinf(v) for v in costs[errname]):
                 print "^ got nan or inf!"
-                if do_exit_on_nan:
-                  sys.exit(1)
+                #if do_exit_on_nan:
+                #  sys.exit(1)
 
     def print_train_results(self):
         self.print_costs(self.train_outputs[-1])
