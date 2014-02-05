@@ -125,8 +125,6 @@ class ConvNet(IGPUModel):
         
     def print_costs(self, cost_outputs, do_exit_on_nan=True):
         costs, num_cases = cost_outputs[0], cost_outputs[1]
-        print "costs=%s" % (str(costs))
-        print "num_cases=%s" % (str(num_cases))
         for errname in costs.keys():
             costs[errname] = [(v/num_cases) for v in costs[errname]]
             print "%s: " % errname,
@@ -202,7 +200,8 @@ class ConvNet(IGPUModel):
         op.add_option("conv-to-local", "conv_to_local", ListOptionParser(StringOptionParser), "Convert given conv layers to unshared local", default=[])
         op.add_option("unshare-weights", "unshare_weights", ListOptionParser(StringOptionParser), "Unshare weight matrices in given layers", default=[])
         op.add_option("conserve-mem", "conserve_mem", BooleanOptionParser, "Conserve GPU memory (slower)?", default=0)
-                
+        op.add_option("label-count", "label_count", IntegerOptionParser, "How many labels to choose in the subset case", default=2, set_once=True)
+
         op.delete_option('max_test_err')
         op.options["max_filesize_mb"].default = 0
         op.options["testing_freq"].default = 50
@@ -214,6 +213,7 @@ class ConvNet(IGPUModel):
         DataProvider.register_data_provider('cifar-cropped', 'Cropped CIFAR', CroppedCIFARDataProvider)
         DataProvider.register_data_provider('raw-cropped', 'Cropped CIFAR', CroppedRawDataProvider)        
         DataProvider.register_data_provider('test', 'Test Data', TestDataProvider)
+        DataProvider.register_data_provider('raw-subset', 'A limited set of the full raw labels', LabelSubsetProvider)
 
         return op
     

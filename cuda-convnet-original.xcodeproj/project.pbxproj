@@ -18,7 +18,6 @@
 		59A97BF5189F2EB7002E167F /* convdata.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = convdata.py; sourceTree = "<group>"; };
 		59A97BF7189F2EB7002E167F /* convnet.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = convnet.py; sourceTree = "<group>"; };
 		59A97BF9189F2EB7002E167F /* data.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = data.py; sourceTree = "<group>"; };
-		59A97BFA189F2EB7002E167F /* data.pyc */ = {isa = PBXFileReference; lastKnownFileType = file; path = data.pyc; sourceTree = "<group>"; };
 		59A97BFC189F2EB7002E167F /* cuda_layer.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = cuda_layer.cfg; sourceTree = "<group>"; };
 		59A97BFD189F2EB7002E167F /* cuda_layer_params.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = cuda_layer_params.cfg; sourceTree = "<group>"; };
 		59A97BFE189F2EB7002E167F /* layer-params-18pct.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = "layer-params-18pct.cfg"; sourceTree = "<group>"; };
@@ -91,7 +90,6 @@
 				59A97BF5189F2EB7002E167F /* convdata.py */,
 				59A97BF7189F2EB7002E167F /* convnet.py */,
 				59A97BF9189F2EB7002E167F /* data.py */,
-				59A97BFA189F2EB7002E167F /* data.pyc */,
 				59A97BFB189F2EB7002E167F /* example-layers */,
 				59A97C0C189F2EB7002E167F /* gpumodel.py */,
 				59A97C0E189F2EB7002E167F /* include */,

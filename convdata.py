@@ -253,3 +253,37 @@ class TestDataProvider(LabeledRawDataProvider):
     # This is used by shownet.py to plot test case predictions.
     def get_plottable_data(self, data):
         return n.require((data).T.reshape(data.shape[1], 3, self.inner_size, self.inner_size).swapaxes(1,3).swapaxes(1,2) / 255.0, dtype=n.single)
+
+class LabelSubsetProvider(CroppedRawDataProvider):
+
+    def __init__(self, data_dir, batch_range=None, init_epoch=1, init_batchnum=None, dp_params=None, test=False):
+        CroppedRawDataProvider.__init__(self, data_dir, batch_range, init_epoch, init_batchnum, dp_params, test)
+        self.label_count = dp_params['label_count']
+        self.original_batch_meta = self.batch_meta
+        self.batch_meta = {'label_names': self.original_batch_meta[0:self.label_count]}
+
+    def get_next_batch(self):
+        how_many_loops = 0
+        while True:
+            epoch, batchnum, data = CroppedRawDataProvider.get_next_batch(self)
+            all_images, labels = data
+            num_images = images.shape[1]
+            wanted_image_count = 0
+            for i in range(num_images):
+                if labels[0, i] < self.label_count:
+                    wanted_image_count += 1
+            if wanted_image_count > 0:
+                break
+            how_many_loops += 1
+            if how_many_loops > 100:
+                sys.stderr.write('Got into an infinite loop in LabelSubsetProvider.get_next_batch(), with a label_count of %d\n' % (self.label_count))
+                exit(1)
+        subset_images = n.empty((images.shape[0], wanted_image_count), dtype=n.float32)
+        subset_labels = n.empty((1, wanted_image_count), dtype=n.float32)
+        subset_index = 0
+        for i in range(num_images):
+          if labels[0, i] < self.label_count:
+            subset_images[:, subset_index] = all_images[:, i]
+            subset_labels[0, subset_index] = labels[0, i]
+            subset_index += 1
+        return epoch, batchnum, [subset_images, subset_labels]
