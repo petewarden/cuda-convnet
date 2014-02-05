@@ -259,8 +259,8 @@ class LabelSubsetProvider(CroppedRawDataProvider):
     def __init__(self, data_dir, batch_range=None, init_epoch=1, init_batchnum=None, dp_params=None, test=False):
         CroppedRawDataProvider.__init__(self, data_dir, batch_range, init_epoch, init_batchnum, dp_params, test)
         self.label_count = dp_params['label_count']
-        self.original_batch_meta = self.batch_meta
-        self.batch_meta = {'label_names': self.original_batch_meta[0:self.label_count]}
+        original_label_names = self.batch_meta['label_names']
+        self.batch_meta['label_names'] = original_label_names[0:self.label_count]
 
     def get_next_batch(self):
         how_many_loops = 0
