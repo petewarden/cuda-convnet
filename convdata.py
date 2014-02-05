@@ -267,7 +267,7 @@ class LabelSubsetProvider(CroppedRawDataProvider):
         while True:
             epoch, batchnum, data = CroppedRawDataProvider.get_next_batch(self)
             all_images, labels = data
-            num_images = images.shape[1]
+            num_images = all_images.shape[1]
             wanted_image_count = 0
             for i in range(num_images):
                 if labels[0, i] < self.label_count:
@@ -278,7 +278,7 @@ class LabelSubsetProvider(CroppedRawDataProvider):
             if how_many_loops > 100:
                 sys.stderr.write('Got into an infinite loop in LabelSubsetProvider.get_next_batch(), with a label_count of %d\n' % (self.label_count))
                 exit(1)
-        subset_images = n.empty((images.shape[0], wanted_image_count), dtype=n.float32)
+        subset_images = n.empty((all_images.shape[0], wanted_image_count), dtype=n.float32)
         subset_labels = n.empty((1, wanted_image_count), dtype=n.float32)
         subset_index = 0
         for i in range(num_images):
