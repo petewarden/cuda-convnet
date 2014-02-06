@@ -258,7 +258,7 @@ class TestDataProvider(LabeledRawDataProvider):
             square_view = images_data[:, i].reshape(3, IMAGE_SIZE_TEST, IMAGE_SIZE_TEST)
             if i & 1 == 1:
               square_view[:, 0::2, :] = 255.0 * n.ones((3, (IMAGE_SIZE_TEST / 2), IMAGE_SIZE_TEST), dtype=n.float32)
-              square_view[:, 1::2, :] = 0.0 * n.ones(((3, IMAGE_SIZE_TEST / 2), IMAGE_SIZE_TEST), dtype=n.float32)
+              square_view[:, 1::2, :] = 0.0 * n.ones((3, (IMAGE_SIZE_TEST / 2), IMAGE_SIZE_TEST), dtype=n.float32)
             else:
               square_view[:, :, 0::2] = 255.0 * n.ones((3, IMAGE_SIZE_TEST, (IMAGE_SIZE_TEST / 2)), dtype=n.float32)
               square_view[:, :, 1::2] = 0.0 * n.ones((3, IMAGE_SIZE_TEST, (IMAGE_SIZE_TEST / 2)), dtype=n.float32)
