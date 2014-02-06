@@ -250,9 +250,9 @@ class TestDataProvider(LabeledRawDataProvider):
             else:
               blue = 0.0
             channel_stride = (IMAGE_SIZE_TEST * IMAGE_SIZE_TEST)
-            images_data[0::channel_stride, i] = red * n.ones((self.get_data_dims() / 3), dtype=n.float32)
-            images_data[channel_stride::(channel_stride*2), i] = green * n.ones((self.get_data_dims() / 3), dtype=n.float32)
-            images_data[(channel_stride*2)::(channel_stride*3), i] = blue * n.ones((self.get_data_dims() / 3), dtype=n.float32)
+            images_data[0:channel_stride, i] = red * n.ones((self.get_data_dims() / 3), dtype=n.float32)
+            images_data[channel_stride:(channel_stride*2), i] = green * n.ones((self.get_data_dims() / 3), dtype=n.float32)
+            images_data[(channel_stride*2):(channel_stride*3), i] = blue * n.ones((self.get_data_dims() / 3), dtype=n.float32)
         elif self.test_pattern == 'stripes':
           for i in range(num_cases):
             square_view = images_data[:, i].reshape(IMAGE_SIZE_TEST, IMAGE_SIZE_TEST, 3)
