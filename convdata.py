@@ -219,20 +219,53 @@ class TestDataProvider(LabeledRawDataProvider):
         self.dp_params = dp_params
         self.batch_range = 1
         self.inner_size = IMAGE_SIZE_TEST
-        self.batch_meta = {'label_names': ['Black', 'White']}
+        self.test_pattern = dp_params['test_pattern']
+        self.label_count = dp_params['label_count']
+        if self.test_pattern == 'solid':
+          all_label_names = ['Black', 'Red', 'Green', 'Yellow', 'Blue', 'Purple', 'Cyan', 'White']
+        elif self.test_pattern == 'stripes':
+          all_label_names = ['Vertical', 'Horizontal']
+        else:
+          raise OptionException('TestDataProvider: Unknown test-pattern %s\n' % (self.test_pattern))
+        if self.label_count > len(all_label_names):
+          raise OptionException('TestDataProvider: Too many requested labels %d vs max %d for %s\n' % (self.label_count, len(all_label_names), self.test_pattern))
+        my_label_names = all_label_names[0:self.label_count]
+        self.batch_meta = {'label_names': my_label_names}
 
     def get_next_batch(self):
-        num_cases = 2
+        num_cases = self.label_count
         images_data = n.empty((self.get_data_dims(), num_cases), dtype=n.float32)
+        if self.test_pattern == 'solid':
+          for i in range(num_cases):
+            if i & 1 == 1:
+              red = 255.0
+            else:
+              red = 0.0
+            if i & 2 == 2:
+              green = 255.0
+            else:
+              green = 0.0
+            if i & 4 == 4:
+              blue = 255.0
+            else:
+              blue = 0.0
+            images_data[0::3, i] = red * n.ones((self.get_data_dims() / 3), dtype=n.float32)
+            images_data[1::3, i] = green * n.ones((self.get_data_dims() / 3), dtype=n.float32)
+            images_data[2::3, i] = blue * n.ones((self.get_data_dims() / 3), dtype=n.float32)
+        elif self.test_pattern == 'stripes':
+          for i in range(num_cases):
+            square_view = images_data[:, i].reshape(IMAGE_SIZE_TEST, IMAGE_SIZE_TEST, 3)
+            if i & 1 == 1:
+              square_view[0::2, :] = 255.0 * n.ones(((IMAGE_SIZE_TEST * IMAGE_SIZE_TEST * 3) / 2), dtype=n.float32)
+              square_view[1::2, :] = 0.0 * n.ones(((IMAGE_SIZE_TEST * IMAGE_SIZE_TEST * 3) / 2), dtype=n.float32)
+            else:
+              square_view[:, 0::2] = 255.0 * n.ones(((IMAGE_SIZE_TEST * IMAGE_SIZE_TEST * 3) / 2), dtype=n.float32)
+              square_view[:, 1::2] = 0.0 * n.ones(((IMAGE_SIZE_TEST * IMAGE_SIZE_TEST * 3) / 2), dtype=n.float32)
+        else:
+          raise OptionException('TestDataProvider: Unknown test-pattern %s\n' % (self.test_pattern))
+        labels = n.empty((1, num_cases), dtype=n.float32)
         for i in range(num_cases):
-          if i == 0:
-            image_value = 0.0
-          else:
-            image_value = 255.0
-          images_data[:, i] = image_value * n.ones((self.get_data_dims()), dtype=n.float32)
-        labels = n.empty((1, 2), dtype=n.float32)
-        labels[0, 0] = 0.0
-        labels[0, 1] = 1.0
+          labels[0, i] = i
         epoch = self.curr_epoch
         batchnum = self.curr_batchnum
         self.advance_batch()

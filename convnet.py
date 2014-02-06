@@ -41,6 +41,7 @@ class ConvNet(IGPUModel):
         dp_params['multiview_test'] = op.get_value('multiview_test')
         dp_params['crop_border'] = op.get_value('crop_border')
         dp_params['label_count'] = op.get_value('label_count')
+        dp_params['test_pattern'] = op.get_value('test_pattern')
         IGPUModel.__init__(self, "ConvNet", op, load_dic, filename_options, dp_params=dp_params)
         
     def import_model(self):
@@ -202,6 +203,7 @@ class ConvNet(IGPUModel):
         op.add_option("unshare-weights", "unshare_weights", ListOptionParser(StringOptionParser), "Unshare weight matrices in given layers", default=[])
         op.add_option("conserve-mem", "conserve_mem", BooleanOptionParser, "Conserve GPU memory (slower)?", default=0)
         op.add_option("label-count", "label_count", IntegerOptionParser, "How many labels to choose in the subset case", default=2, set_once=True)
+        op.add_option("test-pattern", "test_pattern", StringOptionParser, "What patterns to use for the synthesized tests", default="solid", set_once=True)
 
         op.delete_option('max_test_err')
         op.options["max_filesize_mb"].default = 0
