@@ -257,11 +257,11 @@ class TestDataProvider(LabeledRawDataProvider):
           for i in range(num_cases):
             square_view = images_data[:, i].reshape(IMAGE_SIZE_TEST, IMAGE_SIZE_TEST, 3)
             if i & 1 == 1:
-              square_view[0::2, :] = 255.0 * n.ones(((IMAGE_SIZE_TEST * IMAGE_SIZE_TEST * 3) / 2), dtype=n.float32)
-              square_view[1::2, :] = 0.0 * n.ones(((IMAGE_SIZE_TEST * IMAGE_SIZE_TEST * 3) / 2), dtype=n.float32)
+              square_view[0::2, :, :] = 255.0 * n.ones(((IMAGE_SIZE_TEST * IMAGE_SIZE_TEST * 3) / 2), dtype=n.float32)
+              square_view[1::2, :, :] = 0.0 * n.ones(((IMAGE_SIZE_TEST * IMAGE_SIZE_TEST * 3) / 2), dtype=n.float32)
             else:
-              square_view[:, 0::2] = 255.0 * n.ones(((IMAGE_SIZE_TEST * IMAGE_SIZE_TEST * 3) / 2), dtype=n.float32)
-              square_view[:, 1::2] = 0.0 * n.ones(((IMAGE_SIZE_TEST * IMAGE_SIZE_TEST * 3) / 2), dtype=n.float32)
+              square_view[:, 0::2, :] = 255.0 * n.ones(((IMAGE_SIZE_TEST * IMAGE_SIZE_TEST * 3) / 2), dtype=n.float32)
+              square_view[:, 1::2, :] = 0.0 * n.ones(((IMAGE_SIZE_TEST * IMAGE_SIZE_TEST * 3) / 2), dtype=n.float32)
         else:
           raise OptionException('TestDataProvider: Unknown test-pattern %s\n' % (self.test_pattern))
         labels = n.empty((1, num_cases), dtype=n.float32)
