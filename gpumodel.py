@@ -87,6 +87,8 @@ class IGPUModel:
             
         self.import_model()
         self.init_model_lib()
+        if self.print_entire_array:
+            self.print_layer_weights(self.print_entire_array)
         
     def import_model(self):
         print "========================="

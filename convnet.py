@@ -147,7 +147,10 @@ class ConvNet(IGPUModel):
         print "======================Test output======================"
         self.print_costs(self.test_outputs[-1], do_exit_on_nan = False)
         print ""
-        print "-------------------------------------------------------", 
+        print "-------------------------------------------------------",
+        self.print_layer_weights(print_entire_array)
+
+    def print_layer_weights(self, print_entire_array = False):
         for i,l in enumerate(self.layers): # This is kind of hacky but will do for now.
             if 'weights' in l:
                 if type(l['weights']) == n.ndarray:
