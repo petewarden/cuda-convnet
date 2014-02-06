@@ -1,0 +1,316 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXFileReference section */
+		5910AFE518A4509B001CE2C6 /* _ConvNet.so */ = {isa = PBXFileReference; lastKnownFileType = file; path = _ConvNet.so; sourceTree = "<group>"; };
+		5910AFE618A4509B001CE2C6 /* ABOUT */ = {isa = PBXFileReference; lastKnownFileType = text; path = ABOUT; sourceTree = "<group>"; };
+		5910AFEA18A4509B001CE2C6 /* _ConvNet.so */ = {isa = PBXFileReference; lastKnownFileType = file; path = _ConvNet.so; sourceTree = "<group>"; };
+		5910AFEB18A4509B001CE2C6 /* build.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = build.sh; sourceTree = "<group>"; };
+		5910AFEC18A4509B001CE2C6 /* build.sh.original */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = build.sh.original; sourceTree = "<group>"; };
+		5910AFED18A4509B001CE2C6 /* common-gcc-cuda-4.0.mk */ = {isa = PBXFileReference; lastKnownFileType = text; path = "common-gcc-cuda-4.0.mk"; sourceTree = "<group>"; };
+		5910AFEE18A4509B001CE2C6 /* common-gcc-cuda-5.0.mk */ = {isa = PBXFileReference; lastKnownFileType = text; path = "common-gcc-cuda-5.0.mk"; sourceTree = "<group>"; };
+		5910AFEF18A4509B001CE2C6 /* convdata.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = convdata.py; sourceTree = "<group>"; };
+		5910AFF018A4509B001CE2C6 /* convnet.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = convnet.py; sourceTree = "<group>"; };
+		5910AFF118A4509B001CE2C6 /* data.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = data.py; sourceTree = "<group>"; };
+		5910AFF318A4509B001CE2C6 /* cuda_layer.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = cuda_layer.cfg; sourceTree = "<group>"; };
+		5910AFF418A4509B001CE2C6 /* cuda_layer_params.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = cuda_layer_params.cfg; sourceTree = "<group>"; };
+		5910AFF518A4509B001CE2C6 /* infinity_layer.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = infinity_layer.cfg; sourceTree = "<group>"; };
+		5910AFF618A4509B001CE2C6 /* infinity_layer_params.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = infinity_layer_params.cfg; sourceTree = "<group>"; };
+		5910AFF718A4509B001CE2C6 /* layer-params-18pct.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = "layer-params-18pct.cfg"; sourceTree = "<group>"; };
+		5910AFF818A4509B001CE2C6 /* layer-params-19pct.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = "layer-params-19pct.cfg"; sourceTree = "<group>"; };
+		5910AFF918A4509B001CE2C6 /* layer-params-80sec.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = "layer-params-80sec.cfg"; sourceTree = "<group>"; };
+		5910AFFA18A4509B001CE2C6 /* layer-params-conv-local-11pct.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = "layer-params-conv-local-11pct.cfg"; sourceTree = "<group>"; };
+		5910AFFB18A4509B001CE2C6 /* layer-params-conv-local-13pct.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = "layer-params-conv-local-13pct.cfg"; sourceTree = "<group>"; };
+		5910AFFC18A4509B001CE2C6 /* layer-params-example.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = "layer-params-example.cfg"; sourceTree = "<group>"; };
+		5910AFFD18A4509B001CE2C6 /* layer-params.gc.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = "layer-params.gc.cfg"; sourceTree = "<group>"; };
+		5910AFFE18A4509B001CE2C6 /* layers-18pct.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = "layers-18pct.cfg"; sourceTree = "<group>"; };
+		5910AFFF18A4509B001CE2C6 /* layers-19pct.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = "layers-19pct.cfg"; sourceTree = "<group>"; };
+		5910B00018A4509B001CE2C6 /* layers-80sec.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = "layers-80sec.cfg"; sourceTree = "<group>"; };
+		5910B00118A4509B001CE2C6 /* layers-conv-local-11pct.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = "layers-conv-local-11pct.cfg"; sourceTree = "<group>"; };
+		5910B00218A4509B001CE2C6 /* layers-conv-local-13pct.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = "layers-conv-local-13pct.cfg"; sourceTree = "<group>"; };
+		5910B00318A4509B001CE2C6 /* layers-example.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = "layers-example.cfg"; sourceTree = "<group>"; };
+		5910B00418A4509B001CE2C6 /* layers.gc.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = layers.gc.cfg; sourceTree = "<group>"; };
+		5910B00518A4509B001CE2C6 /* test_cifar.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = test_cifar.cfg; sourceTree = "<group>"; };
+		5910B00618A4509B001CE2C6 /* test_cifar_params.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = test_cifar_params.cfg; sourceTree = "<group>"; };
+		5910B00718A4509B001CE2C6 /* test_layer.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = test_layer.cfg; sourceTree = "<group>"; };
+		5910B00818A4509B001CE2C6 /* test_layer_params.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = test_layer_params.cfg; sourceTree = "<group>"; };
+		5910B00918A4509B001CE2C6 /* gpumodel.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = gpumodel.py; sourceTree = "<group>"; };
+		5910B00C18A4509B001CE2C6 /* matrix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = matrix.h; sourceTree = "<group>"; };
+		5910B00D18A4509B001CE2C6 /* matrix_funcs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = matrix_funcs.h; sourceTree = "<group>"; };
+		5910B00E18A4509B001CE2C6 /* queue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = queue.h; sourceTree = "<group>"; };
+		5910B00F18A4509B001CE2C6 /* thread.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = thread.h; sourceTree = "<group>"; };
+		5910B01018A4509B001CE2C6 /* convnet.cuh */ = {isa = PBXFileReference; lastKnownFileType = text; path = convnet.cuh; sourceTree = "<group>"; };
+		5910B01118A4509B001CE2C6 /* cost.cuh */ = {isa = PBXFileReference; lastKnownFileType = text; path = cost.cuh; sourceTree = "<group>"; };
+		5910B01318A4509B001CE2C6 /* conv_util.cuh */ = {isa = PBXFileReference; lastKnownFileType = text; path = conv_util.cuh; sourceTree = "<group>"; };
+		5910B01418A4509B001CE2C6 /* cudaconv2.cuh */ = {isa = PBXFileReference; lastKnownFileType = text; path = cudaconv2.cuh; sourceTree = "<group>"; };
+		5910B01518A4509B001CE2C6 /* data.cuh */ = {isa = PBXFileReference; lastKnownFileType = text; path = data.cuh; sourceTree = "<group>"; };
+		5910B01618A4509B001CE2C6 /* layer.cuh */ = {isa = PBXFileReference; lastKnownFileType = text; path = layer.cuh; sourceTree = "<group>"; };
+		5910B01718A4509B001CE2C6 /* layer_kernels.cuh */ = {isa = PBXFileReference; lastKnownFileType = text; path = layer_kernels.cuh; sourceTree = "<group>"; };
+		5910B01818A4509B001CE2C6 /* neuron.cuh */ = {isa = PBXFileReference; lastKnownFileType = text; path = neuron.cuh; sourceTree = "<group>"; };
+		5910B01A18A4509B001CE2C6 /* nvmatrix.cuh */ = {isa = PBXFileReference; lastKnownFileType = text; path = nvmatrix.cuh; sourceTree = "<group>"; };
+		5910B01B18A4509B001CE2C6 /* nvmatrix_kernels.cuh */ = {isa = PBXFileReference; lastKnownFileType = text; path = nvmatrix_kernels.cuh; sourceTree = "<group>"; };
+		5910B01C18A4509B001CE2C6 /* nvmatrix_operators.cuh */ = {isa = PBXFileReference; lastKnownFileType = text; path = nvmatrix_operators.cuh; sourceTree = "<group>"; };
+		5910B01D18A4509B001CE2C6 /* pyconvnet.cuh */ = {isa = PBXFileReference; lastKnownFileType = text; path = pyconvnet.cuh; sourceTree = "<group>"; };
+		5910B01E18A4509B001CE2C6 /* util.cuh */ = {isa = PBXFileReference; lastKnownFileType = text; path = util.cuh; sourceTree = "<group>"; };
+		5910B01F18A4509B001CE2C6 /* weights.cuh */ = {isa = PBXFileReference; lastKnownFileType = text; path = weights.cuh; sourceTree = "<group>"; };
+		5910B02018A4509B001CE2C6 /* worker.cuh */ = {isa = PBXFileReference; lastKnownFileType = text; path = worker.cuh; sourceTree = "<group>"; };
+		5910B02118A4509B001CE2C6 /* layer.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = layer.py; sourceTree = "<group>"; };
+		5910B02218A4509B001CE2C6 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		5910B02318A4509B001CE2C6 /* options.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = options.py; sourceTree = "<group>"; };
+		5910B02418A4509B001CE2C6 /* ordereddict.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = ordereddict.py; sourceTree = "<group>"; };
+		5910B02518A4509B001CE2C6 /* shownet.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = shownet.py; sourceTree = "<group>"; };
+		5910B02818A4509B001CE2C6 /* matrix.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = matrix.cpp; sourceTree = "<group>"; };
+		5910B02918A4509B001CE2C6 /* convnet.cu */ = {isa = PBXFileReference; lastKnownFileType = text; path = convnet.cu; sourceTree = "<group>"; };
+		5910B02A18A4509B001CE2C6 /* cost.cu */ = {isa = PBXFileReference; lastKnownFileType = text; path = cost.cu; sourceTree = "<group>"; };
+		5910B02C18A4509B001CE2C6 /* conv_util.cu */ = {isa = PBXFileReference; lastKnownFileType = text; path = conv_util.cu; sourceTree = "<group>"; };
+		5910B02D18A4509B001CE2C6 /* filter_acts.cu */ = {isa = PBXFileReference; lastKnownFileType = text; path = filter_acts.cu; sourceTree = "<group>"; };
+		5910B02E18A4509B001CE2C6 /* img_acts.cu */ = {isa = PBXFileReference; lastKnownFileType = text; path = img_acts.cu; sourceTree = "<group>"; };
+		5910B02F18A4509B001CE2C6 /* weight_acts.cu */ = {isa = PBXFileReference; lastKnownFileType = text; path = weight_acts.cu; sourceTree = "<group>"; };
+		5910B03018A4509B001CE2C6 /* data.cu */ = {isa = PBXFileReference; lastKnownFileType = text; path = data.cu; sourceTree = "<group>"; };
+		5910B03118A4509B001CE2C6 /* layer.cu */ = {isa = PBXFileReference; lastKnownFileType = text; path = layer.cu; sourceTree = "<group>"; };
+		5910B03218A4509B001CE2C6 /* layer_kernels.cu */ = {isa = PBXFileReference; lastKnownFileType = text; path = layer_kernels.cu; sourceTree = "<group>"; };
+		5910B03318A4509B001CE2C6 /* neuron.cu */ = {isa = PBXFileReference; lastKnownFileType = text; path = neuron.cu; sourceTree = "<group>"; };
+		5910B03518A4509B001CE2C6 /* nvmatrix.cu */ = {isa = PBXFileReference; lastKnownFileType = text; path = nvmatrix.cu; sourceTree = "<group>"; };
+		5910B03618A4509B001CE2C6 /* nvmatrix_kernels.cu */ = {isa = PBXFileReference; lastKnownFileType = text; path = nvmatrix_kernels.cu; sourceTree = "<group>"; };
+		5910B03718A4509B001CE2C6 /* pyconvnet.cu */ = {isa = PBXFileReference; lastKnownFileType = text; path = pyconvnet.cu; sourceTree = "<group>"; };
+		5910B03818A4509B001CE2C6 /* util.cu */ = {isa = PBXFileReference; lastKnownFileType = text; path = util.cu; sourceTree = "<group>"; };
+		5910B03918A4509B001CE2C6 /* weights.cu */ = {isa = PBXFileReference; lastKnownFileType = text; path = weights.cu; sourceTree = "<group>"; };
+		5910B03A18A4509B001CE2C6 /* worker.cu */ = {isa = PBXFileReference; lastKnownFileType = text; path = worker.cu; sourceTree = "<group>"; };
+		5910B03B18A4509B001CE2C6 /* util.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = util.py; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		5910AFDE18A45076001CE2C6 = {
+			isa = PBXGroup;
+			children = (
+				5910AFE518A4509B001CE2C6 /* _ConvNet.so */,
+				5910AFE618A4509B001CE2C6 /* ABOUT */,
+				5910AFE718A4509B001CE2C6 /* bin */,
+				5910AFEB18A4509B001CE2C6 /* build.sh */,
+				5910AFEC18A4509B001CE2C6 /* build.sh.original */,
+				5910AFED18A4509B001CE2C6 /* common-gcc-cuda-4.0.mk */,
+				5910AFEE18A4509B001CE2C6 /* common-gcc-cuda-5.0.mk */,
+				5910AFEF18A4509B001CE2C6 /* convdata.py */,
+				5910AFF018A4509B001CE2C6 /* convnet.py */,
+				5910AFF118A4509B001CE2C6 /* data.py */,
+				5910AFF218A4509B001CE2C6 /* example-layers */,
+				5910B00918A4509B001CE2C6 /* gpumodel.py */,
+				5910B00A18A4509B001CE2C6 /* include */,
+				5910B02118A4509B001CE2C6 /* layer.py */,
+				5910B02218A4509B001CE2C6 /* Makefile */,
+				5910B02318A4509B001CE2C6 /* options.py */,
+				5910B02418A4509B001CE2C6 /* ordereddict.py */,
+				5910B02518A4509B001CE2C6 /* shownet.py */,
+				5910B02618A4509B001CE2C6 /* src */,
+				5910B03B18A4509B001CE2C6 /* util.py */,
+			);
+			sourceTree = "<group>";
+		};
+		5910AFE718A4509B001CE2C6 /* bin */ = {
+			isa = PBXGroup;
+			children = (
+				5910AFE818A4509B001CE2C6 /* linux */,
+			);
+			path = bin;
+			sourceTree = "<group>";
+		};
+		5910AFE818A4509B001CE2C6 /* linux */ = {
+			isa = PBXGroup;
+			children = (
+				5910AFE918A4509B001CE2C6 /* release */,
+			);
+			path = linux;
+			sourceTree = "<group>";
+		};
+		5910AFE918A4509B001CE2C6 /* release */ = {
+			isa = PBXGroup;
+			children = (
+				5910AFEA18A4509B001CE2C6 /* _ConvNet.so */,
+			);
+			path = release;
+			sourceTree = "<group>";
+		};
+		5910AFF218A4509B001CE2C6 /* example-layers */ = {
+			isa = PBXGroup;
+			children = (
+				5910AFF318A4509B001CE2C6 /* cuda_layer.cfg */,
+				5910AFF418A4509B001CE2C6 /* cuda_layer_params.cfg */,
+				5910AFF518A4509B001CE2C6 /* infinity_layer.cfg */,
+				5910AFF618A4509B001CE2C6 /* infinity_layer_params.cfg */,
+				5910AFF718A4509B001CE2C6 /* layer-params-18pct.cfg */,
+				5910AFF818A4509B001CE2C6 /* layer-params-19pct.cfg */,
+				5910AFF918A4509B001CE2C6 /* layer-params-80sec.cfg */,
+				5910AFFA18A4509B001CE2C6 /* layer-params-conv-local-11pct.cfg */,
+				5910AFFB18A4509B001CE2C6 /* layer-params-conv-local-13pct.cfg */,
+				5910AFFC18A4509B001CE2C6 /* layer-params-example.cfg */,
+				5910AFFD18A4509B001CE2C6 /* layer-params.gc.cfg */,
+				5910AFFE18A4509B001CE2C6 /* layers-18pct.cfg */,
+				5910AFFF18A4509B001CE2C6 /* layers-19pct.cfg */,
+				5910B00018A4509B001CE2C6 /* layers-80sec.cfg */,
+				5910B00118A4509B001CE2C6 /* layers-conv-local-11pct.cfg */,
+				5910B00218A4509B001CE2C6 /* layers-conv-local-13pct.cfg */,
+				5910B00318A4509B001CE2C6 /* layers-example.cfg */,
+				5910B00418A4509B001CE2C6 /* layers.gc.cfg */,
+				5910B00518A4509B001CE2C6 /* test_cifar.cfg */,
+				5910B00618A4509B001CE2C6 /* test_cifar_params.cfg */,
+				5910B00718A4509B001CE2C6 /* test_layer.cfg */,
+				5910B00818A4509B001CE2C6 /* test_layer_params.cfg */,
+			);
+			path = "example-layers";
+			sourceTree = "<group>";
+		};
+		5910B00A18A4509B001CE2C6 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				5910B00B18A4509B001CE2C6 /* common */,
+				5910B01018A4509B001CE2C6 /* convnet.cuh */,
+				5910B01118A4509B001CE2C6 /* cost.cuh */,
+				5910B01218A4509B001CE2C6 /* cudaconv2 */,
+				5910B01518A4509B001CE2C6 /* data.cuh */,
+				5910B01618A4509B001CE2C6 /* layer.cuh */,
+				5910B01718A4509B001CE2C6 /* layer_kernels.cuh */,
+				5910B01818A4509B001CE2C6 /* neuron.cuh */,
+				5910B01918A4509B001CE2C6 /* nvmatrix */,
+				5910B01D18A4509B001CE2C6 /* pyconvnet.cuh */,
+				5910B01E18A4509B001CE2C6 /* util.cuh */,
+				5910B01F18A4509B001CE2C6 /* weights.cuh */,
+				5910B02018A4509B001CE2C6 /* worker.cuh */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		5910B00B18A4509B001CE2C6 /* common */ = {
+			isa = PBXGroup;
+			children = (
+				5910B00C18A4509B001CE2C6 /* matrix.h */,
+				5910B00D18A4509B001CE2C6 /* matrix_funcs.h */,
+				5910B00E18A4509B001CE2C6 /* queue.h */,
+				5910B00F18A4509B001CE2C6 /* thread.h */,
+			);
+			path = common;
+			sourceTree = "<group>";
+		};
+		5910B01218A4509B001CE2C6 /* cudaconv2 */ = {
+			isa = PBXGroup;
+			children = (
+				5910B01318A4509B001CE2C6 /* conv_util.cuh */,
+				5910B01418A4509B001CE2C6 /* cudaconv2.cuh */,
+			);
+			path = cudaconv2;
+			sourceTree = "<group>";
+		};
+		5910B01918A4509B001CE2C6 /* nvmatrix */ = {
+			isa = PBXGroup;
+			children = (
+				5910B01A18A4509B001CE2C6 /* nvmatrix.cuh */,
+				5910B01B18A4509B001CE2C6 /* nvmatrix_kernels.cuh */,
+				5910B01C18A4509B001CE2C6 /* nvmatrix_operators.cuh */,
+			);
+			path = nvmatrix;
+			sourceTree = "<group>";
+		};
+		5910B02618A4509B001CE2C6 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				5910B02718A4509B001CE2C6 /* common */,
+				5910B02918A4509B001CE2C6 /* convnet.cu */,
+				5910B02A18A4509B001CE2C6 /* cost.cu */,
+				5910B02B18A4509B001CE2C6 /* cudaconv2 */,
+				5910B03018A4509B001CE2C6 /* data.cu */,
+				5910B03118A4509B001CE2C6 /* layer.cu */,
+				5910B03218A4509B001CE2C6 /* layer_kernels.cu */,
+				5910B03318A4509B001CE2C6 /* neuron.cu */,
+				5910B03418A4509B001CE2C6 /* nvmatrix */,
+				5910B03718A4509B001CE2C6 /* pyconvnet.cu */,
+				5910B03818A4509B001CE2C6 /* util.cu */,
+				5910B03918A4509B001CE2C6 /* weights.cu */,
+				5910B03A18A4509B001CE2C6 /* worker.cu */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		5910B02718A4509B001CE2C6 /* common */ = {
+			isa = PBXGroup;
+			children = (
+				5910B02818A4509B001CE2C6 /* matrix.cpp */,
+			);
+			path = common;
+			sourceTree = "<group>";
+		};
+		5910B02B18A4509B001CE2C6 /* cudaconv2 */ = {
+			isa = PBXGroup;
+			children = (
+				5910B02C18A4509B001CE2C6 /* conv_util.cu */,
+				5910B02D18A4509B001CE2C6 /* filter_acts.cu */,
+				5910B02E18A4509B001CE2C6 /* img_acts.cu */,
+				5910B02F18A4509B001CE2C6 /* weight_acts.cu */,
+			);
+			path = cudaconv2;
+			sourceTree = "<group>";
+		};
+		5910B03418A4509B001CE2C6 /* nvmatrix */ = {
+			isa = PBXGroup;
+			children = (
+				5910B03518A4509B001CE2C6 /* nvmatrix.cu */,
+				5910B03618A4509B001CE2C6 /* nvmatrix_kernels.cu */,
+			);
+			path = nvmatrix;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXProject section */
+		5910AFDF18A45076001CE2C6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+			};
+			buildConfigurationList = 5910AFE218A45076001CE2C6 /* Build configuration list for PBXProject "cuda-convnet-git" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 5910AFDE18A45076001CE2C6;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		5910AFE318A45076001CE2C6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		5910AFE418A45076001CE2C6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5910AFE218A45076001CE2C6 /* Build configuration list for PBXProject "cuda-convnet-git" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5910AFE318A45076001CE2C6 /* Debug */,
+				5910AFE418A45076001CE2C6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5910AFDF18A45076001CE2C6 /* Project object */;
+}

@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:cuda-convnet-original.xcodeproj">
+      location = "self:cuda-convnet-git.xcodeproj">
    </FileRef>
 </Workspace>

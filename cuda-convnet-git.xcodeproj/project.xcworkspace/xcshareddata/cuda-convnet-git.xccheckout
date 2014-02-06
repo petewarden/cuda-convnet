@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>F370955F-7BF7-44A1-8E44-D4B1DFC2D283</string>
+	<key>IDESourceControlProjectName</key>
+	<string>cuda-convnet-git</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>AA357122-1745-42F8-A950-6989D819D327</key>
+		<string>ssh://github.com/petewarden/cuda-convnet.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>cuda-convnet-git/cuda-convnet-git.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>AA357122-1745-42F8-A950-6989D819D327</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/petewarden/cuda-convnet.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>AA357122-1745-42F8-A950-6989D819D327</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>AA357122-1745-42F8-A950-6989D819D327</string>
+			<key>IDESourceControlWCCName</key>
+			<string>cuda-convnet-git</string>
+		</dict>
+	</array>
+</dict>
+</plist>
