@@ -249,9 +249,9 @@ class TestDataProvider(LabeledRawDataProvider):
               blue = 255.0
             else:
               blue = 0.0
-            images_data[0::3, i] = red * n.ones((self.get_data_dims() / 3), dtype=n.float32)
-            images_data[1::3, i] = green * n.ones((self.get_data_dims() / 3), dtype=n.float32)
-            images_data[2::3, i] = blue * n.ones((self.get_data_dims() / 3), dtype=n.float32)
+            images_data[0::IMAGE_SIZE_TEST, i] = red * n.ones((self.get_data_dims() / 3), dtype=n.float32)
+            images_data[IMAGE_SIZE_TEST::(IMAGE_SIZE_TEST*2), i] = green * n.ones((self.get_data_dims() / 3), dtype=n.float32)
+            images_data[(IMAGE_SIZE_TEST*2)::(IMAGE_SIZE_TEST*3), i] = blue * n.ones((self.get_data_dims() / 3), dtype=n.float32)
         elif self.test_pattern == 'stripes':
           for i in range(num_cases):
             square_view = images_data[:, i].reshape(IMAGE_SIZE_TEST, IMAGE_SIZE_TEST, 3)
