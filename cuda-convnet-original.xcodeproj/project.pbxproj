@@ -11,6 +11,8 @@
 		5910AE3118A05C05001CE2C6 /* test_layer.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = test_layer.cfg; sourceTree = "<group>"; };
 		5910AE3218A15422001CE2C6 /* infinity_layer_params.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = infinity_layer_params.cfg; sourceTree = "<group>"; };
 		5910AE3318A15422001CE2C6 /* infinity_layer.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = infinity_layer.cfg; sourceTree = "<group>"; };
+		5910AF8018A42F68001CE2C6 /* test_cifar_params.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = test_cifar_params.cfg; sourceTree = "<group>"; };
+		5910AF8118A42F68001CE2C6 /* test_cifar.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = test_cifar.cfg; sourceTree = "<group>"; };
 		59A97BF1189F2EB7002E167F /* ABOUT */ = {isa = PBXFileReference; lastKnownFileType = text; path = ABOUT; sourceTree = "<group>"; };
 		59A97BF2189F2EB7002E167F /* build.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = build.sh; sourceTree = "<group>"; };
 		59A97BF3189F2EB7002E167F /* common-gcc-cuda-4.0.mk */ = {isa = PBXFileReference; lastKnownFileType = text; path = "common-gcc-cuda-4.0.mk"; sourceTree = "<group>"; };
@@ -124,6 +126,8 @@
 				59A97C09189F2EB7002E167F /* layers-conv-local-13pct.cfg */,
 				59A97C0A189F2EB7002E167F /* layers-example.cfg */,
 				59A97C0B189F2EB7002E167F /* layers.gc.cfg */,
+				5910AF8018A42F68001CE2C6 /* test_cifar_params.cfg */,
+				5910AF8118A42F68001CE2C6 /* test_cifar.cfg */,
 				5910AE3018A05C05001CE2C6 /* test_layer_params.cfg */,
 				5910AE3118A05C05001CE2C6 /* test_layer.cfg */,
 			);
