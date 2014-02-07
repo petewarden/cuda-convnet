@@ -97,7 +97,7 @@ for index, id in enumerate(wanted_ids):
   wanted_files += found_ids[id]
   label_indexes[id] = index
 
-shuffled_wanted_files = shuffle(wanted_files)
+shuffle(wanted_files)
 
 sys.stderr.write('Starting to process %d files\n' % (len(wanted_files)))
 
@@ -105,7 +105,7 @@ total_image = np.zeros((IMAGE_SIZE * IMAGE_SIZE * 3), dtype=np.float64)
 
 images_processed = 0
 for i in xrange(0, len(wanted_files), IMAGES_PER_BATCH):
-  current_images = shuffled_wanted_files[i:(i + IMAGES_PER_BATCH)]
+  current_images = wanted_files[i:(i + IMAGES_PER_BATCH)]
   labels = []
   images = []
   for basename in current_images:
