@@ -134,7 +134,7 @@ class CroppedRawDataProvider(LabeledRawDataProvider):
         self.num_colors = 3
         
         self.batches_generated = 0
-        self.data_mean = self.batch_meta['data_mean'].reshape((3,self.image_size,IMAGE_SIZE_RAW))[:,self.border_size:self.border_size+self.inner_size,self.border_size:self.border_size+self.inner_size].reshape((self.get_data_dims(), 1))
+        self.data_mean = self.batch_meta['data_mean'].reshape((3,self.image_size,self.image_size))[:,self.border_size:self.border_size+self.inner_size,self.border_size:self.border_size+self.inner_size].reshape((self.get_data_dims(), 1))
 
     def get_next_batch(self):
         start_time = time()
