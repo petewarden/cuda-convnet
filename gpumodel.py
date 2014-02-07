@@ -138,6 +138,7 @@ class IGPUModel:
         while self.epoch <= self.num_epochs:
             data = next_data
             self.epoch, self.batchnum = data[0], data[1]
+            self.image_count = data[2].shape[1]
             self.print_iteration()
             sys.stdout.flush()
             
@@ -189,7 +190,7 @@ class IGPUModel:
         return self.libmodel.finishBatch()
     
     def print_iteration(self):
-        print "\t%d.%d..." % (self.epoch, self.batchnum),
+        print "\t%d.%d... (%d images)" % (self.epoch, self.batchnum, self.image_count),
     
     def print_train_time(self, compute_time_py):
         print "(%.3f sec)" % (compute_time_py)
