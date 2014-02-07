@@ -29,7 +29,7 @@
 # by the LabeledRawDataProvider class.
 #
 # Usage is:
-# python makerawbatches.py <image folder> <output batch folder> [label count]
+# python makerawbatches.py <image folder> <output batch folder> <image size> [label count]
 #
 # 'label count' is optional, but if it's set then only n ids will be used
 
@@ -43,7 +43,6 @@ import numpy as np
 import pickle
 
 IMAGES_PER_BATCH = 2000
-IMAGE_SIZE = 256
 
 log_counts = {}
 def log_count(name, stride = 100):
@@ -53,16 +52,17 @@ def log_count(name, stride = 100):
   if log_counts[name] % stride == 0:
     sys.stderr.write("%s %d\n" % (name, log_counts[name]))
 
-if len(sys.argv) < 3:
-  sys.stderr.write('Usage: python makerawbatches.py <image folder> <output batch folder> [label count]\n')
+if len(sys.argv) < 4:
+  sys.stderr.write('Usage: python makerawbatches.py <image folder> <output batch folder> <image size> [label count]\n')
   exit(1)
 
 image_folder = sys.argv[1]
 output_folder = sys.argv[2]
-if len(sys.argv) < 4:
+image_size = int(sys.argv[3])
+if len(sys.argv) < 5:
   label_limit = None
 else:
-  label_limit = int(sys.argv[3])
+  label_limit = int(sys.argv[4])
 
 found_ids = {}
 input_image_glob = image_folder + '/*.jpg'
@@ -101,7 +101,7 @@ shuffle(wanted_files)
 
 sys.stderr.write('Starting to process %d files\n' % (len(wanted_files)))
 
-total_image = np.zeros((IMAGE_SIZE * IMAGE_SIZE * 3), dtype=np.float64)
+total_image = np.zeros((image_size * image_size * 3), dtype=np.float64)
 
 images_processed = 0
 for i in xrange(0, len(wanted_files), IMAGES_PER_BATCH):
@@ -120,7 +120,7 @@ for i in xrange(0, len(wanted_files), IMAGES_PER_BATCH):
     width = shape[1]
     height = shape[0]
     channels = shape[2]
-    if width == IMAGE_SIZE and height == IMAGE_SIZE:
+    if width == image_size and height == image_size:
       resized = image
     else:
       if width > height:
@@ -129,13 +129,13 @@ for i in xrange(0, len(wanted_files), IMAGES_PER_BATCH):
       if height > width:
         margin = ((height - width) / 2)
         image = image[margin:-margin, :]
-      resized = misc.imresize(image, (IMAGE_SIZE, IMAGE_SIZE))
+      resized = misc.imresize(image, (image_size, image_size))
     red_channel = resized[:, :, 0]
-    red_channel.shape = (IMAGE_SIZE * IMAGE_SIZE)
+    red_channel.shape = (image_size * image_size)
     green_channel = resized[:, :, 1]
-    green_channel.shape = (IMAGE_SIZE * IMAGE_SIZE)
+    green_channel.shape = (image_size * image_size)
     blue_channel = resized[:, :, 2]
-    blue_channel.shape = (IMAGE_SIZE * IMAGE_SIZE)
+    blue_channel.shape = (image_size * image_size)
     all_channels = np.append(np.append(red_channel, green_channel), blue_channel)
     total_image += all_channels
     images.append(all_channels)
