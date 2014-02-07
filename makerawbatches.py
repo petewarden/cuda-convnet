@@ -36,6 +36,7 @@
 import os
 import sys
 import glob
+from random import shuffle
 from scipy import misc
 import re
 import numpy as np
