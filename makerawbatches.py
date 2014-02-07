@@ -145,7 +145,7 @@ for i in xrange(0, len(wanted_files), IMAGES_PER_BATCH):
     log_count('Loaded', 100)
 
   images_data = np.vstack(images).transpose()
-  labels_data = np.vstack(labels)
+  labels_data = np.vstack(labels).astype(np.float32)
   output_index = (i / IMAGES_PER_BATCH)
   output_path= '%s/data_batch_%d' % (output_folder, output_index)
   output_file = open(output_path, 'wb')
