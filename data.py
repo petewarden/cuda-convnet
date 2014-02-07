@@ -25,6 +25,7 @@
 import numpy as n
 from numpy.random import randn, rand, random_integers
 import os
+import sys
 from util import *
 import mmap
 
@@ -241,7 +242,7 @@ class LabeledRawDataProvider(DataProvider):
         bytes_per_image_plus_label = (bytes_per_image + 4)
         image_count = (size / bytes_per_image_plus_label)
         if (image_count * bytes_per_image_plus_label) != size:
-          sys.stderr.write('Bad file size %s for %s\n' % (size, input_name))
+          sys.stderr.write('Bad file size %s for %s - expected %dx%dx%dx3 + %dx4\n' % (size, input_name, image_count, self.image_size, self.image_size, image_count))
           exit(1)
         #mm = mmap.mmap(input_file.fileno(), size, access=mmap.ACCESS_READ)
         mm = input_file.read(size)
