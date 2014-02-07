@@ -7,11 +7,8 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		5910AFE518A4509B001CE2C6 /* _ConvNet.so */ = {isa = PBXFileReference; lastKnownFileType = file; path = _ConvNet.so; sourceTree = "<group>"; };
 		5910AFE618A4509B001CE2C6 /* ABOUT */ = {isa = PBXFileReference; lastKnownFileType = text; path = ABOUT; sourceTree = "<group>"; };
-		5910AFEA18A4509B001CE2C6 /* _ConvNet.so */ = {isa = PBXFileReference; lastKnownFileType = file; path = _ConvNet.so; sourceTree = "<group>"; };
 		5910AFEB18A4509B001CE2C6 /* build.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = build.sh; sourceTree = "<group>"; };
-		5910AFEC18A4509B001CE2C6 /* build.sh.original */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = build.sh.original; sourceTree = "<group>"; };
 		5910AFED18A4509B001CE2C6 /* common-gcc-cuda-4.0.mk */ = {isa = PBXFileReference; lastKnownFileType = text; path = "common-gcc-cuda-4.0.mk"; sourceTree = "<group>"; };
 		5910AFEE18A4509B001CE2C6 /* common-gcc-cuda-5.0.mk */ = {isa = PBXFileReference; lastKnownFileType = text; path = "common-gcc-cuda-5.0.mk"; sourceTree = "<group>"; };
 		5910AFEF18A4509B001CE2C6 /* convdata.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = convdata.py; sourceTree = "<group>"; };
@@ -82,17 +79,15 @@
 		5910B03918A4509B001CE2C6 /* weights.cu */ = {isa = PBXFileReference; lastKnownFileType = text; path = weights.cu; sourceTree = "<group>"; };
 		5910B03A18A4509B001CE2C6 /* worker.cu */ = {isa = PBXFileReference; lastKnownFileType = text; path = worker.cu; sourceTree = "<group>"; };
 		5910B03B18A4509B001CE2C6 /* util.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = util.py; sourceTree = "<group>"; };
+		5910B03C18A456EE001CE2C6 /* makerawbatches.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = makerawbatches.py; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
 		5910AFDE18A45076001CE2C6 = {
 			isa = PBXGroup;
 			children = (
-				5910AFE518A4509B001CE2C6 /* _ConvNet.so */,
 				5910AFE618A4509B001CE2C6 /* ABOUT */,
-				5910AFE718A4509B001CE2C6 /* bin */,
 				5910AFEB18A4509B001CE2C6 /* build.sh */,
-				5910AFEC18A4509B001CE2C6 /* build.sh.original */,
 				5910AFED18A4509B001CE2C6 /* common-gcc-cuda-4.0.mk */,
 				5910AFEE18A4509B001CE2C6 /* common-gcc-cuda-5.0.mk */,
 				5910AFEF18A4509B001CE2C6 /* convdata.py */,
@@ -103,36 +98,13 @@
 				5910B00A18A4509B001CE2C6 /* include */,
 				5910B02118A4509B001CE2C6 /* layer.py */,
 				5910B02218A4509B001CE2C6 /* Makefile */,
+				5910B03C18A456EE001CE2C6 /* makerawbatches.py */,
 				5910B02318A4509B001CE2C6 /* options.py */,
 				5910B02418A4509B001CE2C6 /* ordereddict.py */,
 				5910B02518A4509B001CE2C6 /* shownet.py */,
 				5910B02618A4509B001CE2C6 /* src */,
 				5910B03B18A4509B001CE2C6 /* util.py */,
 			);
-			sourceTree = "<group>";
-		};
-		5910AFE718A4509B001CE2C6 /* bin */ = {
-			isa = PBXGroup;
-			children = (
-				5910AFE818A4509B001CE2C6 /* linux */,
-			);
-			path = bin;
-			sourceTree = "<group>";
-		};
-		5910AFE818A4509B001CE2C6 /* linux */ = {
-			isa = PBXGroup;
-			children = (
-				5910AFE918A4509B001CE2C6 /* release */,
-			);
-			path = linux;
-			sourceTree = "<group>";
-		};
-		5910AFE918A4509B001CE2C6 /* release */ = {
-			isa = PBXGroup;
-			children = (
-				5910AFEA18A4509B001CE2C6 /* _ConvNet.so */,
-			);
-			path = release;
 			sourceTree = "<group>";
 		};
 		5910AFF218A4509B001CE2C6 /* example-layers */ = {
