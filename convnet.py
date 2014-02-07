@@ -121,8 +121,8 @@ class ConvNet(IGPUModel):
             self.libmodel.startBatch(data, not train)
         
     def print_iteration(self):
-        print "%d.%d..." % (self.epoch, self.batchnum),
-        
+        print "%d.%d... (%d images)" % (self.epoch, self.batchnum, self.image_count),
+
     def print_train_time(self, compute_time_py):
         print "(%.3f sec)" % (compute_time_py)
         
