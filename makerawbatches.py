@@ -42,7 +42,7 @@ import re
 import numpy as np
 import pickle
 
-IMAGES_PER_BATCH = 2500
+IMAGES_PER_BATCH = 2000
 IMAGE_SIZE = 256
 
 log_counts = {}
@@ -160,7 +160,7 @@ label_name_for_id = {}
 for id in wanted_ids:
   label_name_for_id[id] = 'n' + str(id)
 # Then, try to load them from the wordnet list
-wordnet_lines = open('wordnetlabels.txt').read_lines()
+wordnet_lines = open('wordnetlabels.txt').readlines()
 for line in wordnet_lines:
   full_id, names = line.strip().split('\t')
   try:
