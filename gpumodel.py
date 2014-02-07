@@ -138,7 +138,7 @@ class IGPUModel:
         while self.epoch <= self.num_epochs:
             data = next_data
             self.epoch, self.batchnum = data[0], data[1]
-            self.image_count = data[2].shape[1]
+            self.image_count = data[2]['data'].shape[1]
             self.print_iteration()
             sys.stdout.flush()
             
