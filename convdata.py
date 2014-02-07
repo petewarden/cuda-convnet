@@ -29,15 +29,11 @@ import random as r
 import sys
 from time import time
 
-IMAGE_SIZE_RAW=32
-IMAGE_SIZE_TEST=224
-
 class CIFARDataProvider(LabeledMemoryDataProvider):
     def __init__(self, data_dir, batch_range, init_epoch=1, init_batchnum=None, dp_params={}, test=False):
         LabeledMemoryDataProvider.__init__(self, data_dir, batch_range, init_epoch, init_batchnum, dp_params, test)
         self.data_mean = self.batch_meta['data_mean']
         self.num_colors = 3
-        self.img_size = IMAGE_SIZE_CIFAR
         # Subtract the mean from the data and make sure that both data and
         # labels are in single-precision floating point.
         for d in self.data_dic:
@@ -52,14 +48,14 @@ class CIFARDataProvider(LabeledMemoryDataProvider):
     # Returns the dimensionality of the two data matrices returned by get_next_batch
     # idx is the index of the matrix. 
     def get_data_dims(self, idx=0):
-        return self.img_size**2 * self.num_colors if idx == 0 else 1
+        return self.image_size**2 * self.num_colors if idx == 0 else 1
     
     # Takes as input an array returned by get_next_batch
     # Returns a (numCases, imgSize, imgSize, 3) array which can be
     # fed to pylab for plotting.
     # This is used by shownet.py to plot test case predictions.
     def get_plottable_data(self, data):
-        return n.require((data + self.data_mean).T.reshape(data.shape[1], 3, self.img_size, self.img_size).swapaxes(1,3).swapaxes(1,2) / 255.0, dtype=n.single)
+        return n.require((data + self.data_mean).T.reshape(data.shape[1], 3, self.image_size, self.image_size).swapaxes(1,3).swapaxes(1,2) / 255.0, dtype=n.single)
 
 class CroppedCIFARDataProvider(LabeledMemoryDataProvider):
     def __init__(self, data_dir, batch_range=None, init_epoch=1, init_batchnum=None, dp_params=None, test=False):
@@ -131,14 +127,14 @@ class CroppedRawDataProvider(LabeledRawDataProvider):
         LabeledRawDataProvider.__init__(self, data_dir, batch_range, init_epoch, init_batchnum, dp_params, test)
 
         self.border_size = dp_params['crop_border']
-        self.inner_size = IMAGE_SIZE_RAW - self.border_size*2
+        self.inner_size = self.image_size - self.border_size*2
         self.multiview = dp_params['multiview_test'] and test
         self.num_views = 5*2
         self.data_mult = self.num_views if self.multiview else 1
         self.num_colors = 3
         
         self.batches_generated = 0
-        self.data_mean = self.batch_meta['data_mean'].reshape((3,IMAGE_SIZE_RAW,IMAGE_SIZE_RAW))[:,self.border_size:self.border_size+self.inner_size,self.border_size:self.border_size+self.inner_size].reshape((self.get_data_dims(), 1))
+        self.data_mean = self.batch_meta['data_mean'].reshape((3,self.image_size,IMAGE_SIZE_RAW))[:,self.border_size:self.border_size+self.inner_size,self.border_size:self.border_size+self.inner_size].reshape((self.get_data_dims(), 1))
 
     def get_next_batch(self):
         start_time = time()
@@ -171,7 +167,7 @@ class CroppedRawDataProvider(LabeledRawDataProvider):
         return n.require((data + self.data_mean).T.reshape(data.shape[1], 3, self.inner_size, self.inner_size).swapaxes(1,3).swapaxes(1,2) / 255.0, dtype=n.single)
     
     def __trim_borders(self, x, target):
-        y = x.reshape(3, IMAGE_SIZE_RAW, IMAGE_SIZE_RAW, x.shape[1])
+        y = x.reshape(3, self.image_size, self.image_size, x.shape[1])
 
         if self.test: # don't need to loop over cases
             if self.multiview:
@@ -218,7 +214,7 @@ class TestDataProvider(LabeledRawDataProvider):
         self.curr_batchnum = init_batchnum
         self.dp_params = dp_params
         self.batch_range = 1
-        self.inner_size = IMAGE_SIZE_TEST
+        self.inner_size = self.image_size
         self.test_pattern = dp_params['test_pattern']
         self.label_count = dp_params['label_count']
         if self.test_pattern == 'solid':
@@ -249,19 +245,19 @@ class TestDataProvider(LabeledRawDataProvider):
               blue = 255.0
             else:
               blue = 0.0
-            channel_stride = (IMAGE_SIZE_TEST * IMAGE_SIZE_TEST)
+            channel_stride = (self.image_size * self.image_size)
             images_data[0:channel_stride, i] = red * n.ones((self.get_data_dims() / 3), dtype=n.float32)
             images_data[channel_stride:(channel_stride*2), i] = green * n.ones((self.get_data_dims() / 3), dtype=n.float32)
             images_data[(channel_stride*2):(channel_stride*3), i] = blue * n.ones((self.get_data_dims() / 3), dtype=n.float32)
         elif self.test_pattern == 'stripes':
           for i in range(num_cases):
-            square_view = images_data[:, i].reshape(3, IMAGE_SIZE_TEST, IMAGE_SIZE_TEST)
+            square_view = images_data[:, i].reshape(3, self.image_size, self.image_size)
             if i & 1 == 1:
-              square_view[:, 0::2, :] = 255.0 * n.ones((3, (IMAGE_SIZE_TEST / 2), IMAGE_SIZE_TEST), dtype=n.float32)
-              square_view[:, 1::2, :] = 0.0 * n.ones((3, (IMAGE_SIZE_TEST / 2), IMAGE_SIZE_TEST), dtype=n.float32)
+              square_view[:, 0::2, :] = 255.0 * n.ones((3, (self.image_size / 2), self.image_size), dtype=n.float32)
+              square_view[:, 1::2, :] = 0.0 * n.ones((3, (self.image_size / 2), self.image_size), dtype=n.float32)
             else:
-              square_view[:, :, 0::2] = 255.0 * n.ones((3, IMAGE_SIZE_TEST, (IMAGE_SIZE_TEST / 2)), dtype=n.float32)
-              square_view[:, :, 1::2] = 0.0 * n.ones((3, IMAGE_SIZE_TEST, (IMAGE_SIZE_TEST / 2)), dtype=n.float32)
+              square_view[:, :, 0::2] = 255.0 * n.ones((3, self.image_size, (self.image_size / 2)), dtype=n.float32)
+              square_view[:, :, 1::2] = 0.0 * n.ones((3, self.image_size, (self.image_size / 2)), dtype=n.float32)
         else:
           raise OptionException('TestDataProvider: Unknown test-pattern %s\n' % (self.test_pattern))
         labels = n.empty((1, num_cases), dtype=n.float32)

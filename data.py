@@ -29,7 +29,7 @@ from util import *
 import mmap
 
 BATCH_META_FILE = "batches.meta"
-IMAGE_SIZE=256
+IMAGE_SIZE=32
 
 class DataProvider:
     BATCH_REGEX = re.compile('^data_batch_(\d+)(\.\d+)?$')
@@ -48,6 +48,7 @@ class DataProvider:
         self.data_dic = None
         self.test = test
         self.batch_idx = batch_range.index(init_batchnum)
+        self.image_size = dp_params['image_size']
 
     def get_next_batch(self):
         if self.data_dic is None or len(self.batch_range) > 1:
@@ -223,7 +224,7 @@ class LabeledMemoryDataProvider(LabeledDataProvider):
 class LabeledRawDataProvider(DataProvider):
     def __init__(self, data_dir, batch_range=None, init_epoch=1, init_batchnum=None, dp_params={}, test=False):
         DataProvider.__init__(self, data_dir, batch_range, init_epoch, init_batchnum, dp_params, test)
-        
+
     def get_num_classes(self):
         return len(self.batch_meta['label_names'])
 
@@ -236,7 +237,7 @@ class LabeledRawDataProvider(DataProvider):
         input_file.seek(0,2)
         size = input_file.tell()
         input_file.seek(0,0)
-        bytes_per_image = (IMAGE_SIZE * IMAGE_SIZE * 3)
+        bytes_per_image = (self.image_size * self.image_size * 3)
         bytes_per_image_plus_label = (bytes_per_image + 4)
         image_count = (size / bytes_per_image_plus_label)
         if (image_count * bytes_per_image_plus_label) != size:
