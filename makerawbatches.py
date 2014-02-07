@@ -34,6 +34,7 @@
 # 'label count' is optional, but if it's set then only n ids will be used
 
 import os
+import sys
 from scipy import misc
 import re
 import numpy as np
