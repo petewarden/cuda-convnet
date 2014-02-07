@@ -83,11 +83,11 @@ all_ids = found_ids.keys()
 
 sys.stderr.write('Found %d total labels\n' % (len(all_ids)))
 
-shuffled_ids = shuffle(all_ids)
+shuffle(all_ids)
 if label_limit is None:
-  wanted_ids = shuffled_ids
+  wanted_ids = all_ids
 else:
-  wanted_ids = shuffled_ids[0:label_limit]
+  wanted_ids = all_ids[0:label_limit]
 
 sys.stderr.write('Looking for %d labels\n' % (len(wanted_ids)))
 
