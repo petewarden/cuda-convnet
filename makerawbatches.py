@@ -29,9 +29,10 @@
 # by the LabeledRawDataProvider class.
 #
 # Usage is:
-# python makerawbatches.py <image folder> <output batch folder> <image size> [label count]
+# python makerawbatches.py <image folder> <output batch folder> <image size> [label count] [format]
 #
 # 'label count' is optional, but if it's set then only n ids will be used
+# 'format' should be either 'raw' or 'cifar', either storing the image data as binary or pickle
 
 import os
 import sys
@@ -53,7 +54,7 @@ def log_count(name, stride = 100):
     sys.stderr.write("%s %d\n" % (name, log_counts[name]))
 
 if len(sys.argv) < 4:
-  sys.stderr.write('Usage: python makerawbatches.py <image folder> <output batch folder> <image size> [label count]\n')
+  sys.stderr.write('Usage: python makerawbatches.py <image folder> <output batch folder> <image size> [label count] [format]\n')
   exit(1)
 
 image_folder = sys.argv[1]
@@ -63,6 +64,14 @@ if len(sys.argv) < 5:
   label_limit = None
 else:
   label_limit = int(sys.argv[4])
+if len(sys.argv) < 6:
+  output_format = 'raw'
+else:
+  output_format = sys.argv[5]
+  if output_format != 'raw' and output_format != 'cifar':
+    sys.stderr.write('Format should be raw or cifar, found \'%s\'' % (output_format))
+    sys.stderr.write('Usage: python makerawbatches.py <image folder> <output batch folder> <image size> [label count] [format]\n')
+    exit(1)
 
 found_ids = {}
 input_image_glob = image_folder + '/*.jpg'
@@ -144,13 +153,18 @@ for i in xrange(0, len(wanted_files), IMAGES_PER_BATCH):
     images_processed += 1
     log_count('Loaded', 100)
 
-  images_data = np.vstack(images).transpose()
-  labels_data = np.vstack(labels).astype(np.float32)
-  output_index = (i / IMAGES_PER_BATCH)
   output_path= '%s/data_batch_%d' % (output_folder, output_index)
-  output_file = open(output_path, 'wb')
-  output_file.write(labels_data.tostring())
-  output_file.write(images_data.tostring())
+  if output_format == 'raw':
+    images_data = np.vstack(images).transpose()
+    labels_data = np.vstack(labels).astype(np.float32)
+    output_index = (i / IMAGES_PER_BATCH)
+    output_file = open(output_path, 'wb')
+    output_file.write(labels_data.tostring())
+    output_file.write(images_data.tostring())
+  elif output_format == 'cifar':
+    images_data = np.vstack(images).transpose()
+    output_dict = { 'data': images_data, 'labels': labels}
+    pickle.dump(output_dict, output_file)
   output_file.close()
   sys.stderr.write('Wrote %s\n' % (output_path))
 
