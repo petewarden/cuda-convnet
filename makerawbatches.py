@@ -42,7 +42,7 @@ import re
 import numpy as np
 import pickle
 
-IMAGES_PER_BATCH = 2000
+IMAGES_PER_BATCH = 500
 
 log_counts = {}
 def log_count(name, stride = 100):
