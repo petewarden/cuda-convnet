@@ -153,12 +153,12 @@ for i in xrange(0, len(wanted_files), IMAGES_PER_BATCH):
     images_processed += 1
     log_count('Loaded', 100)
 
+  output_index = (i / IMAGES_PER_BATCH)
   output_path= '%s/data_batch_%d' % (output_folder, output_index)
+  output_file = open(output_path, 'wb')
   if output_format == 'raw':
     images_data = np.vstack(images).transpose()
     labels_data = np.vstack(labels).astype(np.float32)
-    output_index = (i / IMAGES_PER_BATCH)
-    output_file = open(output_path, 'wb')
     output_file.write(labels_data.tostring())
     output_file.write(images_data.tostring())
   elif output_format == 'cifar':
