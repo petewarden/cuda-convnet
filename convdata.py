@@ -62,7 +62,7 @@ class CroppedCIFARDataProvider(LabeledMemoryDataProvider):
         LabeledMemoryDataProvider.__init__(self, data_dir, batch_range, init_epoch, init_batchnum, dp_params, test)
 
         self.border_size = dp_params['crop_border']
-        self.inner_size = 32 - self.border_size*2
+        self.inner_size = self.image_size - self.border_size*2
         self.multiview = dp_params['multiview_test'] and test
         self.num_views = 5*2
         self.data_mult = self.num_views if self.multiview else 1
@@ -75,7 +75,7 @@ class CroppedCIFARDataProvider(LabeledMemoryDataProvider):
         self.cropped_data = [n.zeros((self.get_data_dims(), self.data_dic[0]['data'].shape[1]*self.data_mult), dtype=n.single) for x in xrange(2)]
 
         self.batches_generated = 0
-        self.data_mean = self.batch_meta['data_mean'].reshape((3,32,32))[:,self.border_size:self.border_size+self.inner_size,self.border_size:self.border_size+self.inner_size].reshape((self.get_data_dims(), 1))
+        self.data_mean = self.batch_meta['data_mean'].reshape((3,self.image_size,self.image_size))[:,self.border_size:self.border_size+self.inner_size,self.border_size:self.border_size+self.inner_size].reshape((self.get_data_dims(), 1))
 
     def get_next_batch(self):
         epoch, batchnum, datadic = LabeledMemoryDataProvider.get_next_batch(self)
@@ -98,7 +98,7 @@ class CroppedCIFARDataProvider(LabeledMemoryDataProvider):
         return n.require((data + self.data_mean).T.reshape(data.shape[1], 3, self.inner_size, self.inner_size).swapaxes(1,3).swapaxes(1,2) / 255.0, dtype=n.single)
     
     def __trim_borders(self, x, target):
-        y = x.reshape(3, 32, 32, x.shape[1])
+        y = x.reshape(3, self.image_size, self.image_size, x.shape[1])
 
         if self.test: # don't need to loop over cases
             if self.multiview:
