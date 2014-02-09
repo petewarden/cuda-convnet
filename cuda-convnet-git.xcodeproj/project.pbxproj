@@ -81,6 +81,7 @@
 		5910B03B18A4509B001CE2C6 /* util.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = util.py; sourceTree = "<group>"; };
 		5910B03C18A456EE001CE2C6 /* makerawbatches.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = makerawbatches.py; sourceTree = "<group>"; };
 		59DD71F718A81FB30054D561 /* imagenet2011ids.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = imagenet2011ids.txt; sourceTree = "<group>"; };
+		59DD71F818A828010054D561 /* downloadimages.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = downloadimages.py; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -94,6 +95,7 @@
 				5910AFEF18A4509B001CE2C6 /* convdata.py */,
 				5910AFF018A4509B001CE2C6 /* convnet.py */,
 				5910AFF118A4509B001CE2C6 /* data.py */,
+				59DD71F818A828010054D561 /* downloadimages.py */,
 				5910AFF218A4509B001CE2C6 /* example-layers */,
 				5910B00918A4509B001CE2C6 /* gpumodel.py */,
 				59DD71F718A81FB30054D561 /* imagenet2011ids.txt */,

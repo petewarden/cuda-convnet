@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright (c) 2011, Pete Warden
+# Copyright (c) 2014, Pete Warden
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without modification,
