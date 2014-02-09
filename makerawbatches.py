@@ -69,7 +69,7 @@ if len(sys.argv) < 6:
 else:
   output_format = sys.argv[5]
   if output_format != 'raw' and output_format != 'cifar':
-    sys.stderr.write('Format should be raw or cifar, found \'%s\'' % (output_format))
+    sys.stderr.write('Format should be raw or cifar, found \'%s\'\n' % (output_format))
     sys.stderr.write('Usage: python makerawbatches.py <image folder> <output batch folder> <image size> [label count] [format]\n')
     exit(1)
 
