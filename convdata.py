@@ -183,12 +183,13 @@ class CroppedRawDataProvider(LabeledRawDataProvider):
                 pic = y[:,self.border_size:self.border_size+self.inner_size,self.border_size:self.border_size+self.inner_size, :] # just take the center for now
                 target[:,:] = pic.reshape((self.get_data_dims(), x.shape[1]))
         else:
-            startY, startX = nr.randint(0,self.border_size*2 + 1), nr.randint(0,self.border_size*2 + 1)
-            endY, endX = startY + self.inner_size, startX + self.inner_size
-            pic = y[:,startY:endY,startX:endX, :]
-            if nr.randint(2) == 0: # also flip the image with 50% probability
-                pic = pic[:, :, ::-1, :]
-            target = pic.copy().reshape((self.get_data_dims(), x.shape[1]))
+            for c in xrange(x.shape[1]): # loop over cases
+                startY, startX = nr.randint(0,self.border_size*2 + 1), nr.randint(0,self.border_size*2 + 1)
+                endY, endX = startY + self.inner_size, startX + self.inner_size
+                pic = y[:,startY:endY,startX:endX, c]
+                if nr.randint(2) == 0: # also flip the image with 50% probability
+                    pic = pic[:,:,::-1]
+                target[:,c] = pic.reshape((self.get_data_dims(),))
 
 class DummyConvNetDataProvider(LabeledDummyDataProvider):
     def __init__(self, data_dim):
