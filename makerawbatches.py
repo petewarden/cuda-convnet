@@ -43,7 +43,10 @@ import re
 import numpy as np
 import pickle
 
-IMAGES_PER_BATCH = 500
+IMAGES_PER_BATCH = 2500
+
+def log(message):
+  sys.stderr.write("%s\n" % (message))
 
 log_counts = {}
 def log_count(name, stride = 100):
@@ -126,9 +129,15 @@ for i in xrange(0, len(wanted_files), IMAGES_PER_BATCH):
       continue
     image = misc.imread(image_path)
     shape = image.shape
+    if len(shape) < 3:
+      log("Missing channels for '%s', skipping" % (basename))
+      continue
     width = shape[1]
     height = shape[0]
     channels = shape[2]
+    if channels < 3:
+      log("Too few channels for '%s', skipping" % (basename))
+      continue
     if width == image_size and height == image_size:
       resized = image
     else:
