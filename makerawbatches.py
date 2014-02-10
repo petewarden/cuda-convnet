@@ -127,7 +127,11 @@ for i in xrange(0, len(wanted_files), IMAGES_PER_BATCH):
     except AttributeError:
       sys.stderr.write('No wordnet ID found for %s\n' % (image_path))
       continue
-    image = misc.imread(image_path)
+    try:
+      image = misc.imread(image_path)
+    except IOError, e:
+      log("IOError for '%s' - %s" % (basename, e))
+      continue
     shape = image.shape
     if len(shape) < 3:
       log("Missing channels for '%s', skipping" % (basename))
