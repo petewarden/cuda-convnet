@@ -153,9 +153,9 @@ for i in xrange(0, len(wanted_files), IMAGES_PER_BATCH):
         image = image[margin:-margin, :]
       try:
         resized = misc.imresize(image, (image_size, image_size))
+      except ValueError, e:
         log("ValueError when resizing '%s' - %s" % (basename, e))
         continue
-      except ValueError, e:
     red_channel = resized[:, :, 0]
     red_channel.shape = (image_size * image_size)
     green_channel = resized[:, :, 1]
