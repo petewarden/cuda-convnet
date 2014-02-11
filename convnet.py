@@ -297,6 +297,10 @@ class ConvNet(IGPUModel):
         op.add_option("test-pattern", "test_pattern", StringOptionParser, "What patterns to use for the synthesized tests", default="solid", set_once=True)
         op.add_option("image-size", "image_size", IntegerOptionParser, "The square size of the images", default=256, set_once=True)
         op.add_option("show-filters", "show_filters", StringOptionParser, "Save learned filters in specified layer to per-iteration image files", default="")
+        op.add_option("input-idx", "input_idx", IntegerOptionParser, "Input index for layer given to --show-filters", default=0)
+        op.add_option("no-rgb", "no_rgb", BooleanOptionParser, "Don't combine filter channels into RGB in layer given to --show-filters", default=False)
+        op.add_option("yuv-to-rgb", "yuv_to_rgb", BooleanOptionParser, "Convert RGB filters to YUV in layer given to --show-filters", default=False)
+        op.add_option("channels", "channels", IntegerOptionParser, "Number of channels in layer given to --show-filters (fully-connected layers only)", default=0)
 
         op.delete_option('max_test_err')
         op.options["max_filesize_mb"].default = 0
