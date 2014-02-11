@@ -151,6 +151,7 @@ class IGPUModel:
             batch_output = self.finish_batch()
             self.train_outputs += [batch_output]
             self.print_train_results()
+            self.save_filter_image()
 
             if self.get_num_batches_done() % self.testing_freq == 0:
                 self.sync_with_host()
