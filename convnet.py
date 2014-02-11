@@ -37,6 +37,12 @@ from os import linesep as NL
 import matplotlib
 matplotlib.use('Agg')
 
+try:
+    import pylab as pl
+except:
+    print "This script requires the matplotlib python library (Ubuntu/Fedora package name python-matplotlib). Please install it."
+    sys.exit(1)
+
 class ConvNet(IGPUModel):
     def __init__(self, op, load_dic, dp_params={}):
         filename_options = []
