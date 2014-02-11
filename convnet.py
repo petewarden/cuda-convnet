@@ -33,11 +33,14 @@ import math as m
 import layer as lay
 from convdata import *
 from os import linesep as NL
-#import pylab as pl
+
+import matplotlib
+matplotlib.use('Agg')
 
 class ConvNet(IGPUModel):
     def __init__(self, op, load_dic, dp_params={}):
         filename_options = []
+        self.animation_image_index = 0
         dp_params['multiview_test'] = op.get_value('multiview_test')
         dp_params['crop_border'] = op.get_value('crop_border')
         dp_params['label_count'] = op.get_value('label_count')
@@ -123,6 +126,15 @@ class ConvNet(IGPUModel):
     def print_iteration(self):
         print "%d.%d... (%d images)" % (self.epoch, self.batchnum, self.image_count),
 
+    def save_filter_image(self):
+      if not self.show_filters:
+        return
+      self.plot_filters()
+      image_file_name = "%s_%05d.png" % (self.show_filters, self.animation_image_index)
+      image_file_path = os.path.join(self.save_path, image_file_name)
+      pl.savefig(image_file_path)
+      self.animation_image_index += 1
+
     def print_train_time(self, compute_time_py):
         print "(%.3f sec)" % (compute_time_py)
         
@@ -192,7 +204,82 @@ class ConvNet(IGPUModel):
                 for j in xrange(len(v)):
                     test_outputs[0][0][k][j] += test_outputs[i][0][k][j]
         return (test_outputs[0][0], num_cases)
+
+    def make_filter_fig(self, filters, filter_start, fignum, _title, num_filters, combine_chans):
+        FILTERS_PER_ROW = 16
+        MAX_ROWS = 16
+        MAX_FILTERS = FILTERS_PER_ROW * MAX_ROWS
+        num_colors = filters.shape[0]
+        f_per_row = int(ceil(FILTERS_PER_ROW / float(1 if combine_chans else num_colors)))
+        filter_end = min(filter_start+MAX_FILTERS, num_filters)
+        filter_rows = int(ceil(float(filter_end - filter_start) / f_per_row))
     
+        filter_size = int(sqrt(filters.shape[1]))
+        fig = pl.figure(fignum)
+        fig.text(.5, .95, '%s %dx%d filters %d-%d' % (_title, filter_size, filter_size, filter_start, filter_end-1), horizontalalignment='center') 
+        num_filters = filter_end - filter_start
+        if not combine_chans:
+            bigpic = n.zeros((filter_size * filter_rows + filter_rows + 1, filter_size*num_colors * f_per_row + f_per_row + 1), dtype=n.single)
+        else:
+            bigpic = n.zeros((3, filter_size * filter_rows + filter_rows + 1, filter_size * f_per_row + f_per_row + 1), dtype=n.single)
+    
+        for m in xrange(filter_start,filter_end ):
+            filter = filters[:,:,m]
+            y, x = (m - filter_start) / f_per_row, (m - filter_start) % f_per_row
+            if not combine_chans:
+                for c in xrange(num_colors):
+                    filter_pic = filter[c,:].reshape((filter_size,filter_size))
+                    bigpic[1 + (1 + filter_size) * y:1 + (1 + filter_size) * y + filter_size,
+                           1 + (1 + filter_size*num_colors) * x + filter_size*c:1 + (1 + filter_size*num_colors) * x + filter_size*(c+1)] = filter_pic
+            else:
+                filter_pic = filter.reshape((3, filter_size,filter_size))
+                bigpic[:,
+                       1 + (1 + filter_size) * y:1 + (1 + filter_size) * y + filter_size,
+                       1 + (1 + filter_size) * x:1 + (1 + filter_size) * x + filter_size] = filter_pic
+                
+        pl.xticks([])
+        pl.yticks([])
+        if not combine_chans:
+            pl.imshow(bigpic, cmap=pl.cm.gray, interpolation='nearest')
+        else:
+            bigpic = bigpic.swapaxes(0,2).swapaxes(0,1)
+            pl.imshow(bigpic, interpolation='nearest')        
+        
+    def plot_filters(self):
+        filter_start = 0 # First filter to show
+        layer_names = [l['name'] for l in self.layers]
+        if self.show_filters not in layer_names:
+            raise ShowNetError("Layer with name '%s' not defined by given convnet." % self.show_filters)
+        layer = self.layers[layer_names.index(self.show_filters)]
+        filters = layer['weights'][self.input_idx]
+        if layer['type'] == 'fc': # Fully-connected layer
+            num_filters = layer['outputs']
+            channels = self.channels
+        elif layer['type'] in ('conv', 'local'): # Conv layer
+            num_filters = layer['filters']
+            channels = layer['filterChannels'][self.input_idx]
+            if layer['type'] == 'local':
+                filters = filters.reshape((layer['modules'], layer['filterPixels'][self.input_idx] * channels, num_filters))
+                filter_start = r.randint(0, layer['modules']-1)*num_filters # pick out some random modules
+                filters = filters.swapaxes(0,1).reshape(channels * layer['filterPixels'][self.input_idx], num_filters * layer['modules'])
+                num_filters *= layer['modules']
+
+        filters = filters.reshape(channels, filters.shape[0]/channels, filters.shape[1])
+        # Convert YUV filters to RGB
+        if self.yuv_to_rgb and channels == 3:
+            R = filters[0,:,:] + 1.28033 * filters[2,:,:]
+            G = filters[0,:,:] + -0.21482 * filters[1,:,:] + -0.38059 * filters[2,:,:]
+            B = filters[0,:,:] + 2.12798 * filters[1,:,:]
+            filters[0,:,:], filters[1,:,:], filters[2,:,:] = R, G, B
+        combine_chans = not self.no_rgb and channels == 3
+        
+        # Make sure you don't modify the backing array itself here -- so no -= or /=
+        filters = filters - filters.min()
+        filters = filters / filters.max()
+
+        self.make_filter_fig(filters, filter_start, 2, 'Layer %s' % self.show_filters, num_filters, combine_chans)
+
+
     @classmethod
     def get_options_parser(cls):
         op = IGPUModel.get_options_parser()
@@ -209,6 +296,7 @@ class ConvNet(IGPUModel):
         op.add_option("label-count", "label_count", IntegerOptionParser, "How many labels to choose in the subset case", default=2, set_once=True)
         op.add_option("test-pattern", "test_pattern", StringOptionParser, "What patterns to use for the synthesized tests", default="solid", set_once=True)
         op.add_option("image-size", "image_size", IntegerOptionParser, "The square size of the images", default=256, set_once=True)
+        op.add_option("show-filters", "show_filters", StringOptionParser, "Save learned filters in specified layer to per-iteration image files", default="")
 
         op.delete_option('max_test_err')
         op.options["max_filesize_mb"].default = 0
