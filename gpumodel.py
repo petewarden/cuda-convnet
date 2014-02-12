@@ -280,15 +280,20 @@ class IGPUModel:
 
     def save_as_binary(self, filename):
         layers = bytearray()
-        for layer in self.layers:
-            layers.extend(layer.to_binary())
+        for layer_dict in self.layers:
+            type = layer_dict['type']
+            if type not in layer.layer_savers:
+              sys.stderr.write('save_as_binary(): Type not recognized: %s\n' % (type))
+              continue
+            layer_saver = layer.layer_savers[type]
+            layers.extend(layer_saver(layer_dict))
         graph = bytearray()
         graph.extend(binary.to_string('layers'))
         graph.extend(binary.to_list(layers))
 
         data_mean = self.train_data_provider.batch_meta['data_mean']
         graph.extend(binary.to_string('data_mean'))
-        graph.extend(data_mean.to_binary())
+        graph.extend(numpy_array_to_binary(data_mean))
 
         labels_payload = bytearray()
         label_names = self.train_data_provider.batch_meta['label_names']
