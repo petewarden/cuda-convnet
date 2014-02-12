@@ -295,7 +295,7 @@ class IGPUModel:
 
         data_mean = self.train_data_provider.batch_meta['data_mean']
         graph.extend(binary.to_string('data_mean'))
-        graph.extend(numpy_array_to_binary(data_mean))
+        graph.extend(binary.numpy_array_to_binary(data_mean))
 
         labels_payload = bytearray()
         label_names = self.train_data_provider.batch_meta['label_names']

@@ -819,11 +819,11 @@ class FCLayerParser(WeightLayerParser):
       payload.extend(binary.to_string('spec'))
       payload.extend(binary.convert_simple_dict(spec))
       payload.extend(binary.to_string('weight'))
-      payload.extend(numpy_array_to_binary(dic['weights'][0]))
+      payload.extend(binary.numpy_array_to_binary(dic['weights'][0]))
       payload.extend(binary.to_string('has_bias'))
       payload.extend(binary.to_uint32(1))
       payload.extend(binary.to_string('bias'))
-      payload.extend(numpy_array_to_binary(dic['biases'][0]))
+      payload.extend(binary.numpy_array_to_binary(dic['biases'][0]))
       output = binary.to_dict(payload)
       return output
 
@@ -998,11 +998,11 @@ class ConvLayerParser(LocalLayerParser):
       }
       payload.extend(binary.convert_simple_dict(spec))
       payload.extend(binary.to_string('kernels'))
-      payload.extend(numpy_array_to_binary(dic['weights'][index]))
+      payload.extend(binary.numpy_array_to_binary(dic['weights'][index]))
       payload.extend(binary.to_string('has_bias'))
       payload.extend(binary.to_uint32(1))
       payload.extend(binary.to_string('bias'))
-      payload.extend(numpy_array_to_binary(dic['biases'][index]))
+      payload.extend(binary.numpy_array_to_binary(dic['biases'][index]))
       payload.extend(binary.to_string('padding'))
       payload.extend(binary.to_uint32(dic['padding'][0]))
       output = binary.to_dict(payload)
