@@ -119,6 +119,7 @@ class IGPUModel:
         pass
     
     def start(self):
+        self.save_as_binary('start.ntwk')
         if self.test_only:
             self.test_outputs += [self.get_test_error()]
             self.print_test_results()
