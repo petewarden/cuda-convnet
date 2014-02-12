@@ -267,13 +267,42 @@ class IGPUModel:
             os.makedirs(checkpoint_dir)
     
         pickle(checkpoint_file_full_path, dic,compress=self.zip_save)
-        
+
+        binary_checkpoint_file = "binary_%d.%d.ntwk" % (self.epoch, self.batchnum)
+        binary_checkpoint_file_full_path = os.path.join(checkpoint_dir, binary_checkpoint_file)
+        self.save_as_binary(binary_checkpoint_file_full_path)
+
         #for f in sorted(os.listdir(checkpoint_dir), key=alphanum_key):
         #    if sum(os.path.getsize(os.path.join(checkpoint_dir, f2)) for f2 in os.listdir(checkpoint_dir)) > self.max_filesize_mb*1024*1024 and f != checkpoint_file:
         #        os.remove(os.path.join(checkpoint_dir, f))
         #    else:
         #        break
-            
+
+    def save_as_binary(self, filename):
+        layers = bytearray()
+        for layer in self.layers:
+            layers.extend(layer.to_binary())
+        graph = bytearray()
+        graph.extend(binary.to_string('layers'))
+        graph.extend(binary.to_list(layers))
+
+        data_mean = self.train_data_provider.batch_meta['data_mean']
+        graph.extend(binary.to_string('data_mean'))
+        graph.extend(data_mean.to_binary())
+
+        labels_payload = bytearray()
+        label_names = self.train_data_provider.batch_meta['label_names']
+        for label_name in label_names:
+          labels_payload.extend(binary.to_string(label_name))
+        graph.extend(binary.to_string('label_names'))
+        graph.extend(binary.to_list(labels_payload))
+
+        output = binary.to_dict(graph)
+        file = open(filename, 'wb')
+        file.write(output)
+        file.close()
+
+
     @staticmethod
     def load_checkpoint(load_dir):
         if os.path.isdir(load_dir):
