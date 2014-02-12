@@ -71,9 +71,9 @@ try:
     payload.extend(to_string('class'))
     payload.extend(to_string('blob'))
     payload.extend(to_string('float_bits'))
-    if array.dtype == np.float32:
+    if array.dtype == n.float32:
       payload.extend(to_uint32(32))
-    elif array.dtype == np.float64:
+    elif array.dtype == n.float64:
       payload.extend(to_uint32(64))
     else:
       raise "Bad data type for blob when dumping to JSON: %s" % self.dtype
