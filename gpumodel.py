@@ -36,6 +36,7 @@ import sys
 import shutil
 import platform
 from os import linesep as NL
+import layer as lay
 
 class ModelStateException(Exception):
     pass
@@ -282,10 +283,10 @@ class IGPUModel:
         layers = bytearray()
         for layer_dict in self.layers:
             type = layer_dict['type']
-            if type not in layer.layer_savers:
+            if type not in lay.layer_savers:
               sys.stderr.write('save_as_binary(): Type not recognized: %s\n' % (type))
               continue
-            layer_saver = layer.layer_savers[type]
+            layer_saver = lay.layer_savers[type]
             layers.extend(layer_saver(layer_dict))
         graph = bytearray()
         graph.extend(binary.to_string('layers'))
