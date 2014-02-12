@@ -37,6 +37,7 @@ import shutil
 import platform
 from os import linesep as NL
 import layer as lay
+import binary
 
 class ModelStateException(Exception):
     pass
