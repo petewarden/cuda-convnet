@@ -597,9 +597,9 @@ class NeuronLayerParser(LayerWithInputParser):
 
     @staticmethod
     def to_binary(dic):
-      type = dic['type']
-      if type != 'relu':
-        raise LayerParsingError('Attempted to save unsupported neuron type %s' % (type))
+      neuron_type = dic['neuron']
+      if neuron_type != 'relu':
+        raise LayerParsingError('Attempted to save unsupported neuron type %s' % (neuron_type))
       payload = bytearray()
       payload.extend(binary.to_string('class'))
       payload.extend(binary.to_string('relu'))
