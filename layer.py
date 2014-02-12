@@ -33,6 +33,7 @@ from ordereddict import OrderedDict
 from os import linesep as NL
 from options import OptionsParser
 import re
+import binary
 
 class LayerParsingError(Exception):
     pass
