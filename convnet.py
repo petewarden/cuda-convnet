@@ -33,6 +33,7 @@ import math as m
 import layer as lay
 from convdata import *
 from os import linesep as NL
+import binary
 
 import matplotlib
 matplotlib.use('Agg')
@@ -202,7 +203,32 @@ class ConvNet(IGPUModel):
         print "-------------------------------------------------------"
         print "Saved checkpoint to %s" % os.path.join(self.save_path, self.save_file)
         print "=======================================================",
-        
+
+    def save_as_binary(self):
+        layers = bytearray()
+        for layer in self.layers:
+            layers.extend(layer.to_binary())
+        graph = bytearray()
+        graph.extend(binary.to_string('layers'))
+        graph.extend(binary.to_list(layers))
+
+        data_mean = self.train_data_provider.batch_meta['data_mean']
+        graph.extend(binary.to_string('data_mean'))
+        graph.extend(data_mean.to_binary())
+
+        labels_payload = bytearray()
+        label_names = self.train_data_provider.batch_meta['label_names']
+        for label_name in label_names:
+          labels_payload.extend(binary.to_string(label_name))
+        graph.extend(binary.to_string('label_names'))
+        graph.extend(binary.to_list(labels_payload))
+
+        output = binary.to_dict(graph)
+        file = open('graph.btag', 'wb')
+        file.write(output)
+        file.close()
+
+
     def aggregate_test_outputs(self, test_outputs):
         num_cases = sum(t[1] for t in test_outputs)
         for i in xrange(1 ,len(test_outputs)):

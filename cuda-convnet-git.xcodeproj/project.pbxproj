@@ -82,6 +82,7 @@
 		5910B03C18A456EE001CE2C6 /* makerawbatches.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = makerawbatches.py; sourceTree = "<group>"; };
 		59DD71F718A81FB30054D561 /* imagenet2011ids.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = imagenet2011ids.txt; sourceTree = "<group>"; };
 		59DD71F818A828010054D561 /* downloadimages.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = downloadimages.py; sourceTree = "<group>"; };
+		59DD71F918ABF3E60054D561 /* binary.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = binary.py; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -89,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				5910AFE618A4509B001CE2C6 /* ABOUT */,
+				59DD71F918ABF3E60054D561 /* binary.py */,
 				5910AFEB18A4509B001CE2C6 /* build.sh */,
 				5910AFED18A4509B001CE2C6 /* common-gcc-cuda-4.0.mk */,
 				5910AFEE18A4509B001CE2C6 /* common-gcc-cuda-5.0.mk */,

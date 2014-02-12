@@ -52,7 +52,19 @@ class NeuronParser:
                     'usesActs': self.uses_acts,
                     'usesInputs': self.uses_inputs}
         return None
-    
+
+    def to_binary(self):
+      if type != 'relu':
+        raise LayerParsingError('Attempted to save unsupported neuron type %s' % (type))
+      payload = bytearray()
+      payload.extend(binary.to_string('class'))
+      payload.extend(binary.to_string('relu'))
+      payload.extend(binary.to_string('name'))
+      payload.extend(binary.to_string(self.name))
+      output = binary.to_dict(payload)
+      return output
+
+
 # A neuron that takes parameters
 class ParamNeuronParser(NeuronParser):
     neuron_regex = re.compile(r'^\s*(\w+)\s*\[\s*(\w+(\s*,\w+)*)\s*\]\s*$')
@@ -295,6 +307,18 @@ class LayerParser:
         if ltype in layer_parsers:
             raise LayerParsingError("Layer type '%s' already registered" % ltype)
         layer_parsers[ltype] = cls
+
+    def to_binary(self):
+      sys.stderr.write('Missing to_binary() for %s\n' % (self.__class__.__name__))
+      payload = bytearray()
+      payload.extend(binary.to_string('class'))
+      payload.extend(binary.to_string('layer'))
+      payload.extend(binary.to_string('name'))
+      payload.extend(binary.to_string(self.name))
+      payload.extend(binary.to_string('spec'))
+      payload.extend(binary.convert_simple_dict(self.spec))
+      output = binary.to_dict(payload)
+      return output
 
 # Any layer that takes an input (i.e. non-data layer)
 class LayerWithInputParser(LayerParser):
@@ -794,6 +818,24 @@ class FCLayerParser(WeightLayerParser):
         print "Initialized fully-connected layer '%s', producing %d outputs" % (name, dic['outputs'])
         return dic
 
+    def to_binary(self):
+      payload = bytearray()
+      payload.extend(binary.to_string('class'))
+      payload.extend(binary.to_string('neuron'))
+      payload.extend(binary.to_string('name'))
+      payload.extend(binary.to_string(self.name))
+      spec = {'num_output': self.dic['outputs']}
+      payload.extend(binary.to_string('spec'))
+      payload.extend(binary.convert_simple_dict(spec))
+      payload.extend(binary.to_string('weight'))
+      payload.extend(self.dic['weights'][0].to_binary())
+      payload.extend(binary.to_string('has_bias'))
+      payload.extend(binary.to_uint32(1))
+      payload.extend(binary.to_string('bias'))
+      payload.extend(self.dic['biases'][0].to_binary())
+      output = binary.to_dict(payload)
+      return output
+
 class LocalLayerParser(WeightLayerParser):
     def __init__(self):
         WeightLayerParser.__init__(self)
@@ -949,7 +991,52 @@ class ConvLayerParser(LocalLayerParser):
 
         print "Initialized convolutional layer '%s', producing %dx%d %d-channel output" % (name, dic['modulesX'], dic['modulesX'], dic['filters'])
         return dic    
-    
+
+    def single_to_binary(self, index):
+      payload = bytearray()
+      payload.extend(binary.to_string('class'))
+      payload.extend(binary.to_string('conv'))
+      payload.extend(binary.to_string('name'))
+      payload.extend(binary.to_string(self.name))
+      payload.extend(binary.to_string('spec'))
+      spec = {
+        'num_kernels': self.dic['filters'],
+        'ksize': self.dic['filterSize'],
+        'stride': self.dic['stride'],
+      }
+      payload.extend(binary.convert_simple_dict(spec))
+      payload.extend(binary.to_string('kernels'))
+      payload.extend(self.dic['weights'][index].to_binary())
+      payload.extend(binary.to_string('has_bias'))
+      payload.extend(binary.to_uint32(1))
+      payload.extend(binary.to_string('bias'))
+      payload.extend(self.dic['biases'][index].to_binary())
+      payload.extend(binary.to_string('padding'))
+      payload.extend(binary.to_uint32(self.dic['padding']))
+      output = binary.to_dict(payload)
+
+    def to_binary(self):
+      group_count = self.dic['groups']
+      if group_count == 1:
+        output = self.single_to_binary(0)
+      else:
+        payload = bytearray()
+        payload.extend(binary.to_string('class'))
+        payload.extend(binary.to_string('gconv'))
+        payload.extend(binary.to_string('name'))
+        payload.extend(binary.to_string(self.name))
+        payload.extend(binary.to_string('layers_count'))
+        payload.extend(binary.to_uint32(group_count))
+        payload.extend(binary.to_string('kernels_count'))
+        payload.extend(binary.to_uint32(self.dic['filters']))
+        layers_payload = bytearray()
+        for i in range(self._group):
+          layers_payload.extend(self.single_to_binary(i))
+        payload.extend(binary.to_string('layers'))
+        payload.extend(binary.to_list(layers_payload))
+        output = binary.to_dict(payload)
+      return output
+
 class LocalUnsharedLayerParser(LocalLayerParser):
     def __init__(self):
         LocalLayerParser.__init__(self)
@@ -986,6 +1073,15 @@ class SoftmaxLayerParser(LayerWithInputParser):
         dic['outputs'] = prev_layers[dic['inputs'][0]]['outputs']
         print "Initialized softmax layer '%s', producing %d outputs" % (name, dic['outputs'])
         return dic
+
+    def to_binary(self):
+      payload = bytearray()
+      payload.extend(binary.to_string('class'))
+      payload.extend(binary.to_string('max'))
+      payload.extend(binary.to_string('name'))
+      payload.extend(binary.to_string(self.name))
+      output = binary.to_dict(payload)
+      return output
 
 class PoolLayerParser(LayerWithInputParser):
     def __init__(self):
@@ -1024,7 +1120,22 @@ class PoolLayerParser(LayerWithInputParser):
         
         print "Initialized %s-pooling layer '%s', producing %dx%d %d-channel output" % (dic['pool'], name, dic['outputsX'], dic['outputsX'], dic['channels'])
         return dic
-    
+
+    def to_binary(self):
+      payload = bytearray()
+      payload.extend(binary.to_string('class'))
+      payload.extend(binary.to_string('pool'))
+      payload.extend(binary.to_string('name'))
+      payload.extend(binary.to_string(self.name))
+      payload.extend(binary.to_string('psize'))
+      payload.extend(binary.to_uint32(self.dic['sizeX']))
+      payload.extend(binary.to_string('stride'))
+      payload.extend(binary.to_uint32(self.dic['stride']))
+      payload.extend(binary.to_string('mode'))
+      payload.extend(binary.to_string(self.dic['pool']))
+      output = binary.to_dict(payload)
+      return output
+
 class NormLayerParser(LayerWithInputParser):
     RESPONSE_NORM = 'response'
     CONTRAST_NORM = 'contrast'
@@ -1070,6 +1181,23 @@ class NormLayerParser(LayerWithInputParser):
         dic['outputs'] = dic['imgPixels'] * dic['channels']
         print "Initialized %s-normalization layer '%s', producing %dx%d %d-channel output" % (self.norm_type, name, dic['imgSize'], dic['imgSize'], dic['channels'])
         return dic
+
+    def to_binary(self):
+      payload = bytearray()
+      payload.extend(binary.to_string('class'))
+      payload.extend(binary.to_string('normalize'))
+      payload.extend(binary.to_string('name'))
+      payload.extend(binary.to_string(self.name))
+      payload.extend(binary.to_string('size'))
+      payload.extend(binary.to_uint32(self.dic['size']))
+      payload.extend(binary.to_string('k'))
+      payload.extend(binary.to_float32(self._k))
+      payload.extend(binary.to_string('alpha'))
+      payload.extend(binary.to_float32(self.dic['scale']))
+      payload.extend(binary.to_string('beta'))
+      payload.extend(binary.to_float32(self.dic['pow']))
+      output = binary.to_dict(payload)
+      return output
 
 class CostParser(LayerWithInputParser):
     def __init__(self, num_inputs=-1):
