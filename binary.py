@@ -68,23 +68,23 @@ try:
 
   def numpy_array_to_binary(array):
     payload = bytearray()
-    payload.extend(binary.to_string('class'))
-    payload.extend(binary.to_string('blob'))
-    payload.extend(binary.to_string('float_bits'))
+    payload.extend(to_string('class'))
+    payload.extend(to_string('blob'))
+    payload.extend(to_string('float_bits'))
     if array.dtype == np.float32:
-      payload.extend(binary.to_uint32(32))
+      payload.extend(to_uint32(32))
     elif array.dtype == np.float64:
-      payload.extend(binary.to_uint32(64))
+      payload.extend(to_uint32(64))
     else:
       raise "Bad data type for blob when dumping to JSON: %s" % self.dtype
     dims_payload = bytearray()
     for i in range(len(array.shape)):
-      dims_payload.extend(binary.to_uint32(array.shape[i]))
-    payload.extend(binary.to_string('dims'))
-    payload.extend(binary.to_list(dims_payload))
-    payload.extend(binary.to_string('data'))
-    payload.extend(binary.to_float32_array(array))
-    output = binary.to_dict(payload)
+      dims_payload.extend(to_uint32(array.shape[i]))
+    payload.extend(to_string('dims'))
+    payload.extend(to_list(dims_payload))
+    payload.extend(to_string('data'))
+    payload.extend(to_float32_array(array))
+    output = to_dict(payload)
     return output
 
 except ImportError:
