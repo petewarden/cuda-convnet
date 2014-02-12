@@ -1022,7 +1022,7 @@ class ConvLayerParser(LocalLayerParser):
         payload.extend(binary.to_string('layers_count'))
         payload.extend(binary.to_uint32(group_count))
         payload.extend(binary.to_string('kernels_count'))
-        payload.extend(binary.to_uint32(dic['filters'][0]))
+        payload.extend(binary.to_uint32(dic['filters']))
         layers_payload = bytearray()
         for i in range(self._group):
           layers_payload.extend(ConvLayerParser.single_to_binary(dic, i))
