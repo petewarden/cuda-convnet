@@ -287,8 +287,10 @@ class IGPUModel:
             if type not in lay.layer_savers:
               sys.stderr.write('save_as_binary(): Type not recognized: %s\n' % (type))
               continue
+            sys.stderr.write('save_as_binary(): Type: %s\n' % (type))
             layer_saver = lay.layer_savers[type]
-            layers.extend(layer_saver(layer_dict))
+            layer_payload = layer_saver(layer_dict)
+            layers.extend(layer_payload)
         graph = bytearray()
         graph.extend(binary.to_string('layers'))
         graph.extend(binary.to_list(layers))
