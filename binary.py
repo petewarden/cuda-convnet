@@ -1,5 +1,6 @@
 import struct
 import array
+import sys
 
 def to_string(input):
   output = bytearray()
