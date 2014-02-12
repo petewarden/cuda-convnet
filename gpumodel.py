@@ -290,7 +290,6 @@ class IGPUModel:
             sys.stderr.write('save_as_binary(): Type: %s\n' % (type))
             layer_saver = lay.layer_savers[type]
             layer_payload = layer_saver(layer_dict)
-            sys.stderr.write('save_as_binary(): layer_payload=%s\n' % (str(layer_payload)))
             layers.extend(layer_payload)
         graph = bytearray()
         graph.extend(binary.to_string('layers'))

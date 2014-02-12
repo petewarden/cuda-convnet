@@ -1006,6 +1006,7 @@ class ConvLayerParser(LocalLayerParser):
       payload.extend(binary.to_string('padding'))
       payload.extend(binary.to_uint32(dic['padding'][0]))
       output = binary.to_dict(payload)
+      return output
 
     @staticmethod
     def to_binary(dic):
