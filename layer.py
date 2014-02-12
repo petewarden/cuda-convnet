@@ -1004,7 +1004,8 @@ class ConvLayerParser(LocalLayerParser):
       payload.extend(binary.to_string('bias'))
       payload.extend(binary.numpy_array_to_binary(dic['biases'][index]))
       payload.extend(binary.to_string('padding'))
-      payload.extend(binary.to_uint32(dic['padding'][0]))
+      sys.stderr.write('padding=%s\n' % (dic['padding']))
+      payload.extend(binary.to_uint32(dic['padding'][index]))
       output = binary.to_dict(payload)
       return output
 
