@@ -996,6 +996,7 @@ class ConvLayerParser(LocalLayerParser):
         'ksize': dic['filterSize'][0],
         'stride': dic['stride'][0],
       }
+      sys.stderr.write('weights=%s\n' % (dic['weights']))
       payload.extend(binary.convert_simple_dict(spec))
       payload.extend(binary.to_string('kernels'))
       payload.extend(binary.numpy_array_to_binary(dic['weights'][index]))
