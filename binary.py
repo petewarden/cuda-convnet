@@ -57,7 +57,7 @@ def convert_simple_dict(input):
     elif isinstance(value, float):
       payload.extend(to_float32(value))
     else:
-      sys.stderr.write('Unknown type for key %s' % (key))
+      sys.stderr.write('Unknown type for key %s\n' % (key))
   output = to_dict(payload)
   return output
 

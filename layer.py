@@ -993,8 +993,8 @@ class ConvLayerParser(LocalLayerParser):
       payload.extend(binary.to_string('spec'))
       spec = {
         'num_kernels': dic['filters'],
-        'ksize': dic['filterSize'],
-        'stride': dic['stride'],
+        'ksize': dic['filterSize'][0],
+        'stride': dic['stride'][0],
       }
       payload.extend(binary.convert_simple_dict(spec))
       payload.extend(binary.to_string('kernels'))
@@ -1123,9 +1123,9 @@ class PoolLayerParser(LayerWithInputParser):
       payload.extend(binary.to_string('name'))
       payload.extend(binary.to_string(dic['name']))
       payload.extend(binary.to_string('psize'))
-      payload.extend(binary.to_uint32(dic['sizeX']))
+      payload.extend(binary.to_uint32(dic['sizeX'][0]))
       payload.extend(binary.to_string('stride'))
-      payload.extend(binary.to_uint32(dic['stride']))
+      payload.extend(binary.to_uint32(dic['stride'][0]))
       payload.extend(binary.to_string('mode'))
       payload.extend(binary.to_string(dic['pool']))
       output = binary.to_dict(payload)
