@@ -47,7 +47,7 @@ except:
 class ConvNet(IGPUModel):
     def __init__(self, op, load_dic, dp_params={}):
         filename_options = []
-        self.animation_image_index = 0
+        self.animation_image_index = op.get_value('show_filters_idx')
         dp_params['multiview_test'] = op.get_value('multiview_test')
         dp_params['crop_border'] = op.get_value('crop_border')
         dp_params['label_count'] = op.get_value('label_count')
@@ -139,6 +139,9 @@ class ConvNet(IGPUModel):
       self.plot_filters()
       image_file_name = "%s_%05d.png" % (self.show_filters, self.animation_image_index)
       image_file_path = os.path.join(self.save_path, image_file_name)
+      if os.path.exists(output_filename):
+        print "save_filter_image(): '%s' already exists, skipping save\n" % (image_file_path)
+        return
       pl.savefig(image_file_path)
       self.animation_image_index += 1
 
@@ -304,6 +307,7 @@ class ConvNet(IGPUModel):
         op.add_option("test-pattern", "test_pattern", StringOptionParser, "What patterns to use for the synthesized tests", default="solid", set_once=True)
         op.add_option("image-size", "image_size", IntegerOptionParser, "The square size of the images", default=256, set_once=True)
         op.add_option("show-filters", "show_filters", StringOptionParser, "Save learned filters in specified layer to per-iteration image files", default="")
+        op.add_option("show-filters-idx", "show_filters_idx", IntegerOptionParser, "The index to start saving image files to.", default=0)
         op.add_option("input-idx", "input_idx", IntegerOptionParser, "Input index for layer given to --show-filters", default=0)
         op.add_option("no-rgb", "no_rgb", BooleanOptionParser, "Don't combine filter channels into RGB in layer given to --show-filters", default=False)
         op.add_option("yuv-to-rgb", "yuv_to_rgb", BooleanOptionParser, "Convert RGB filters to YUV in layer given to --show-filters", default=False)

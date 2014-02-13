@@ -120,7 +120,6 @@ class IGPUModel:
         pass
     
     def start(self):
-        self.save_as_binary('start.ntwk')
         if self.test_only:
             self.test_outputs += [self.get_test_error()]
             self.print_test_results()
@@ -271,9 +270,10 @@ class IGPUModel:
     
         pickle(checkpoint_file_full_path, dic,compress=self.zip_save)
 
-        binary_checkpoint_file = "binary_%d.%d.ntwk" % (self.epoch, self.batchnum)
-        binary_checkpoint_file_full_path = os.path.join(checkpoint_dir, binary_checkpoint_file)
-        self.save_as_binary(binary_checkpoint_file_full_path)
+        if self.do_binary_save:
+          binary_checkpoint_file = "binary_%d.%d.ntwk" % (self.epoch, self.batchnum)
+          binary_checkpoint_file_full_path = os.path.join(checkpoint_dir, binary_checkpoint_file)
+          self.save_as_binary(binary_checkpoint_file_full_path)
 
         #for f in sorted(os.listdir(checkpoint_dir), key=alphanum_key):
         #    if sum(os.path.getsize(os.path.join(checkpoint_dir, f2)) for f2 in os.listdir(checkpoint_dir)) > self.max_filesize_mb*1024*1024 and f != checkpoint_file:
@@ -338,6 +338,7 @@ class IGPUModel:
         op.add_option("test-one", "test_one", BooleanOptionParser, "Test on one batch at a time?", default=1)
         op.add_option("gpu", "gpu", ListOptionParser(IntegerOptionParser), "GPU override", default=OptionExpression("[-1] * num_gpus"))
         op.add_option("print-entire-array", "print_entire_array", BooleanOptionParser, "Print all weight and bias values?", default=0)
+        op.add_option("binary-save", "do_binary_save", BooleanOptionParser, "Save the network to a portable binary file in the checkpoints folder?", default=0)
         return op
 
     @staticmethod
