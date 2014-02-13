@@ -139,7 +139,7 @@ class ConvNet(IGPUModel):
       self.plot_filters()
       image_file_name = "%s_%05d.png" % (self.show_filters, self.animation_image_index)
       image_file_path = os.path.join(self.save_path, image_file_name)
-      if os.path.exists(output_filename):
+      if os.path.exists(image_file_path):
         print "save_filter_image(): '%s' already exists, skipping save\n" % (image_file_path)
         return
       pl.savefig(image_file_path)
