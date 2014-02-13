@@ -1024,7 +1024,7 @@ class ConvLayerParser(LocalLayerParser):
     def to_binary(dic):
       group_count = dic['groups'][0]
       if group_count == 1:
-        output = ConvLayerParser.single_to_binary(dic, 0, 1)
+        output = ConvLayerParser.single_to_binary(dic, 0, group_count)
       else:
         payload = bytearray()
         payload.extend(binary.to_string('class'))
@@ -1037,7 +1037,7 @@ class ConvLayerParser(LocalLayerParser):
         payload.extend(binary.to_uint32(dic['filters']))
         layers_payload = bytearray()
         for i in range(group_count):
-          layers_payload.extend(ConvLayerParser.single_to_binary(dic, i))
+          layers_payload.extend(ConvLayerParser.single_to_binary(dic, i, group_count))
         payload.extend(binary.to_string('layers'))
         payload.extend(binary.to_list(layers_payload))
         output = binary.to_dict(payload)
