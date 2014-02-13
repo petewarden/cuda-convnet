@@ -984,7 +984,19 @@ class ConvLayerParser(LocalLayerParser):
         return dic    
 
     @staticmethod
-    def single_to_binary(dic, index):
+    def single_to_binary(dic, index, total_layers):
+      weights = dic['weights'][0]
+      biases = dic['biases'][0]
+      weights_shape = weights.shape
+      total_channels = weights_shape[1]
+      channels_chunk = int(total_channels / total_layers)
+      channels_start = (index * channels_chunk)
+      channels_end = ((index + 1) * channels_chunk)
+      my_weights = weights[:, channels_start:channels_end]
+      my_weights = weights[:, channels_start:channels_end]
+      my_biases = biases[channels_start:channels_end]
+      sys.stderr.write('my_weights.shape=%s\n' % (str(my_weights.shape)))
+
       payload = bytearray()
       payload.extend(binary.to_string('class'))
       payload.extend(binary.to_string('conv'))
@@ -996,14 +1008,13 @@ class ConvLayerParser(LocalLayerParser):
         'ksize': dic['filterSize'][0],
         'stride': dic['stride'][0],
       }
-      sys.stderr.write('weights[0].shape=%s\n' % (str(dic['weights'][0].shape)))
       payload.extend(binary.convert_simple_dict(spec))
       payload.extend(binary.to_string('kernels'))
-      payload.extend(binary.numpy_array_to_binary(dic['weights'][0]))
+      payload.extend(binary.numpy_array_to_binary(my_weights))
       payload.extend(binary.to_string('has_bias'))
       payload.extend(binary.to_uint32(1))
       payload.extend(binary.to_string('bias'))
-      payload.extend(binary.numpy_array_to_binary(dic['biases'][0]))
+      payload.extend(binary.numpy_array_to_binary(my_biases))
       payload.extend(binary.to_string('padding'))
       payload.extend(binary.to_uint32(-dic['padding'][0]))
       output = binary.to_dict(payload)
@@ -1013,7 +1024,7 @@ class ConvLayerParser(LocalLayerParser):
     def to_binary(dic):
       group_count = dic['groups'][0]
       if group_count == 1:
-        output = ConvLayerParser.single_to_binary(dic, 0)
+        output = ConvLayerParser.single_to_binary(dic, 0, 1)
       else:
         payload = bytearray()
         payload.extend(binary.to_string('class'))
