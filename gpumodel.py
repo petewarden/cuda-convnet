@@ -38,6 +38,7 @@ import platform
 from os import linesep as NL
 import layer as lay
 import binary
+import numpy as n
 
 class ModelStateException(Exception):
     pass
@@ -296,7 +297,7 @@ class IGPUModel:
         graph.extend(binary.to_string('layers'))
         graph.extend(binary.to_list(layers))
 
-        data_mean = self.train_data_provider.batch_meta['data_mean']
+        data_mean = self.train_data_provider.batch_meta['data_mean'].astype(n.float32)
         graph.extend(binary.to_string('data_mean'))
         graph.extend(binary.numpy_array_to_binary(data_mean))
 
