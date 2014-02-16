@@ -998,6 +998,7 @@ class ConvLayerParser(LocalLayerParser):
       num_kernels = (dic['filters'] / total_layers)
       sys.stderr.write('my_weights.shape=%s\n' % (str(my_weights.shape)))
       sys.stderr.write('my_biases.shape=%s\n' % (str(my_biases.shape)))
+      sys.stderr.write('biases.shape=%s\n' % (str(dic['biases'][0].shape)))
 
       payload = bytearray()
       payload.extend(binary.to_string('class'))
