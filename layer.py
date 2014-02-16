@@ -986,7 +986,7 @@ class ConvLayerParser(LocalLayerParser):
     @staticmethod
     def single_to_binary(dic, index, total_layers):
       weights = dic['weights'][0]
-      biases = dic['biases'][0]
+      biases = dic['biases']
       weights_shape = weights.shape
       total_channels = weights_shape[1]
       channels_chunk = int(total_channels / total_layers)
@@ -998,7 +998,7 @@ class ConvLayerParser(LocalLayerParser):
       num_kernels = (dic['filters'] / total_layers)
       sys.stderr.write('my_weights.shape=%s\n' % (str(my_weights.shape)))
       sys.stderr.write('my_biases.shape=%s\n' % (str(my_biases.shape)))
-      sys.stderr.write('biases.shape=%s\n' % (str(dic['biases'][0].shape)))
+      sys.stderr.write('biases.shape=%s\n' % (str(dic['biases'].shape)))
 
       payload = bytearray()
       payload.extend(binary.to_string('class'))
