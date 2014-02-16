@@ -994,7 +994,7 @@ class ConvLayerParser(LocalLayerParser):
       channels_end = ((index + 1) * channels_chunk)
       my_weights = weights[:, channels_start:channels_end]
       my_weights = weights[:, channels_start:channels_end]
-      my_biases = biases[:, channels_start:channels_end]
+      my_biases = biases[channels_start:channels_end]
       num_kernels = (dic['filters'] / total_layers)
       sys.stderr.write('my_weights.shape=%s\n' % (str(my_weights.shape)))
       sys.stderr.write('my_biases.shape=%s\n' % (str(my_biases.shape)))
