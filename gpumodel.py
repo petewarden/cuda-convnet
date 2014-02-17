@@ -249,6 +249,7 @@ class IGPUModel:
     def print_predictions(self):
         data = self.get_next_batch(train=False)[2] # get a test batch
         num_classes = self.test_data_provider.get_num_classes()
+        softmax_idx = self.get_layer_idx(self.op.get_value('show_preds'), check_type='softmax')
         NUM_IMGS = 1
         NUM_TOP_CLASSES = min(num_classes, 4) # show this many top labels
         label_names = self.test_data_provider.batch_meta['label_names']
@@ -259,7 +260,7 @@ class IGPUModel:
         data += [preds]
 
         # Run the model
-        self.libmodel.startFeatureWriter(data, self.sotmax_idx)
+        self.libmodel.startFeatureWriter(data, softmax_idx)
         self.finish_batch()
 
         data[0] = self.test_data_provider.get_plottable_data(data[0])
