@@ -238,6 +238,7 @@ class IGPUModel:
             test_outputs += [self.finish_batch()]
             if self.test_only: # Print the individual batch results for safety
                 print "batch %d: %s" % (data[1], str(test_outputs[-1]))
+                print "%s" % (str(test_outputs))
             if not load_next:
                 break
             sys.stdout.flush()
