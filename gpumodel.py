@@ -26,6 +26,7 @@ import numpy as n
 import os
 from time import time, asctime, localtime, strftime
 from numpy.random import randn, rand
+import numpy.random as nr
 from numpy import s_, dot, tile, zeros, ones, zeros_like, array, ones_like
 from util import *
 from data import *
