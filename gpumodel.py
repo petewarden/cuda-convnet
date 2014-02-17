@@ -122,8 +122,9 @@ class IGPUModel:
     
     def start(self):
         if self.test_only:
-            self.test_outputs += [self.get_test_error()]
-            self.print_test_results()
+            #self.test_outputs += [self.get_test_error()]
+            #self.print_test_results()
+            self.print_predictions()
             sys.exit(0)
         self.train()
     
@@ -244,7 +245,30 @@ class IGPUModel:
             sys.stdout.flush()
             
         return self.aggregate_test_outputs(test_outputs)
-    
+
+    def print_predictions(self):
+        data = self.get_next_batch(train=False)[2] # get a test batch
+        num_classes = self.test_data_provider.get_num_classes()
+        label_names = self.test_data_provider.batch_meta['label_names']
+        preds = n.zeros((NUM_IMGS, num_classes), dtype=n.single)
+        rand_idx = 0
+        data[0] = n.require(data[0][:,rand_idx], requirements='C')
+        data[1] = n.require(data[1][:,rand_idx], requirements='C')
+        data += [preds]
+
+        # Run the model
+        self.libmodel.startFeatureWriter(data, self.sotmax_idx)
+        self.finish_batch()
+
+        data[0] = self.test_data_provider.get_plottable_data(data[0])
+        img_idx = 0
+        true_label = int(data[1][0,img_idx])
+
+        img_labels = sorted(zip(preds[img_idx,:], label_names), key=lambda x: x[0])[-NUM_TOP_CLASSES:]
+        print "true_label=%s" % (label_names[true_label])
+        for l in img_labels:
+          print "l=%s" % (str(l))
+
     def set_var(self, var_name, var_val):
         setattr(self, var_name, var_val)
         self.model_state[var_name] = var_val
