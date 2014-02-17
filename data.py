@@ -104,7 +104,8 @@ class DataProvider:
     def get_data_file_name(self, batchnum=None):
         if self.test_batch:
             return os.path.join(self.test_batch, 'data_batch_0')
-
+        print "test_batch is not set!"
+        exit(1)
         if batchnum is None:
             batchnum = self.curr_batchnum
         return os.path.join(self.data_dir, 'data_batch_%d' % batchnum)
