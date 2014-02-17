@@ -251,10 +251,10 @@ class IGPUModel:
         num_classes = self.test_data_provider.get_num_classes()
         softmax_idx = self.get_layer_idx('probs', check_type='softmax')
         NUM_IMGS = 1
-        NUM_TOP_CLASSES = min(num_classes, 5) # show this many top labels
+        NUM_TOP_CLASSES = min(num_classes, 4) # show this many top labels
         label_names = self.test_data_provider.batch_meta['label_names']
         preds = n.zeros((NUM_IMGS, num_classes), dtype=n.single)
-        rand_idx = 0
+        rand_idx = nr.randint(0, data[0].shape[1], NUM_IMGS)
         data[0] = n.require(data[0][:,rand_idx], requirements='C')
         data[1] = n.require(data[1][:,rand_idx], requirements='C')
         data += [preds]
