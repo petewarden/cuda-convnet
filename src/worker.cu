@@ -180,6 +180,7 @@ void MultiviewTestWorker::run() {
  */
 FeatureWorker::FeatureWorker(ConvNet& convNet, CPUData& data, Matrix& ftrs, int layerIdx)
     : DataWorker(convNet, data), _ftrs(&ftrs), _layerIdx(layerIdx) {
+    fprintf(stderr, "%d, %d\n", ftrs.getNumRows(), data.getNumCases());
     assert(ftrs.getNumRows() == data.getNumCases());
     assert(!ftrs.isTrans());
 }
