@@ -53,6 +53,7 @@ class ConvNet(IGPUModel):
         dp_params['label_count'] = op.get_value('label_count')
         dp_params['test_pattern'] = op.get_value('test_pattern')
         dp_params['image_size'] = op.get_value('image_size')
+        dp_params['test_batch'] = op.get_value('test_batch')
         IGPUModel.__init__(self, "ConvNet", op, load_dic, filename_options, dp_params=dp_params)
         
     def import_model(self):
@@ -312,6 +313,7 @@ class ConvNet(IGPUModel):
         op.add_option("no-rgb", "no_rgb", BooleanOptionParser, "Don't combine filter channels into RGB in layer given to --show-filters", default=False)
         op.add_option("yuv-to-rgb", "yuv_to_rgb", BooleanOptionParser, "Convert RGB filters to YUV in layer given to --show-filters", default=False)
         op.add_option("channels", "channels", IntegerOptionParser, "Number of channels in layer given to --show-filters (fully-connected layers only)", default=0)
+        op.add_option("test-batch", "test_batch", StringOptionParser, "A single batch file to test against", default="", set_once=True)
 
         op.delete_option('max_test_err')
         op.options["max_filesize_mb"].default = 0

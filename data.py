@@ -50,6 +50,7 @@ class DataProvider:
         self.test = test
         self.batch_idx = batch_range.index(init_batchnum)
         self.image_size = dp_params['image_size']
+        self.test_batch = dp_params['test_batch']
 
     def get_next_batch(self):
         if self.data_dic is None or len(self.batch_range) > 1:
@@ -101,6 +102,9 @@ class DataProvider:
     
     # get filename of current batch
     def get_data_file_name(self, batchnum=None):
+        if self.test_batch:
+            return os.path.join(self.test_batch, 'data_batch_0')
+
         if batchnum is None:
             batchnum = self.curr_batchnum
         return os.path.join(self.data_dir, 'data_batch_%d' % batchnum)
