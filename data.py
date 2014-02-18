@@ -256,6 +256,7 @@ class LabeledRawDataProvider(DataProvider):
           dtype=n.uint8,
           offset = (4 * image_count),
           count = (bytes_per_image * image_count)).reshape((bytes_per_image, image_count))
+        print "entry['data']=%s" % (entry['data'])
         return epoch, batchnum, entry
 
 class LabeledMemoryRawDataProvider(LabeledDataProvider):
