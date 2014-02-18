@@ -920,7 +920,8 @@ void Matrix::saveToBinary(const char* filename) const {
   fileLength += tagHeaderSize + strlen("float_bits") + 1;
   fileLength += tagHeaderSize + sizeof(uint32_t);
   fileLength += tagHeaderSize + strlen("dims") + 1;
-  fileLength += tagHeaderSize + (sizeof(uint32_t) * 2);
+  fileLength += tagHeaderSize;
+  fileLength += (tagHeaderSize + sizeof(uint32_t)) * 2;
   fileLength += tagHeaderSize + strlen("data") + 1;
   fileLength += tagHeaderSize + (sizeof(float) * elementCount);
 
@@ -952,10 +953,20 @@ void Matrix::saveToBinary(const char* filename) const {
 
   SBinaryTag* dimsTag = (SBinaryTag*)(current);
   dimsTag->type = JP_LIST;
-  dimsTag->length = (sizeof(uint32_t) * 2);
-  (&dimsTag->payload.jpuint)[0] = _numRows;
-  (&dimsTag->payload.jpuint)[1] = _numCols;
-  current += tagHeaderSize + dimsTag->length;
+  dimsTag->length = ((tagHeaderSize + sizeof(uint32_t)) * 2);
+  current += tagHeaderSize;
+
+  SBinaryTag* dim0Tag = (SBinaryTag*)(current);
+  dim0Tag->type = JP_UINT;
+  dim0Tag->length = sizeof(uint32_t);
+  dim0Tag->payload.jpuint = _numRows;
+  current += tagHeaderSize + sizeof(uint32_t);
+
+  SBinaryTag* dim1Tag = (SBinaryTag*)(current);
+  dim1Tag->type = JP_UINT;
+  dim1Tag->length = sizeof(uint32_t);
+  dim1Tag->payload.jpuint = _numCols;
+  current += tagHeaderSize + sizeof(uint32_t);
 
   SBinaryTag* dataKeyTag = (SBinaryTag*)(current);
   dataKeyTag->type = JP_CHAR;
