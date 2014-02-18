@@ -1077,3 +1077,10 @@ void NVMatrix::printContents(int maxElements) {
   printf("]");
   printf("\n");
 }
+
+void NVMatrix::saveToBinary(const char* filename) const {
+    cudaThreadSynchronize();
+    Matrix hm = Matrix(_numRows, _numCols);
+    copyToHost(hm);
+    hm.saveToBinary(filename);
+}

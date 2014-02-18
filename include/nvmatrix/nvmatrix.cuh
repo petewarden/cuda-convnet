@@ -433,6 +433,7 @@ public:
     void print(int rows, int cols) const;
     void printShape(const char* name) const;
     void printContents(int maxElements = 8);
+    void saveToBinary(const char* filename) const;
 
     template <class Op> void applyBinaryV(Op op, NVMatrix& vec, NVMatrix& target) {
         assert(&target != &vec); // for now
