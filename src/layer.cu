@@ -102,6 +102,9 @@ void Layer::fprop(NVMatrixV& v, PASS_TYPE passType) {
     }
     getActs().transpose(_trans);
     
+    printf("input=\n");
+    (*(v.begin())).printContents();
+
     // First do fprop on the input whose acts matrix I'm sharing, if any
     if (_actsTarget >= 0) {
         fpropActs(_actsTarget, 0, passType);
@@ -376,6 +379,7 @@ FCLayer::FCLayer(ConvNet* convNet, PyObject* paramsDict) : WeightLayer(convNet, 
 
 void FCLayer::fpropActs(int inpIdx, float scaleTargets, PASS_TYPE passType) {
     getActs().addProduct(*_inputs[inpIdx], *_weights[inpIdx], scaleTargets, 1);
+    printf("weights=\n");
     (*_weights[inpIdx]).printContents();
     if (scaleTargets == 0) {
         getActs().addVector(_biases->getW());
@@ -469,6 +473,7 @@ void ConvLayer::fpropActs(int inpIdx, float scaleTargets, PASS_TYPE passType) {
                              _imgSize->at(inpIdx), _modulesX, _modulesX, _padding->at(inpIdx), _stride->at(inpIdx), _channels->at(inpIdx),
                              _filterChannels->at(inpIdx), _groups->at(inpIdx), scaleTargets, 1);
     } else {
+        printf("weights=\n");
         (*_weights[inpIdx]).printContents();
         convFilterActs(*_inputs[inpIdx], *_weights[inpIdx], getActs(), _imgSize->at(inpIdx), _modulesX, _modulesX, _padding->at(inpIdx),
                        _stride->at(inpIdx), _channels->at(inpIdx), _groups->at(inpIdx), scaleTargets, 1);
@@ -480,6 +485,8 @@ void ConvLayer::fpropActs(int inpIdx, float scaleTargets, PASS_TYPE passType) {
             getActs().addVector(_biases->getW());
             getActs().reshape(_numFilters * _modules, getActs().getNumElements() / (_numFilters * _modules));
         } else {
+            printf("biases=\n");
+            _biases->getW().printContents();
             getActs().addVector(_biases->getW());
         }
     }
