@@ -91,7 +91,7 @@ void Layer::fprop(NVMatrix& v, PASS_TYPE passType) {
     fprop(vl, passType);
 }
 
-g_layerIndex = 1;
+int g_layerIndex = 1;
 
 void Layer::fprop(NVMatrixV& v, PASS_TYPE passType) {
     assert(v.size() == _prev.size());
