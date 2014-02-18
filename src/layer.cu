@@ -103,7 +103,7 @@ void Layer::fprop(NVMatrixV& v, PASS_TYPE passType) {
     getActs().transpose(_trans);
     
     printf("input=\n");
-    (*(v.begin())).printContents();
+    (*(v.begin()))->printContents();
 
     // First do fprop on the input whose acts matrix I'm sharing, if any
     if (_actsTarget >= 0) {
