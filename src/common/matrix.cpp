@@ -917,11 +917,11 @@ void Matrix::saveToBinary(const char* filename) const {
 
   size_t fileLength = 0;
   fileLength += tagHeaderSize; // Main dict header
-  fileLength += tagHeaderSize + strlen("float_bits");
+  fileLength += tagHeaderSize + strlen("float_bits") + 1;
   fileLength += tagHeaderSize + sizeof(uint32_t);
-  fileLength += tagHeaderSize + strlen("dims");
+  fileLength += tagHeaderSize + strlen("dims") + 1;
   fileLength += tagHeaderSize + (sizeof(uint32_t) * 2);
-  fileLength += tagHeaderSize + strlen("data");
+  fileLength += tagHeaderSize + strlen("data") + 1;
   fileLength += tagHeaderSize + (sizeof(float) * elementCount);
 
   char* fileData = (char*)(malloc(fileLength));
@@ -934,8 +934,8 @@ void Matrix::saveToBinary(const char* filename) const {
 
   SBinaryTag* bitsPerFloatKeyTag = (SBinaryTag*)(current);
   bitsPerFloatKeyTag->type = JP_CHAR;
-  bitsPerFloatKeyTag->length = tagHeaderSize + strlen("float_bits");
-  memcpy(bitsPerFloatKeyTag->payload.jpchar, "float_bits", strlen("float_bits"));
+  bitsPerFloatKeyTag->length = tagHeaderSize + strlen("float_bits") + 1;
+  strncpy(bitsPerFloatKeyTag->payload.jpchar, strlen("float_bits") + 1, "float_bits");
   current += bitsPerFloatKeyTag->length;
 
   SBinaryTag* bitsPerFloatTag = (SBinaryTag*)(current);
@@ -944,12 +944,24 @@ void Matrix::saveToBinary(const char* filename) const {
   bitsPerFloatTag->payload.jpuint = 32;
   current += bitsPerFloatTag->length;
 
+  SBinaryTag* dimsKeyTag = (SBinaryTag*)(current);
+  dimsKeyTag->type = JP_CHAR;
+  dimsKeyTag->length = tagHeaderSize + strlen("dims") + 1;
+  strncpy(dimsKeyTag->payload.jpchar, strlen("dims") + 1, "dims");
+  current += dimsKeyTag->length;
+
   SBinaryTag* dimsTag = (SBinaryTag*)(current);
   dimsTag->type = JP_LIST;
   dimsTag->length = tagHeaderSize + (sizeof(uint32_t) * 2);
   (&dimsTag->payload.jpuint)[0] = _numRows;
   (&dimsTag->payload.jpuint)[1] = _numCols;
   current += dimsTag->length;
+
+  SBinaryTag* dataKeyTag = (SBinaryTag*)(current);
+  dataKeyTag->type = JP_CHAR;
+  dataKeyTag->length = tagHeaderSize + strlen("data") + 1;
+  strncpy(dataKeyTag->payload.jpchar, strlen("data") + 1, "data");
+  current += dataKeyTag->length;
 
   SBinaryTag* dataTag = (SBinaryTag*)(current);
   dataTag->type = JP_FARY;
