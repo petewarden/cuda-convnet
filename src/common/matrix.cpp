@@ -960,7 +960,7 @@ void Matrix::saveToBinary(const char* filename) const {
 
   FILE* output = fopen(filename, "wb");
   assert(output != NULL);
-  fwrite(fileData, fileLength, 1, output)
+  fwrite(fileData, fileLength, 1, output);
   fclose(output);
 
 }
