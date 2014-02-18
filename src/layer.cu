@@ -140,7 +140,7 @@ void Layer::fprop(NVMatrixV& v, PASS_TYPE passType) {
     cudaDeviceSynchronize();
 
     snprintf(filename, maxFilenameLength, "%03d_output_%s.blob", g_layerIndex, _name.c_str());
-    (*(v.begin()))->saveToBinary(filename);
+    getActs().saveToBinary(filename);
     g_layerIndex += 1;
 
     fpropNext(passType);
