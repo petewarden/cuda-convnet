@@ -1024,7 +1024,7 @@ class ConvLayerParser(LocalLayerParser):
       }
       payload.extend(binary.convert_simple_dict(spec))
       payload.extend(binary.to_string('kernels'))
-      payload.extend(binary.numpy_array_to_binary(converted_weights))
+      payload.extend(binary.numpy_array_to_binary(my_weights))
       payload.extend(binary.to_string('has_bias'))
       payload.extend(binary.to_uint32(1))
       payload.extend(binary.to_string('bias'))
