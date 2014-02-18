@@ -124,7 +124,7 @@ void Layer::fprop(NVMatrixV& v, PASS_TYPE passType) {
         getActs().scale(1.0 - _dropout);
     }
 
-    printf("Layer %s\n", _name);
+    printf("Layer %s\n", _name.c_str());
     cudaDeviceSynchronize();
     getActs().print(10, 10);
 
