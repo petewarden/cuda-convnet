@@ -942,7 +942,7 @@ void Matrix::saveToBinary(const char* filename) const {
   bitsPerFloatTag->type = JP_UINT;
   bitsPerFloatTag->length = sizeof(uint32_t);
   bitsPerFloatTag->payload.jpuint = 32;
-  current += bitsPerFloatTag->length;
+  current += tagHeaderSize + bitsPerFloatTag->length;
 
   SBinaryTag* dimsKeyTag = (SBinaryTag*)(current);
   dimsKeyTag->type = JP_CHAR;
