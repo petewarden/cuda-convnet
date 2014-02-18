@@ -934,40 +934,40 @@ void Matrix::saveToBinary(const char* filename) const {
 
   SBinaryTag* bitsPerFloatKeyTag = (SBinaryTag*)(current);
   bitsPerFloatKeyTag->type = JP_CHAR;
-  bitsPerFloatKeyTag->length = tagHeaderSize + strlen("float_bits") + 1;
+  bitsPerFloatKeyTag->length = strlen("float_bits") + 1;
   strncpy(bitsPerFloatKeyTag->payload.jpchar, "float_bits", strlen("float_bits") + 1);
-  current += bitsPerFloatKeyTag->length;
+  current += tagHeaderSize + bitsPerFloatKeyTag->length;
 
   SBinaryTag* bitsPerFloatTag = (SBinaryTag*)(current);
   bitsPerFloatTag->type = JP_UINT;
-  bitsPerFloatTag->length = tagHeaderSize + sizeof(uint32_t);
+  bitsPerFloatTag->length = sizeof(uint32_t);
   bitsPerFloatTag->payload.jpuint = 32;
   current += bitsPerFloatTag->length;
 
   SBinaryTag* dimsKeyTag = (SBinaryTag*)(current);
   dimsKeyTag->type = JP_CHAR;
-  dimsKeyTag->length = tagHeaderSize + strlen("dims") + 1;
+  dimsKeyTag->length = strlen("dims") + 1;
   strncpy(dimsKeyTag->payload.jpchar, "dims", strlen("dims") + 1);
-  current += dimsKeyTag->length;
+  current += tagHeaderSize + dimsKeyTag->length;
 
   SBinaryTag* dimsTag = (SBinaryTag*)(current);
   dimsTag->type = JP_LIST;
-  dimsTag->length = tagHeaderSize + (sizeof(uint32_t) * 2);
+  dimsTag->length = (sizeof(uint32_t) * 2);
   (&dimsTag->payload.jpuint)[0] = _numRows;
   (&dimsTag->payload.jpuint)[1] = _numCols;
-  current += dimsTag->length;
+  current += tagHeaderSize + dimsTag->length;
 
   SBinaryTag* dataKeyTag = (SBinaryTag*)(current);
   dataKeyTag->type = JP_CHAR;
-  dataKeyTag->length = tagHeaderSize + strlen("data") + 1;
+  dataKeyTag->length = strlen("data") + 1;
   strncpy(dataKeyTag->payload.jpchar, "data", strlen("data") + 1);
-  current += dataKeyTag->length;
+  current += tagHeaderSize + dataKeyTag->length;
 
   SBinaryTag* dataTag = (SBinaryTag*)(current);
   dataTag->type = JP_FARY;
-  dataTag->length = tagHeaderSize + (sizeof(float) * elementCount);
+  dataTag->length = (sizeof(float) * elementCount);
   memcpy(dataTag->payload.jpfary, _data, (sizeof(float) * elementCount));
-  current += dataTag->length;
+  current += tagHeaderSize + dataTag->length;
   assert((current - fileData) == fileLength);
 
   FILE* output = fopen(filename, "wb");
