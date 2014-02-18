@@ -1061,7 +1061,7 @@ void NVMatrix::printContents(int maxElements) {
       if (x > 0) {
         printf(", ");
       }
-      const jpfloat_t value = *(_devData + (y * _numCols) + x);
+      const float value = *(_devData + (y * _numCols) + x);
       printf("%.10f", value);
     }
     if (y < (height - 1)) {
