@@ -1008,6 +1008,7 @@ class ConvLayerParser(LocalLayerParser):
       my_weights = converted_weights[:, channels_start:channels_end]
       my_biases = biases[channels_start:channels_end]
       sys.stderr.write('converted_weights.shape=%s\n' % (str(converted_weights.shape)))
+      sys.stderr.write('my_weights.shape=%s\n' % (str(my_weights.shape)))
       sys.stderr.write('my_biases.shape=%s\n' % (str(my_biases.shape)))
       sys.stderr.write('biases.shape=%s\n' % (str(dic['biases'].shape)))
 
