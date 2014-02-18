@@ -1017,3 +1017,59 @@ void NVMatrix::print(int rows, int cols) const {
 void NVMatrix::printShape(const char* name) const {
     printf("%s: %dx%d\n", name, _numRows, _numCols);
 }
+
+void NVMatrix::printContents(int maxElements) {
+  const int height = _numRows;
+  const int width = _numCols;
+
+  int yTop;
+  int yBottom;
+  if (maxElements < 1) {
+    yTop = -1;
+    yBottom = -1;
+  } else {
+    yTop = (maxElements / 2);
+    yBottom = (height - (maxElements / 2));
+  }
+
+  int xLeft;
+  int xRight;
+  if (maxElements < 1) {
+    xLeft = -1;
+    xRight = -1;
+  } else {
+    xLeft = (maxElements / 2);
+    xRight = (width - (maxElements / 2));
+  }
+
+  printf("[");
+  for (int y = 0; y < height; y += 1) {
+    if (y == yTop) {
+      printf("...\n");
+    }
+    if ((y >= yTop) && (y < yBottom)) {
+      continue;
+    }
+    printf("[");
+    for (int x = 0; x < width; x += 1) {
+      if (x == xLeft) {
+        printf("...");
+      }
+      if ((x >= xLeft) && (x < xRight)) {
+        continue;
+      }
+      if (x > 0) {
+        printf(", ");
+      }
+      const jpfloat_t value = *(_devData + (y * _numCols) + x);
+      printf("%.10f", value);
+    }
+    if (y < (height - 1)) {
+      printf("],\n");
+    } else {
+      printf("]");
+    }
+  }
+  printf("]");
+  printf("\n");
+}
