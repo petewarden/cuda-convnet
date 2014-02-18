@@ -929,7 +929,7 @@ void Matrix::saveToBinary(const char* filename) const {
   char* current = fileData;
   SBinaryTag* mainDict = (SBinaryTag*)(current);
   mainDict->type = JP_DICT;
-  mainDict->length = fileLength;
+  mainDict->length = (fileLength - tagHeaderSize);
   current += tagHeaderSize;
 
   SBinaryTag* bitsPerFloatKeyTag = (SBinaryTag*)(current);
