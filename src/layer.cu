@@ -91,6 +91,8 @@ void Layer::fprop(NVMatrix& v, PASS_TYPE passType) {
     fprop(vl, passType);
 }
 
+g_layerIndex = 1;
+
 void Layer::fprop(NVMatrixV& v, PASS_TYPE passType) {
     assert(v.size() == _prev.size());
     _inputs.clear();
@@ -104,6 +106,12 @@ void Layer::fprop(NVMatrixV& v, PASS_TYPE passType) {
     
     printf("input=\n");
     (*(v.begin()))->printContents();
+
+    const int maxFilenameLength = 1024;
+    char filename[maxFilenameLength];
+    snprintf(filename, maxFilenameLength, "%03d_input_%s.blob", g_layerIndex, _name.c_str());
+    (*(v.begin()))->saveToBinary(filename);
+    g_layerIndex += 1;
 
     // First do fprop on the input whose acts matrix I'm sharing, if any
     if (_actsTarget >= 0) {
@@ -130,6 +138,10 @@ void Layer::fprop(NVMatrixV& v, PASS_TYPE passType) {
     printf("Layer %s\n", _name.c_str());
     getActs().printContents(16);
     cudaDeviceSynchronize();
+
+    snprintf(filename, maxFilenameLength, "%03d_output_%s.blob", g_layerIndex, _name.c_str());
+    (*(v.begin()))->saveToBinary(filename);
+    g_layerIndex += 1;
 
     fpropNext(passType);
 }

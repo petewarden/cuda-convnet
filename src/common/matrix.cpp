@@ -908,4 +908,59 @@ bool Matrix::hasInf() const {
     return false;
 }
 
+void Matrix::saveToBinary(const char* filename) const {
+
+  const size_t tagHeaderSize = 8;
+
+  const int elementCount = (_numRows * _numCols);
+
+  size_t fileLength = 0;
+  fileLength += tagHeaderSize; // Main dict header
+  fileLength += tagHeaderSize + strlen("float_bits");
+  fileLength += tagHeaderSize + sizeof(uint32_t);
+  fileLength += tagHeaderSize + strlen("dims");
+  fileLength += tagHeaderSize + (sizeof(uint32_t) * 2);
+  fileLength += tagHeaderSize + strlen("data");
+  fileLength += tagHeaderSize + (sizeof(float) * elementCount);
+
+  char* fileData = (char*)(malloc(fileLength));
+
+  char* current = fileData;
+  SBinaryTag* mainDict = (SBinaryTag*)(current);
+  mainDict.type = JP_DICT;
+  mainDict.length = fileLength;
+  current += tagHeaderSize;
+
+  SBinaryTag* bitsPerFloatKeyTag = (SBinaryTag*)(current);
+  bitsPerFloatKeyTag.type = JP_CHAR;
+  bitsPerFloatKeyTag.length = tagHeaderSize + strlen("float_bits");
+  memcpy(bitsPerFloatKeyTag.jpchar, "float_bits", strlen("float_bits"));
+  current += bitsPerFloatKeyTag.length;
+
+  SBinaryTag* bitsPerFloatTag = (SBinaryTag*)(current);
+  bitsPerFloatTag.type = JP_UINT;
+  bitsPerFloatTag.length = tagHeaderSize + sizeof(uint32_t);
+  bitsPerFloatTag.jpuint = 32;
+  current += bitsPerFloatTag.length;
+
+  SBinaryTag* dimsTag = (SBinaryTag*)(current);
+  dimsTag.type = JP_LIST;
+  dimsTag.length = tagHeaderSize + (sizeof(uint32_t) * 2);
+  (&dimsTag.jpuint)[0] = _numRows;
+  (&dimsTag.jpuint)[1] = _numCols;
+  current += dimsTag.length;
+
+  SBinaryTag* dataTag = (SBinaryTag*)(current);
+  dataTag.type = JP_FARY;
+  dataTag.length = tagHeaderSize + (sizeof(float) * elementCount);
+  memcpy(dataTag.jpfary, _data, (sizeof(float) * elementCount));
+  current += dataTag.length;
+  assert((current - fileData) == fileLength);
+
+  FILE* output = fopen(filename, "wb");
+  assert(output != NULL);
+  fwrite(fileData, fileLength, 1, output)
+  fclose(output);
+
+}
 

@@ -309,6 +309,7 @@ public:
     void print() const;
     void print(long int startRow,long int rows, long int startCol,long int cols) const;
     void print(long int rows, long int cols) const;
+    void saveToBinary(const char* filename) const;
 };
 
 #endif /* MATRIX_H_ */

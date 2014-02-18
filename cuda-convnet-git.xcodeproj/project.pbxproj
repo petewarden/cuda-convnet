@@ -80,6 +80,8 @@
 		5910B03A18A4509B001CE2C6 /* worker.cu */ = {isa = PBXFileReference; lastKnownFileType = text; path = worker.cu; sourceTree = "<group>"; };
 		5910B03B18A4509B001CE2C6 /* util.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = util.py; sourceTree = "<group>"; };
 		5910B03C18A456EE001CE2C6 /* makerawbatches.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = makerawbatches.py; sourceTree = "<group>"; };
+		591A037418B3D6980014C655 /* binary_format.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = binary_format.h; sourceTree = "<group>"; };
+		591A037518B3D6BD0014C655 /* binary_format.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = binary_format.cpp; sourceTree = "<group>"; };
 		59DD71F718A81FB30054D561 /* imagenet2011ids.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = imagenet2011ids.txt; sourceTree = "<group>"; };
 		59DD71F818A828010054D561 /* downloadimages.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = downloadimages.py; sourceTree = "<group>"; };
 		59DD71F918ABF3E60054D561 /* binary.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = binary.py; sourceTree = "<group>"; };
@@ -167,6 +169,7 @@
 		5910B00B18A4509B001CE2C6 /* common */ = {
 			isa = PBXGroup;
 			children = (
+				591A037418B3D6980014C655 /* binary_format.h */,
 				5910B00C18A4509B001CE2C6 /* matrix.h */,
 				5910B00D18A4509B001CE2C6 /* matrix_funcs.h */,
 				5910B00E18A4509B001CE2C6 /* queue.h */,
@@ -217,6 +220,7 @@
 		5910B02718A4509B001CE2C6 /* common */ = {
 			isa = PBXGroup;
 			children = (
+				591A037518B3D6BD0014C655 /* binary_format.cpp */,
 				5910B02818A4509B001CE2C6 /* matrix.cpp */,
 			);
 			path = common;
