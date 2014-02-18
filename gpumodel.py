@@ -274,8 +274,7 @@ class IGPUModel:
           print "l=%s" % (str(l))
 
         binary_checkpoint_file = "binary_%d.%d.ntwk" % (self.epoch, self.batchnum)
-        binary_checkpoint_file_full_path = os.path.join(checkpoint_dir, binary_checkpoint_file)
-        self.save_as_binary(binary_checkpoint_file_full_path)
+        self.save_as_binary(binary_checkpoint_file)
 
     def set_var(self, var_name, var_val):
         setattr(self, var_name, var_val)
