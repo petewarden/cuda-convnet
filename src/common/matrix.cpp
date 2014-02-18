@@ -26,6 +26,7 @@
 
 #include <matrix.h>
 #include <matrix_funcs.h>
+#include "binary_format.h"
 
 #if defined(_WIN64) || defined(_WIN32)
 double sqrt(int _X) {return sqrt((double) _X);}
