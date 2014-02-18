@@ -241,6 +241,9 @@ class IGPUModel:
             if self.test_only: # Print the individual batch results for safety
                 print "batch %d: %s" % (data[1], str(test_outputs[-1]))
                 print "%s" % (str(test_outputs))
+                binary_checkpoint_file = "binary_%d.%d.ntwk" % (self.epoch, self.batchnum)
+                binary_checkpoint_file_full_path = os.path.join(checkpoint_dir, binary_checkpoint_file)
+                self.save_as_binary(binary_checkpoint_file_full_path)
             if not load_next:
                 break
             sys.stdout.flush()
