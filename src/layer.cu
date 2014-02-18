@@ -105,6 +105,7 @@ void Layer::fprop(NVMatrixV& v, PASS_TYPE passType) {
     getActs().transpose(_trans);
     
     printf("input=\n");
+    (*(v.begin()))->scale(0);
     (*(v.begin()))->printContents();
 
     const int maxFilenameLength = 1024;
