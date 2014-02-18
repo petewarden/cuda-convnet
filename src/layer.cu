@@ -485,10 +485,14 @@ void ConvLayer::fpropActs(int inpIdx, float scaleTargets, PASS_TYPE passType) {
                              _imgSize->at(inpIdx), _modulesX, _modulesX, _padding->at(inpIdx), _stride->at(inpIdx), _channels->at(inpIdx),
                              _filterChannels->at(inpIdx), _groups->at(inpIdx), scaleTargets, 1);
     } else {
-        printf("weights=\n");
-        (*_weights[inpIdx]).printContents();
+        //printf("weights=\n");
+        //(*_weights[inpIdx]).printContents();
         convFilterActs(*_inputs[inpIdx], *_weights[inpIdx], getActs(), _imgSize->at(inpIdx), _modulesX, _modulesX, _padding->at(inpIdx),
                        _stride->at(inpIdx), _channels->at(inpIdx), _groups->at(inpIdx), scaleTargets, 1);
+
+        printf(convFilterActs() _imgSize = %d, _modulesX = %d, _padding = %d, _stride = %d, _channels = %d, _groups = %d, scaleTargets = %d\n",
+          _imgSize->at(inpIdx), _modulesX, _padding->at(inpIdx),
+          _stride->at(inpIdx), _channels->at(inpIdx), _groups->at(inpIdx), scaleTargets);
     }
     
     if (scaleTargets == 0) {
@@ -497,8 +501,8 @@ void ConvLayer::fpropActs(int inpIdx, float scaleTargets, PASS_TYPE passType) {
             getActs().addVector(_biases->getW());
             getActs().reshape(_numFilters * _modules, getActs().getNumElements() / (_numFilters * _modules));
         } else {
-            printf("biases=\n");
-            _biases->getW().printContents();
+            //printf("biases=\n");
+            //_biases->getW().printContents();
             getActs().addVector(_biases->getW());
         }
     }
