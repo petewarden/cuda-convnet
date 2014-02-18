@@ -1019,6 +1019,10 @@ void NVMatrix::printShape(const char* name) const {
 }
 
 void NVMatrix::printContents(int maxElements) {
+  Matrix hm = Matrix(_numRows, _numCols);
+  copyToHost(hm);
+  float* data = hm.getData();
+
   const int height = _numRows;
   const int width = _numCols;
 
@@ -1061,7 +1065,7 @@ void NVMatrix::printContents(int maxElements) {
       if (x > 0) {
         printf(", ");
       }
-      const float value = 10.0f;//*(_devData + (y * _numCols) + x);
+      const float value = *(data + (y * _numCols) + x);
       printf("%.10f", value);
     }
     if (y < (height - 1)) {
