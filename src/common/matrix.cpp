@@ -935,7 +935,7 @@ void Matrix::saveToBinary(const char* filename) const {
   SBinaryTag* bitsPerFloatKeyTag = (SBinaryTag*)(current);
   bitsPerFloatKeyTag->type = JP_CHAR;
   bitsPerFloatKeyTag->length = tagHeaderSize + strlen("float_bits") + 1;
-  strncpy(bitsPerFloatKeyTag->payload.jpchar, strlen("float_bits") + 1, "float_bits");
+  strncpy(bitsPerFloatKeyTag->payload.jpchar, "float_bits", strlen("float_bits") + 1);
   current += bitsPerFloatKeyTag->length;
 
   SBinaryTag* bitsPerFloatTag = (SBinaryTag*)(current);
@@ -947,7 +947,7 @@ void Matrix::saveToBinary(const char* filename) const {
   SBinaryTag* dimsKeyTag = (SBinaryTag*)(current);
   dimsKeyTag->type = JP_CHAR;
   dimsKeyTag->length = tagHeaderSize + strlen("dims") + 1;
-  strncpy(dimsKeyTag->payload.jpchar, strlen("dims") + 1, "dims");
+  strncpy(dimsKeyTag->payload.jpchar, "dims", strlen("dims") + 1);
   current += dimsKeyTag->length;
 
   SBinaryTag* dimsTag = (SBinaryTag*)(current);
@@ -960,7 +960,7 @@ void Matrix::saveToBinary(const char* filename) const {
   SBinaryTag* dataKeyTag = (SBinaryTag*)(current);
   dataKeyTag->type = JP_CHAR;
   dataKeyTag->length = tagHeaderSize + strlen("data") + 1;
-  strncpy(dataKeyTag->payload.jpchar, strlen("data") + 1, "data");
+  strncpy(dataKeyTag->payload.jpchar, "data", strlen("data") + 1);
   current += dataKeyTag->length;
 
   SBinaryTag* dataTag = (SBinaryTag*)(current);
