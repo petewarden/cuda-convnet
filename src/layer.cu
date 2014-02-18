@@ -124,6 +124,8 @@ void Layer::fprop(NVMatrixV& v, PASS_TYPE passType) {
         getActs().scale(1.0 - _dropout);
     }
 
+    printf("Hello world\n");
+
     fpropNext(passType);
 }
 
