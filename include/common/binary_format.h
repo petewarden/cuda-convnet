@@ -29,7 +29,7 @@
 #include <stdio.h>
 #include <stdint.h>
 
-#include "jpcnn.h"
+typedef float jpfloat_t;
 
 #define JP_CHAR (0x52414843) // 'CHAR'
 #define JP_UINT (0x544E4955) // 'UINT'
