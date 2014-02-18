@@ -151,6 +151,8 @@ class CroppedRawDataProvider(LabeledRawDataProvider):
         print "precropped data = %s" % (str(datadic['data']))
         self.__trim_borders(datadic['data'], cropped)
         print "premean data = %s" % (str(cropped))
+        print "data_mean.shape = %s" % (str(data_mean.shape))
+        print "data_mean = %s" % (str(data_mean))
         cropped -= self.data_mean
         print "postmean data = %s" % (str(cropped))
         self.batches_generated += 1
