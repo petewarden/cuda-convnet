@@ -985,14 +985,13 @@ class ConvLayerParser(LocalLayerParser):
 
     @staticmethod
     def single_to_binary(dic, index, total_layers):
-      weights = dic['weights'][0]
+      weights = dic['weights'][0].copy()
       biases = dic['biases']
       weights_shape = weights.shape
       total_channels = weights_shape[1]
       channels_chunk = int(total_channels / total_layers)
       channels_start = (index * channels_chunk)
       channels_end = ((index + 1) * channels_chunk)
-      my_weights = weights[:, channels_start:channels_end].copy()
 
       input_channels = dic['channels'][0]
       num_kernels = (dic['filters'] / total_layers)
@@ -1001,12 +1000,12 @@ class ConvLayerParser(LocalLayerParser):
 
       print "input_channels=%s, ksize=%s, num_kernels=%s" % (str(input_channels), str(ksize), str(num_kernels))
 
-      my_weights.resize((input_channels, ksize, ksize, num_kernels))
-      converted_weights = n.empty((ksize, ksize, input_channels, num_kernels), dtype=my_weights.dtype)
+      weights.resize((input_channels, ksize, ksize, num_kernels))
+      converted_weights = n.empty((ksize, ksize, input_channels, num_kernels), dtype=weights.dtype)
       for i in range(input_channels):
-        converted_weights[:, :, i, :] = my_weights[i, :, :, :]
+        converted_weights[:, :, i, :] = weights[i, :, :, :]
       converted_weights.resize(ksize * ksize * input_channels, num_kernels)
-
+      my_weights = converted_weights[:, channels_start:channels_end]
       my_biases = biases[channels_start:channels_end]
       sys.stderr.write('converted_weights.shape=%s\n' % (str(converted_weights.shape)))
       sys.stderr.write('my_biases.shape=%s\n' % (str(my_biases.shape)))
