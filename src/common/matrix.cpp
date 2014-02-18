@@ -935,26 +935,26 @@ void Matrix::saveToBinary(const char* filename) const {
   SBinaryTag* bitsPerFloatKeyTag = (SBinaryTag*)(current);
   bitsPerFloatKeyTag->type = JP_CHAR;
   bitsPerFloatKeyTag->length = tagHeaderSize + strlen("float_bits");
-  memcpy(bitsPerFloatKeyTag->jpchar, "float_bits", strlen("float_bits"));
+  memcpy(bitsPerFloatKeyTag->payload.jpchar, "float_bits", strlen("float_bits"));
   current += bitsPerFloatKeyTag->length;
 
   SBinaryTag* bitsPerFloatTag = (SBinaryTag*)(current);
   bitsPerFloatTag->type = JP_UINT;
   bitsPerFloatTag->length = tagHeaderSize + sizeof(uint32_t);
-  bitsPerFloatTag->jpuint = 32;
+  bitsPerFloatTag->payload.jpuint = 32;
   current += bitsPerFloatTag->length;
 
   SBinaryTag* dimsTag = (SBinaryTag*)(current);
   dimsTag->type = JP_LIST;
   dimsTag->length = tagHeaderSize + (sizeof(uint32_t) * 2);
-  (&dimsTag->jpuint)[0] = _numRows;
-  (&dimsTag->jpuint)[1] = _numCols;
+  (&dimsTag->payload.jpuint)[0] = _numRows;
+  (&dimsTag->payload.jpuint)[1] = _numCols;
   current += dimsTag->length;
 
   SBinaryTag* dataTag = (SBinaryTag*)(current);
   dataTag->type = JP_FARY;
   dataTag->length = tagHeaderSize + (sizeof(float) * elementCount);
-  memcpy(dataTag->jpfary, _data, (sizeof(float) * elementCount));
+  memcpy(dataTag->payload.jpfary, _data, (sizeof(float) * elementCount));
   current += dataTag->length;
   assert((current - fileData) == fileLength);
 
