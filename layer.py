@@ -993,7 +993,7 @@ class ConvLayerParser(LocalLayerParser):
       channels_start = (index * channels_chunk)
       channels_end = ((index + 1) * channels_chunk)
 
-      input_channels = dic['channels'][0]
+      input_channels = (dic['channels'][0] / total_layers)
       total_num_kernels = dic['filters']
       my_num_kernels = (total_num_kernels / total_layers)
       ksize = dic['filterSize'][0]
