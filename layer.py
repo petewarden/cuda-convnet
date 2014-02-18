@@ -1002,7 +1002,7 @@ class ConvLayerParser(LocalLayerParser):
       print "input_channels=%s, ksize=%s, num_kernels=%s" % (str(input_channels), str(ksize), str(num_kernels))
 
       my_weights.resize((input_channels, ksize, ksize, num_kernels))
-      converted_weights = np.empty((ksize, ksize, input_channels, num_kernels), my_weights.dtype)
+      converted_weights = n.empty((ksize, ksize, input_channels, num_kernels), dtype=my_weights.dtype)
       for i in range(input_channels):
         converted_weights[:, :, i, :] = my_weights[i, :, :, :]
       converted_weights.resize(ksize * ksize * input_channels, num_kernels)
