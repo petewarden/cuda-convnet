@@ -148,8 +148,11 @@ class CroppedRawDataProvider(LabeledRawDataProvider):
 
         cropped = n.zeros((self.get_data_dims(), datadic['data'].shape[1]*self.data_mult), dtype=n.single)
 
+        print "precropped data = %s" % (str(datadic['data']))
         self.__trim_borders(datadic['data'], cropped)
+        print "premean data = %s" % (str(cropped))
         cropped -= self.data_mean
+        print "postmean data = %s" % (str(cropped))
         self.batches_generated += 1
 
         #sys.stderr.write('Other get_next_batch() work took %s secs\n' % (time() - start_time))
@@ -185,6 +188,7 @@ class CroppedRawDataProvider(LabeledRawDataProvider):
         else:
             for c in xrange(x.shape[1]): # loop over cases
                 startY, startX = nr.randint(0,self.border_size*2 + 1), nr.randint(0,self.border_size*2 + 1)
+
                 endY, endX = startY + self.inner_size, startX + self.inner_size
                 pic = y[:,startY:endY,startX:endX, c]
                 if nr.randint(2) == 0: # also flip the image with 50% probability
