@@ -994,17 +994,18 @@ class ConvLayerParser(LocalLayerParser):
       channels_end = ((index + 1) * channels_chunk)
 
       input_channels = dic['channels'][0]
-      num_kernels = (dic['filters'] / total_layers)
+      total_num_kernels = dic['filters']
+      my_num_kernels = (total_num_kernels / total_layers)
       ksize = dic['filterSize'][0]
       stride = dic['stride'][0]
 
-      print "input_channels=%s, ksize=%s, num_kernels=%s" % (str(input_channels), str(ksize), str(num_kernels))
+      print "input_channels=%s, ksize=%s, total_num_kernels=%s" % (str(input_channels), str(ksize), str(total_num_kernels))
 
-      weights.resize((input_channels, ksize, ksize, num_kernels))
-      converted_weights = n.empty((ksize, ksize, input_channels, num_kernels), dtype=weights.dtype)
+      weights.resize((input_channels, ksize, ksize, total_num_kernels))
+      converted_weights = n.empty((ksize, ksize, input_channels, total_num_kernels), dtype=weights.dtype)
       for i in range(input_channels):
         converted_weights[:, :, i, :] = weights[i, :, :, :]
-      converted_weights.resize(ksize * ksize * input_channels, num_kernels)
+      converted_weights.resize(ksize * ksize * input_channels, total_num_kernels)
       my_weights = converted_weights[:, channels_start:channels_end]
       my_biases = biases[channels_start:channels_end]
       sys.stderr.write('converted_weights.shape=%s\n' % (str(converted_weights.shape)))
@@ -1019,7 +1020,7 @@ class ConvLayerParser(LocalLayerParser):
       payload.extend(binary.to_string(dic['name']))
       payload.extend(binary.to_string('spec'))
       spec = {
-        'num_kernels': num_kernels,
+        'num_kernels': my_num_kernels,
         'ksize': ksize,
         'stride': stride,
       }
