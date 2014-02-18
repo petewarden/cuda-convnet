@@ -994,7 +994,7 @@ class ConvLayerParser(LocalLayerParser):
       channels_end = ((index + 1) * channels_chunk)
       my_weights = weights[:, channels_start:channels_end]
 
-      input_channels = dic['channels']
+      input_channels = dic['channels'][0]
       num_kernels = (dic['filters'] / total_layers)
       ksize = dic['filterSize'][0]
       stride = dic['stride'][0]
