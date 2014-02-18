@@ -493,7 +493,7 @@ void ConvLayer::fpropActs(int inpIdx, float scaleTargets, PASS_TYPE passType) {
         printf("convFilterActs() _imgSize = %d, _modulesX = %d, _padding = %d, _stride = %d, _channels = %d, _groups = %d, scaleTargets = %f\n",
           _imgSize->at(inpIdx), _modulesX, _padding->at(inpIdx),
           _stride->at(inpIdx), _channels->at(inpIdx), _groups->at(inpIdx), scaleTargets);
-        getActs().printShape();
+        getActs().printShape("acts");
     }
     
     if (scaleTargets == 0) {
