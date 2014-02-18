@@ -993,10 +993,20 @@ class ConvLayerParser(LocalLayerParser):
       channels_start = (index * channels_chunk)
       channels_end = ((index + 1) * channels_chunk)
       my_weights = weights[:, channels_start:channels_end]
-      my_weights = weights[:, channels_start:channels_end]
-      my_biases = biases[channels_start:channels_end]
+
+      input_channels = dic['channels']
       num_kernels = (dic['filters'] / total_layers)
-      sys.stderr.write('my_weights.shape=%s\n' % (str(my_weights.shape)))
+      ksize = dic['filterSize'][0]
+      stride = dic['stride'][0]
+
+      my_weights.resize((input_channels, ksize, ksize, num_kernels))
+      converted_weights = np.empty((ksize, ksize, input_channels, num_kernels), my_weights.dtype)
+      for i in range(input_channels):
+        converted_weights[:, :, i, :] = my_weights[i, :, :, :]
+      converted_weights.resize(ksize * ksize * input_channels, num_kernels)
+
+      my_biases = biases[channels_start:channels_end]
+      sys.stderr.write('converted_weights.shape=%s\n' % (str(converted_weights.shape)))
       sys.stderr.write('my_biases.shape=%s\n' % (str(my_biases.shape)))
       sys.stderr.write('biases.shape=%s\n' % (str(dic['biases'].shape)))
 
@@ -1008,12 +1018,12 @@ class ConvLayerParser(LocalLayerParser):
       payload.extend(binary.to_string('spec'))
       spec = {
         'num_kernels': num_kernels,
-        'ksize': dic['filterSize'][0],
-        'stride': dic['stride'][0],
+        'ksize': ksize,
+        'stride': stride,
       }
       payload.extend(binary.convert_simple_dict(spec))
       payload.extend(binary.to_string('kernels'))
-      payload.extend(binary.numpy_array_to_binary(my_weights))
+      payload.extend(binary.numpy_array_to_binary(converted_weights))
       payload.extend(binary.to_string('has_bias'))
       payload.extend(binary.to_uint32(1))
       payload.extend(binary.to_string('bias'))
