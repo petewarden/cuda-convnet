@@ -830,7 +830,10 @@ class FCLayerParser(WeightLayerParser):
       else:
           converted_weights = weights
 
-      do_flatten = (len(input_shape) != 1) ? 1 : 0
+      if len(input_shape) != 1:
+        do_flatten = 1
+      else:
+        do_flatten = 0
 
       payload = bytearray()
       payload.extend(binary.to_string('class'))
