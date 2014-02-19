@@ -105,11 +105,14 @@ void Layer::fprop(NVMatrixV& v, PASS_TYPE passType) {
     getActs().transpose(_trans);
     
     printf("input=\n");
-//    NVMatrix* deviceMatrix = (*(v.begin()));
-//    Matrix hostMatrix(deviceMatrix->getNumRows(), deviceMatrix->getNumCols());
-//    hostMatrix.scale(0);
-//    hostMatrix(1, 0) = 1.0f;
-//    deviceMatrix->copyFromHost(hostMatrix);
+    if (strcmp(_name.c_str(), "fc6") == 0) {
+      NVMatrix* deviceMatrix = (*(v.begin()));
+      Matrix hostMatrix(deviceMatrix->getNumRows(), deviceMatrix->getNumCols());
+      hostMatrix.scale(0);
+      //hostMatrix(1, 0) = 1.0f;
+      deviceMatrix->copyFromHost(hostMatrix);
+      printf("!!!!!!!!!!!!!!!!!!!!!!!!!");
+    }
     (*(v.begin()))->printContents();
 
     const int maxFilenameLength = 1024;
