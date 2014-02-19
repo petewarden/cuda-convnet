@@ -802,6 +802,7 @@ class FCLayerParser(WeightLayerParser):
         dic['usesActs'] = False
         dic['outputs'] = mcp.safe_get_int(name, 'outputs')
         dic['my_input'] = prev_layers[dic['inputs'][0]]
+        print "parse(): my_input = %s" % (str(dic['my_input']))
 
         self.verify_num_range(dic['outputs'], 'outputs', 1, None)
         self.make_weights(dic['initW'], dic['numInputs'], [dic['outputs']] * len(dic['numInputs']), order='F')
