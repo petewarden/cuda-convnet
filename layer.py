@@ -825,12 +825,14 @@ class FCLayerParser(WeightLayerParser):
       if weights.shape[0] != input_size or weights.shape[1] != num_output:
         raise LayerParsingError('Incorrect shapes: weights shape %s, input shape %s, num_output %d' % (weights.shape, input_shape, num_output))
       if len(input_shape) == 3:
+        print 'Converting'
         channels = input_shape[2]
         height = input_shape[0]
         width = input_shape[1]
         weights = weights.reshape((channels, height, width, num_output))
         converted_weights = n.empty((height, width, channels, num_output), dtype=weights.dtype)
         for channel in range(channels):
+          print 'channel %d' % (channel)
           converted_weights[:, :, channel, :] = weights[channel, :, :, :]
         converted_weights.resize(input_size, num_output)
       else:
