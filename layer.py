@@ -860,6 +860,8 @@ class FCLayerParser(WeightLayerParser):
       payload.extend(binary.to_uint32(1))
       payload.extend(binary.to_string('bias'))
       payload.extend(binary.numpy_array_to_binary(dic['biases'][0]))
+      payload.extend(binary.to_string('dropout'))
+      payload.extend(binary.to_float32(dic['dropout']))
       output = binary.to_dict(payload)
       return output
 
