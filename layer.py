@@ -801,8 +801,6 @@ class FCLayerParser(WeightLayerParser):
         
         dic['usesActs'] = False
         dic['outputs'] = mcp.safe_get_int(name, 'outputs')
-        dic['my_input'] = prev_layers[dic['inputs'][0]]
-        print "parse(): my_input = %s" % (str(dic['my_input']))
 
         self.verify_num_range(dic['outputs'], 'outputs', 1, None)
         self.make_weights(dic['initW'], dic['numInputs'], [dic['outputs']] * len(dic['numInputs']), order='F')
@@ -813,39 +811,29 @@ class FCLayerParser(WeightLayerParser):
     @staticmethod
     def to_binary(dic):
 
-      my_input = dic['my_input']
-      print "my_input = %s" % (str(my_input))
-      #imgSize
+      if dic['name'] == 'fc6':
+        input_shape = (1, 6, 6, 256)
+      else:
+        input_shape = (1, 4096)
 
-      #input_shape = output_shapes[cuda_layer['inputLayers'][0]['name']]
-      #input_size = reduce(mul, input_shape)
-      #num_output = cuda_layer['outputs']
-      #output_shapes[cuda_layer['name']] = (num_output,)
-      #weight = cuda_layer['weights'][0]
-      #if weight.shape[0] != input_size or weight.shape[1] != num_output:
-      #    raise ValueError('Incorrect shapes: weight shape %s, input shape %s,'
-      #                     ' num_output %d' %
-      #                     (weight.shape, input_shape, num_output))
-      #if len(input_shape) == 3:
-      #    # The original input is an image, so we will need to reshape it
-      #    weight = weight.reshape(
-      #        (input_shape[2], input_shape[0], input_shape[1], num_output))
-      #    converted_weight = np.empty(input_shape + (num_output,),
-      #                                weight.dtype)
-      #    for i in range(input_shape[2]):
-      #        converted_weight[:, :, i, :] = weight[i, :, :, :]
-      #    converted_weight.resize(input_size, num_output)
-      #else:
-      #    converted_weight = weight
-      #params[0].mirror(converted_weight)
-      #bias = cuda_layer['biases'][0]
-      #params[1].mirror(bias)
-      #if len(input_shape) == 1:
-      #    return decaf_layer
-      #else:
-      #    # If the input is not a vector, we need to have a flatten layer first.
-      #    return [core_layers.FlattenLayer(name=cuda_layer['name'] + '_flatten'),
-      #            decaf_layer]
+      num_output = 4096
+      input_size = reduce(mul, input_shape)
+      weights = dic['weights'][0]
+      if weights.shape[0] != input_size or weights.shape[1] != num_output:
+        print 'Incorrect shapes: weights shape %s, input shape %s,'
+              ' num_output %d' %
+              (weights.shape, input_shape, num_output))
+              exit(1)
+      if len(input_shape) == 3:
+          weights = weights.reshape((input_shape[2], input_shape[0], input_shape[1], num_output))
+          converted_weights = np.empty(input_shape + (num_output,), dtype=weights.dtype)
+          for i in range(input_shape[2]):
+              converted_weights[:, :, i, :] = weights[i, :, :, :]
+          converted_weights.resize(input_size, num_output)
+      else:
+          converted_weights = weights
+
+      do_flatten = (len(input_shape) != 1) ? 1 : 0
 
       payload = bytearray()
       payload.extend(binary.to_string('class'))
@@ -861,6 +849,8 @@ class FCLayerParser(WeightLayerParser):
       payload.extend(binary.to_uint32(1))
       payload.extend(binary.to_string('bias'))
       payload.extend(binary.numpy_array_to_binary(dic['biases'][0]))
+      payload.extend(binary.to_string('do_flatten'))
+      payload.extend(binary.to_uint32(do_flatten))
       output = binary.to_dict(payload)
       return output
 
