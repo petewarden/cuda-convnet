@@ -403,6 +403,8 @@ void FCLayer::fpropActs(int inpIdx, float scaleTargets, PASS_TYPE passType) {
     (*_weights[inpIdx]).printContents();
     if (scaleTargets == 0) {
         getActs().addVector(_biases->getW());
+        printf("biases=\n");
+        _biases->getW().printContents();
     }
 }
 
