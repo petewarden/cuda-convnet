@@ -820,6 +820,8 @@ class FCLayerParser(WeightLayerParser):
       num_output = dic['outputs']
       input_size = reduce(mul, input_shape)
       weights = dic['weights'][0]
+      print 'weights.shape=%s' % (str(weights.shape))
+      print 'weights=%s' % (str(weights))
       if weights.shape[0] != input_size or weights.shape[1] != num_output:
         raise LayerParsingError('Incorrect shapes: weights shape %s, input shape %s, num_output %d' % (weights.shape, input_shape, num_output))
       if len(input_shape) == 3:
@@ -833,6 +835,9 @@ class FCLayerParser(WeightLayerParser):
         converted_weights.resize(input_size, num_output)
       else:
         converted_weights = weights
+
+      print 'converted_weights.shape=%s' % (str(converted_weights.shape))
+      print 'converted_weights=%s' % (str(converted_weights))
 
       payload = bytearray()
       payload.extend(binary.to_string('class'))
