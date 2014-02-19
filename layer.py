@@ -823,25 +823,23 @@ class FCLayerParser(WeightLayerParser):
       if weights.shape[0] != input_size or weights.shape[1] != num_output:
         raise LayerParsingError('Incorrect shapes: weights shape %s, input shape %s, num_output %d' % (weights.shape, input_shape, num_output))
       if len(input_shape) == 3:
-          weights = weights.reshape((input_shape[2], input_shape[0], input_shape[1], num_output))
-          converted_weights = n.empty(input_shape + (num_output,), dtype=weights.dtype)
-          for i in range(input_shape[2]):
-              converted_weights[:, :, i, :] = weights[i, :, :, :]
-          converted_weights.resize(input_size, num_output)
+        channels = input_shape[2]
+        height = input_shape[0]
+        width = input_shape[1]
+        weights = weights.reshape((channels, height, width, num_output))
+        converted_weights = n.empty((height, width, channels), dtype=weights.dtype)
+        for channel in range(channels):
+          converted_weights[:, :, channel, :] = weights[channel, :, :, :]
+        converted_weights.resize(input_size, num_output)
       else:
-          converted_weights = weights
-
-      if len(input_shape) != 1:
-        do_flatten = 1
-      else:
-        do_flatten = 0
+        converted_weights = weights
 
       payload = bytearray()
       payload.extend(binary.to_string('class'))
       payload.extend(binary.to_string('neuron'))
       payload.extend(binary.to_string('name'))
       payload.extend(binary.to_string(dic['name']))
-      spec = {'num_output': dic['outputs']}
+      spec = {'num_output': num_output}
       payload.extend(binary.to_string('spec'))
       payload.extend(binary.convert_simple_dict(spec))
       payload.extend(binary.to_string('weight'))
@@ -850,8 +848,6 @@ class FCLayerParser(WeightLayerParser):
       payload.extend(binary.to_uint32(1))
       payload.extend(binary.to_string('bias'))
       payload.extend(binary.numpy_array_to_binary(dic['biases'][0]))
-      payload.extend(binary.to_string('do_flatten'))
-      payload.extend(binary.to_uint32(do_flatten))
       output = binary.to_dict(payload)
       return output
 
