@@ -845,7 +845,7 @@ class FCLayerParser(WeightLayerParser):
       payload.extend(binary.to_string('spec'))
       payload.extend(binary.convert_simple_dict(spec))
       payload.extend(binary.to_string('weight'))
-      payload.extend(binary.numpy_array_to_binary(dic['weights'][0]))
+      payload.extend(binary.numpy_array_to_binary(converted_weights))
       payload.extend(binary.to_string('has_bias'))
       payload.extend(binary.to_uint32(1))
       payload.extend(binary.to_string('bias'))
