@@ -801,7 +801,8 @@ class FCLayerParser(WeightLayerParser):
         
         dic['usesActs'] = False
         dic['outputs'] = mcp.safe_get_int(name, 'outputs')
-        
+        dic['my_input'] = prev_layers[dic['inputs'][0]]
+
         self.verify_num_range(dic['outputs'], 'outputs', 1, None)
         self.make_weights(dic['initW'], dic['numInputs'], [dic['outputs']] * len(dic['numInputs']), order='F')
         self.make_biases(1, dic['outputs'], order='F')
@@ -810,6 +811,41 @@ class FCLayerParser(WeightLayerParser):
 
     @staticmethod
     def to_binary(dic):
+
+      my_input = dic['my_input']
+      print "my_input = %s" % (str(my_input))
+      #imgSize
+
+      #input_shape = output_shapes[cuda_layer['inputLayers'][0]['name']]
+      #input_size = reduce(mul, input_shape)
+      #num_output = cuda_layer['outputs']
+      #output_shapes[cuda_layer['name']] = (num_output,)
+      #weight = cuda_layer['weights'][0]
+      #if weight.shape[0] != input_size or weight.shape[1] != num_output:
+      #    raise ValueError('Incorrect shapes: weight shape %s, input shape %s,'
+      #                     ' num_output %d' %
+      #                     (weight.shape, input_shape, num_output))
+      #if len(input_shape) == 3:
+      #    # The original input is an image, so we will need to reshape it
+      #    weight = weight.reshape(
+      #        (input_shape[2], input_shape[0], input_shape[1], num_output))
+      #    converted_weight = np.empty(input_shape + (num_output,),
+      #                                weight.dtype)
+      #    for i in range(input_shape[2]):
+      #        converted_weight[:, :, i, :] = weight[i, :, :, :]
+      #    converted_weight.resize(input_size, num_output)
+      #else:
+      #    converted_weight = weight
+      #params[0].mirror(converted_weight)
+      #bias = cuda_layer['biases'][0]
+      #params[1].mirror(bias)
+      #if len(input_shape) == 1:
+      #    return decaf_layer
+      #else:
+      #    # If the input is not a vector, we need to have a flatten layer first.
+      #    return [core_layers.FlattenLayer(name=cuda_layer['name'] + '_flatten'),
+      #            decaf_layer]
+
       payload = bytearray()
       payload.extend(binary.to_string('class'))
       payload.extend(binary.to_string('neuron'))
