@@ -106,7 +106,7 @@ void Layer::fprop(NVMatrixV& v, PASS_TYPE passType) {
     
     printf("input=\n");
     NVMatrix* deviceMatrix = (*(v.begin()));
-    Matrix hostMatrix(deviceMatrix->_numRows, deviceMatrix->_numCols);
+    Matrix hostMatrix(deviceMatrix->getNumRows(), deviceMatrix->getNumCols());
     hostMatrix.scale(0);
     hostMatrix(0, 0) = 1.0f;
     deviceMatrix->copyFromHost(hostMatrix);
