@@ -817,7 +817,7 @@ class FCLayerParser(WeightLayerParser):
       else:
         input_shape = (1, 4096)
 
-      num_output = 4096
+      num_output = dic['outputs']
       input_size = reduce(mul, input_shape)
       weights = dic['weights'][0]
       if weights.shape[0] != input_size or weights.shape[1] != num_output:
