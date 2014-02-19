@@ -813,7 +813,7 @@ class FCLayerParser(WeightLayerParser):
     def to_binary(dic):
 
       if dic['name'] == 'fc6':
-        input_shape = (1, 6, 6, 256)
+        input_shape = (6, 6, 256)
       else:
         input_shape = (1, 4096)
 
