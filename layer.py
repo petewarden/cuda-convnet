@@ -824,7 +824,7 @@ class FCLayerParser(WeightLayerParser):
         raise LayerParsingError('Incorrect shapes: weights shape %s, input shape %s, num_output %d' % (weights.shape, input_shape, num_output))
       if len(input_shape) == 3:
           weights = weights.reshape((input_shape[2], input_shape[0], input_shape[1], num_output))
-          converted_weights = np.empty(input_shape + (num_output,), dtype=weights.dtype)
+          converted_weights = n.empty(input_shape + (num_output,), dtype=weights.dtype)
           for i in range(input_shape[2]):
               converted_weights[:, :, i, :] = weights[i, :, :, :]
           converted_weights.resize(input_size, num_output)
