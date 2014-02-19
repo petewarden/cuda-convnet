@@ -34,6 +34,7 @@ from os import linesep as NL
 from options import OptionsParser
 import re
 import binary
+from operator import mul
 
 class LayerParsingError(Exception):
     pass
