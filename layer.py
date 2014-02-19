@@ -815,7 +815,7 @@ class FCLayerParser(WeightLayerParser):
       if dic['name'] == 'fc6':
         input_shape = (6, 6, 256)
       else:
-        input_shape = (4096)
+        input_shape = (4096, )
 
       num_output = dic['outputs']
       input_size = reduce(mul, input_shape)
