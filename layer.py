@@ -833,7 +833,7 @@ class FCLayerParser(WeightLayerParser):
         converted_weights = n.empty((height, width, channels, num_output), dtype=weights.dtype)
         for channel in range(channels):
           print 'channel %d' % (channel)
-          converted_weights[:, :, channel, :] = weights[channel, :, :, :]
+          #converted_weights[:, :, channel, :] = weights[channel, :, :, :]
         converted_weights.resize(input_size, num_output)
       else:
         converted_weights = weights
