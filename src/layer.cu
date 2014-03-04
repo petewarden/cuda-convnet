@@ -104,7 +104,7 @@ void Layer::fprop(NVMatrixV& v, PASS_TYPE passType) {
     }
     getActs().transpose(_trans);
     
-    printf("input=\n");
+//    printf("input=\n");
 //    if (strcmp(_name.c_str(), "fc6") == 0) {
 //      NVMatrix* deviceMatrix = (*(v.begin()));
 //      Matrix hostMatrix(deviceMatrix->getNumRows(), deviceMatrix->getNumCols());
@@ -113,13 +113,13 @@ void Layer::fprop(NVMatrixV& v, PASS_TYPE passType) {
 //      deviceMatrix->copyFromHost(hostMatrix);
 //      printf("!!!!!!!!!!!!!!!!!!!!!!!!!");
 //    }
-    (*(v.begin()))->printContents();
+//    (*(v.begin()))->printContents();
 
-    const int maxFilenameLength = 1024;
-    char filename[maxFilenameLength];
-    snprintf(filename, maxFilenameLength, "%03d_input_%s.blob", g_layerIndex, _name.c_str());
-    (*(v.begin()))->saveToBinary(filename);
-    g_layerIndex += 1;
+//    const int maxFilenameLength = 1024;
+//    char filename[maxFilenameLength];
+//    snprintf(filename, maxFilenameLength, "%03d_input_%s.blob", g_layerIndex, _name.c_str());
+//    (*(v.begin()))->saveToBinary(filename);
+//    g_layerIndex += 1;
 
     // First do fprop on the input whose acts matrix I'm sharing, if any
     if (_actsTarget >= 0) {
@@ -147,9 +147,9 @@ void Layer::fprop(NVMatrixV& v, PASS_TYPE passType) {
 //    getActs().printContents(16);
 //    cudaDeviceSynchronize();
 
-    snprintf(filename, maxFilenameLength, "%03d_output_%s.blob", g_layerIndex, _name.c_str());
-    getActs().saveToBinary(filename);
-    g_layerIndex += 1;
+//    snprintf(filename, maxFilenameLength, "%03d_output_%s.blob", g_layerIndex, _name.c_str());
+//    getActs().saveToBinary(filename);
+//    g_layerIndex += 1;
 
     fpropNext(passType);
 }
