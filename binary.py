@@ -5,9 +5,13 @@ import sys
 def to_string(input):
   output = bytearray()
   output.extend('CHAR')
-  output.extend(struct.pack('I', len(input) + 1))
+  minimum_length = (len(input) + 1)
+  padded_length = (((minimum_length + 3) / 4) * 4)
+  terminator_count = (padded_length - len(input))
+  output.extend(struct.pack('I', padded_length))
   output.extend(input)
-  output.extend(struct.pack('B', 0))
+  for i in range(terminator_count):
+    output.extend(struct.pack('B', 0))
   return output
 
 def to_uint32(input):
