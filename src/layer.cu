@@ -143,9 +143,9 @@ void Layer::fprop(NVMatrixV& v, PASS_TYPE passType) {
         getActs().scale(1.0 - _dropout);
     }
 
-    printf("Layer %s\n", _name.c_str());
-    getActs().printContents(16);
-    cudaDeviceSynchronize();
+//    printf("Layer %s\n", _name.c_str());
+//    getActs().printContents(16);
+//    cudaDeviceSynchronize();
 
     snprintf(filename, maxFilenameLength, "%03d_output_%s.blob", g_layerIndex, _name.c_str());
     getActs().saveToBinary(filename);
@@ -399,12 +399,12 @@ FCLayer::FCLayer(ConvNet* convNet, PyObject* paramsDict) : WeightLayer(convNet, 
 
 void FCLayer::fpropActs(int inpIdx, float scaleTargets, PASS_TYPE passType) {
     getActs().addProduct(*_inputs[inpIdx], *_weights[inpIdx], scaleTargets, 1);
-    printf("weights=\n");
-    (*_weights[inpIdx]).printContents();
+//    printf("weights=\n");
+//    (*_weights[inpIdx]).printContents();
     if (scaleTargets == 0) {
         getActs().addVector(_biases->getW());
-        printf("biases=\n");
-        _biases->getW().printContents();
+//        printf("biases=\n");
+//        _biases->getW().printContents();
     }
 }
 
