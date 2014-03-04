@@ -148,13 +148,8 @@ class CroppedRawDataProvider(LabeledRawDataProvider):
 
         cropped = n.zeros((self.get_data_dims(), datadic['data'].shape[1]*self.data_mult), dtype=n.single)
 
-        print "precropped data = %s" % (str(datadic['data']))
         self.__trim_borders(datadic['data'], cropped)
-        print "premean data = %s" % (str(cropped))
-        print "data_mean.shape = %s" % (str(self.data_mean.shape))
-        print "data_mean = %s" % (str(self.data_mean))
         cropped -= self.data_mean
-        print "postmean data = %s" % (str(cropped))
         self.batches_generated += 1
 
         #sys.stderr.write('Other get_next_batch() work took %s secs\n' % (time() - start_time))
